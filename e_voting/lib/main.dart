@@ -1,3 +1,4 @@
+import 'package:e_voting/Views/Auth/registerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -15,10 +16,11 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: Scaffold(body: Text('Final Year Project')),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            // fontFamily: ,
+            primaryColor: Color(0xff4CBB17)),
+        home: RegisterPage(),
       );
     });
   }
