@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, orientation, ScreenType) {
       return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'E-voting App',
         theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
+            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            // useMaterial3: true,
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         home: RegisterPage(),

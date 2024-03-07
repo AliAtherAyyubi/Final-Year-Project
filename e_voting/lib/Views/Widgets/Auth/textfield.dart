@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class AuthTextField extends StatelessWidget {
   final TextInputType keyboardType;
@@ -38,7 +38,7 @@ class AuthTextField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       style: TextStyle(
-        fontFamily: GoogleFonts.poppins().fontFamily,
+        // fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 14,
         letterSpacing: letterSpacing,

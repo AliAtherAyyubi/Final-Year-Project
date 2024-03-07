@@ -1,6 +1,6 @@
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         title: Text(
           'Create Account',
-          style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w500),
+          // style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w500),
         ),
       ),
       body: Container(
@@ -29,8 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             Container(
               margin: EdgeInsets.only(top: 20),
-              height: 20.h,
-              child: Image.asset('assets/images/logo.png'),
+              height: 50,
+              child: Image.asset('assets/images/logo2.jpg'),
             ),
             SizedBox(
               height: 50,
