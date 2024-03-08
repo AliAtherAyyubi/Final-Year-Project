@@ -1,4 +1,6 @@
+import 'package:e_voting/Views/Auth/forgotPass.dart';
 import 'package:e_voting/Views/Auth/registerPage.dart';
+import 'package:e_voting/Views/Auth/resetPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
             // useMaterial3: true,
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
-        home: RegisterPage(),
+        debugShowCheckedModeBanner: false,
+        home: ResetPasswordPage(),
       );
     });
   }

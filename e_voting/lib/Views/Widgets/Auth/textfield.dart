@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class AuthTextField extends StatelessWidget {
+class AuthTextField extends StatefulWidget {
   final TextInputType keyboardType;
-  final bool obscureText;
+  bool obscureText;
   final String labelText;
   // final double fontSize;
   // final FontWeight fontWeight;
-  final double? letterSpacing;
+  // final double? letterSpacing;
   final IconData icon;
+  IconData? hidebtn;
   final TextEditingController? controller;
   final FormFieldValidator? validator;
 
@@ -20,45 +22,72 @@ class AuthTextField extends StatelessWidget {
       required this.labelText,
       // required this.fontSize,
       // required this.fontWeight,
-      this.letterSpacing,
+      // this.letterSpacing,
+      this.hidebtn,
       required this.icon});
 
-  // bool isEmailValid(String email) {
-  //   String pattern =
-  //       '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))\$';
-  //   RegExp regex = new RegExp(pattern);
-  //   return regex.hasMatch(email);
-  // }
+  @override
+  State<AuthTextField> createState() => _AuthTextFieldState();
+}
 
+class _AuthTextFieldState extends State<AuthTextField> {
+  // bool isEmailValid(String email) {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: validator,
-      controller: controller,
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      style: TextStyle(
-        // fontFamily: GoogleFonts.poppins().fontFamily,
-        fontWeight: FontWeight.w500,
-        fontSize: 14,
-        letterSpacing: letterSpacing,
-      ),
-      decoration: InputDecoration(
-        labelText: labelText, alignLabelWithHint: true,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(10),
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        validator: widget.validator,
+        controller: widget.controller,
+        keyboardType: widget.keyboardType,
+        obscureText: widget.obscureText,
+        textAlignVertical: TextAlignVertical.center,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+          // letterSpacing: letterSpacing,
         ),
-        filled: true,
-        fillColor: Colors.grey[200],
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        contentPadding: EdgeInsets.all(10),
-        prefixIcon: Icon(
-          icon,
-          size: 20,
-          // color: Colors.blue,
-        ),
-        // hintStyle: GoogleFonts.poppins(fontSize: 15, letterSpacing: 1),
+        cursorColor: Colors.black,
+        cursorWidth: 1,
+        decoration: InputDecoration(
+            labelText: widget.labelText,
+            hoverColor: Colors.grey[200],
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            filled: true,
+            fillColor: Colors.grey[200],
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            contentPadding: EdgeInsets.all(15),
+            prefixIcon: IconButton(
+              onPressed: () {},
+              icon: Icon(widget.icon),
+              iconSize: 20,
+              splashRadius: 20,
+              padding: EdgeInsets.only(right: 15, left: 15),
+              color: Color(0xff2AAA8A),
+            ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  if (widget.hidebtn == Icons.visibility_off) {
+                    widget.hidebtn = Icons.visibility;
+                    widget.obscureText = false;
+                  } else {
+                    widget.hidebtn = Icons.visibility_off;
+                    widget.obscureText = true;
+                  }
+                });
+              },
+              icon: Icon(widget.hidebtn),
+              iconSize: 20,
+              splashRadius: 20,
+              padding: EdgeInsets.only(right: 10),
+              color: Colors.grey,
+            )
+            // hintStyle: GoogleFonts.poppins(fontSize: 15, letterSpacing: 1),
+            ),
       ),
     );
   }
