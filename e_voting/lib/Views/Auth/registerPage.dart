@@ -97,6 +97,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: MyButton(
                               text: 'Register',
                               width: 40.w,
+                              onPress: () {
+                                if (_formKey.currentState!.validate()) {
+                                  print('Correct values');
+                                }
+                              },
                             )),
                       ],
                     )),

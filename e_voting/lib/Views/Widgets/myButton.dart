@@ -8,9 +8,10 @@ class MyButton extends StatelessWidget {
 
   final String text;
   double? width;
+  Function? onPress;
   // void trigger(){}
 
-  MyButton({required this.text, this.width});
+  MyButton({required this.text, this.width, this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,7 @@ class MyButton extends StatelessWidget {
       width: width,
       height: 40,
       child: ElevatedButton(
-        onPressed: () {
-          // if (_formKey.currentState!.validate()) {
-          //   // registerUser();
-          // }
-        },
+        onPressed: () => onPress,
         child: Text(
           text,
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400),
