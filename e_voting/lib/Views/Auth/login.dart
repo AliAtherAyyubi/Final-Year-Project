@@ -1,54 +1,50 @@
-import 'package:e_voting/Views/Auth/login.dart';
+import 'package:e_voting/Views/Auth/forgotPass.dart';
+import 'package:e_voting/Views/Auth/registerPage.dart';
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
+import 'package:e_voting/Views/Widgets/appBar.dart';
 import 'package:e_voting/Views/Widgets/myButton.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
-
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
+class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController cnic = TextEditingController();
+  // TextEditingController cnic = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
 
+  TextEditingController password = TextEditingController();
+
+  // TextEditingController confirmPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: AppBar(
-          leading: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Create Account',
-            style: GoogleFonts.poppins(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white,
+        child: MyAppBar(
+          logoname: 'E-voting',
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: Colors.white,
           width: double.infinity,
           child: Column(
             children: [
               Container(
                 margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  'Welcome to E-voting\n Login to your account ',
+                  style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff2AAA8A)),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
                 width: 20.w,
                 child: Image.asset('assets/images/logo.png'),
               ),
@@ -61,13 +57,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        AuthTextField(
-                          controller: cnic,
-                          keyboardType: TextInputType.number,
-                          obscureText: false,
-                          labelText: 'CNIC',
-                          icon: Icons.badge,
-                        ),
                         AuthTextField(
                           controller: email,
                           keyboardType: TextInputType.emailAddress,
@@ -83,20 +72,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           icon: Icons.password,
                           hidebtn: Icons.visibility_off,
                         ),
-                        AuthTextField(
-                          controller: confirmPassword,
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: true,
-                          labelText: 'Confirm Password',
-                          icon: Icons.lock_reset,
-                          hidebtn: Icons.visibility_off,
-                        ),
 
-                        ////// Register Button ///////
+                        ////// Login Button ///////
                         Align(
                             alignment: Alignment.center,
                             child: MyButton(
-                              text: 'Register',
+                              text: 'Login',
                               width: 40.w,
                               onPress: () {
                                 if (_formKey.currentState!.validate()) {
@@ -108,17 +89,28 @@ class _RegisterPageState extends State<RegisterPage> {
                     )),
               ),
               SizedBox(height: 10),
+
+              /// forgot password //
               Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    'By signing up, you agree to our Terms of Service and Privacy Policy',
-                    style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey[600]),
-                    textAlign: TextAlign.left,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPasswordPage()));
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ),
               ),
@@ -127,16 +119,16 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Already have an account?',
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                      )),
+                  Text('Don\'t have an account?',
+                      style: GoogleFonts.poppins(fontSize: 15)),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()));
                     },
-                    child: Text('Sign in',
+                    child: Text('Sign up',
                         style: GoogleFonts.poppins(
                             fontSize: 15,
                             color: Color(0xff2AAA8A),
