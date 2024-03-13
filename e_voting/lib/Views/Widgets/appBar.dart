@@ -11,7 +11,7 @@ class MyAppBar extends StatelessWidget {
     return AppBar(
       leading: Icon(
         Icons.arrow_back_rounded,
-        color: Colors.white,
+        color: Colors.transparent,
       ),
       title: Text(
         logoname,

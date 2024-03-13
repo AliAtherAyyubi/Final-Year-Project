@@ -1,5 +1,5 @@
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
-import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

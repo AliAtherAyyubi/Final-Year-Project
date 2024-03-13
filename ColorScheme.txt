@@ -1,3 +1,5 @@
 
 
-Primary  :     #4CBB17  / #2AAA8A
+Primary  :    2AAA8A
+
+Secondary:    4CBB17
