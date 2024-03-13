@@ -1,7 +1,7 @@
 import 'package:e_voting/Views/Auth/forgotPass.dart';
 import 'package:e_voting/Views/Auth/registerPage.dart';
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
-import 'package:e_voting/Views/Widgets/appBar.dart';
+import 'package:e_voting/Views/Widgets/Custom/appBar.dart';
 import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
