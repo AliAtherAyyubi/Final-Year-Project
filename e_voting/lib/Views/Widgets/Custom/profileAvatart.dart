@@ -5,12 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 class MyProfileAvatar extends StatelessWidget {
   // const MyProfileAvatar({super.key});
 
-  final String name;
+  final String? name;
   final String image;
   double radius;
 
-  MyProfileAvatar(
-      {required this.name, required this.image, this.radius = 60, super.key});
+  MyProfileAvatar({this.name, this.image = '', this.radius = 50, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +32,14 @@ class MyProfileAvatar extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Container(
             width: 100,
             child: Text(
-              name,
+              name!,
               style: GoogleFonts.inter(
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center,

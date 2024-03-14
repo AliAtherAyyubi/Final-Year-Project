@@ -13,11 +13,10 @@ class VoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-        // height: 80,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 20, bottom: 20),
         width: 80.w,
-        // height: 240,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
@@ -31,12 +30,11 @@ class VoteCard extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Vote for \n ${title}',
               style: GoogleFonts.poppins(
-                  fontSize: 20,
+                  fontSize: 18,
                   height: 1.4,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
@@ -48,9 +46,10 @@ class VoteCard extends StatelessWidget {
             Text(
               time,
               style: GoogleFonts.inter(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 20,
@@ -58,7 +57,7 @@ class VoteCard extends StatelessWidget {
             Text(
               description,
               style: GoogleFonts.inter(
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

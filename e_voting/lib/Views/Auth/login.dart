@@ -79,11 +79,6 @@ class LoginPage extends StatelessWidget {
                             child: MyButton(
                               text: 'Login',
                               width: 40.w,
-                              onPress: () {
-                                if (_formKey.currentState!.validate()) {
-                                  print('Correct values');
-                                }
-                              },
                             )),
                       ],
                     )),

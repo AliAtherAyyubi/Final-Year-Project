@@ -1,12 +1,12 @@
-import 'package:e_voting/Views/Widgets/Custom/appBar.dart';
+import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:e_voting/Views/Widgets/Custom/profileAvatart.dart';
 import 'package:e_voting/Views/Widgets/homepage/Dashboard/card.dart';
 import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
@@ -65,7 +65,7 @@ class Dashboard extends StatelessWidget {
               title: Text(
                 'WeVote',
                 style: GoogleFonts.poppins(
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
                 // textAlign: TextAlign.center,
@@ -82,17 +82,37 @@ class Dashboard extends StatelessWidget {
               /// Tab 1 //
               SingleChildScrollView(
                 child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
                   width: double.infinity,
                   child: Column(
                     children: [
-                      VoteCard(
-                          title: 'Student Representative',
-                          time: 'April 10th to 11th - 8am to 10pm',
-                          description:
-                              'Student representatives are known as enrolled scholars at their instituion elected to lobby for student\'s rights and represent the point of view of their peers'),
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      // Card Section //
+                      Container(
+                        height: 250,
+                        // padding: EdgeInsets.all(20),
+                        // color: Colors.amber,
+                        child: ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return VoteCard(
+                                title: 'Student Representative',
+                                time: 'April 10th to 11th - 8am to 10pm',
+                                description:
+                                    'Student representatives are known as enrolled scholars at their instituion elected to lobby for student\'s rights and represent the point of view of their peers.');
+                          },
+                          itemCount: 3,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                        ),
+                      ),
 
                       const SizedBox(
-                        height: 40,
+                        height: 10,
                       ),
 
                       /// Candidates Section //
@@ -104,10 +124,10 @@ class Dashboard extends StatelessWidget {
                       ),
                       // Candidates List>>>>>>
                       Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 10),
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        // width: 500,
-                        height: 200,
+                        width: 400,
+                        height: 180,
                         child: ListView.builder(
                             itemCount: 6,
                             shrinkWrap: true,
@@ -119,10 +139,19 @@ class Dashboard extends StatelessWidget {
                               );
                             }),
                       ),
-
                       SizedBox(
-                        height: 200,
-                      )
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: MyButton(
+                          text: 'VOTE NOW',
+                          width: 100.w,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
