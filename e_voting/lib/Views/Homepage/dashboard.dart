@@ -1,24 +1,17 @@
-import 'package:e_voting/Views/Widgets/Custom/appBar.dart';
+import 'package:e_voting/Views/Homepage/Voting/onGoing.dart';
+import 'package:e_voting/Views/Homepage/Voting/upcoming.dart';
+import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:e_voting/Views/Widgets/Custom/profileAvatart.dart';
 import 'package:e_voting/Views/Widgets/homepage/Dashboard/card.dart';
 import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
-
-  List<String> CandidateName = [
-    'Harry Brook',
-    'Alice Henry',
-    'William Washington',
-    'Sohaib Zafar',
-    'Syed Ali Raza',
-    'Asgar Zaidi'
-  ];
 
   TabController? controller;
   @override
@@ -65,7 +58,7 @@ class Dashboard extends StatelessWidget {
               title: Text(
                 'WeVote',
                 style: GoogleFonts.poppins(
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
                 // textAlign: TextAlign.center,
@@ -80,56 +73,9 @@ class Dashboard extends StatelessWidget {
           body: TabBarView(
             children: [
               /// Tab 1 //
-              SingleChildScrollView(
-                child: Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      VoteCard(
-                          title: 'Student Representative',
-                          time: 'April 10th to 11th - 8am to 10pm',
-                          description:
-                              'Student representatives are known as enrolled scholars at their instituion elected to lobby for student\'s rights and represent the point of view of their peers'),
-
-                      const SizedBox(
-                        height: 40,
-                      ),
-
-                      /// Candidates Section //
-
-                      Text(
-                        '6 Candidates',
-                        style: GoogleFonts.inter(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      // Candidates List>>>>>>
-                      Container(
-                        margin: EdgeInsets.only(top: 20),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        // width: 500,
-                        height: 200,
-                        child: ListView.builder(
-                            itemCount: 6,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return MyProfileAvatar(
-                                name: CandidateName[index],
-                                image: 'assets/images/profile.jpg',
-                              );
-                            }),
-                      ),
-
-                      SizedBox(
-                        height: 200,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-
+              OnGoingElectionPage(),
               //    Tab No.2 ///
-              Center(child: Text('Upcoming ...')),
+              UpcomingElection(),
             ],
           )),
     );

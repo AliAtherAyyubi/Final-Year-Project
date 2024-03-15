@@ -2,8 +2,8 @@ import 'package:e_voting/Views/Auth/forgotPass.dart';
 import 'package:e_voting/Views/Auth/login.dart';
 import 'package:e_voting/Views/Auth/registerPage.dart';
 import 'package:e_voting/Views/Auth/resetPassword.dart';
+import 'package:e_voting/Views/Homepage/Voting/upcoming.dart';
 import 'package:e_voting/Views/Homepage/dashboard.dart';
-import 'package:e_voting/Views/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

@@ -75,9 +75,6 @@ class ResetPasswordPage extends StatelessWidget {
                       MyButton(
                         text: 'Submit',
                         width: 40.w,
-                        onPress: () {
-                          print('Reset passw');
-                        },
                       )
                     ],
                   )),
