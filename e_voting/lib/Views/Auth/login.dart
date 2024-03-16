@@ -72,13 +72,15 @@ class LoginPage extends StatelessWidget {
                           icon: Icons.password,
                           hidebtn: Icons.visibility_off,
                         ),
-
+                        SizedBox(
+                          height: 20,
+                        ),
                         ////// Login Button ///////
                         Align(
                             alignment: Alignment.center,
                             child: MyButton(
                               text: 'Login',
-                              width: 40.w,
+                              width: 100.w,
                             )),
                       ],
                     )),
