@@ -42,25 +42,27 @@ class WelcomePage extends StatelessWidget {
             Text(
               'Your account has been created successfully!',
               style: GoogleFonts.inter(
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: FontWeight.w400,
                   color: Colors.black),
               textAlign: TextAlign.center,
             ),
             Container(
-              height: 40.h,
-              width: 80.w,
+              height: 400,
+              width: 100.w,
               // margin: EdgeInsets.only(top: 20),
               child: Image.asset(
-                'assets/images/voting.jpg',
+                'assets/images/castvote.jpg',
                 filterQuality: FilterQuality.high,
               ),
             ),
+
+            // continue Button //
             Align(
               alignment: Alignment.bottomCenter,
               child: MyButton(
                 text: 'CONTINUE',
-                width: 80.w,
+                width: 100.w,
               ),
             )
           ],

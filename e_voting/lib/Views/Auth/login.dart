@@ -6,6 +6,8 @@ import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:page_transition/page_transition.dart';
+
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
@@ -37,7 +39,7 @@ class LoginPage extends StatelessWidget {
                 child: Text(
                   'Welcome to E-voting\n Login to your account ',
                   style: GoogleFonts.poppins(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff2AAA8A)),
                   textAlign: TextAlign.left,
@@ -104,7 +106,7 @@ class LoginPage extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Colors.grey,
+                        color: Colors.black45,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -122,8 +124,9 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()));
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: RegisterPage()));
                     },
                     child: Text('Sign up',
                         style: GoogleFonts.poppins(

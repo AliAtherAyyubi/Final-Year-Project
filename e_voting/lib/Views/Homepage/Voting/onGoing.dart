@@ -1,3 +1,4 @@
+import 'package:e_voting/Providers/VotingInfo.dart';
 import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:e_voting/Views/Widgets/Custom/profileAvatart.dart';
 import 'package:e_voting/Views/Widgets/homepage/Dashboard/card.dart';
@@ -7,13 +8,21 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class OnGoingElectionPage extends StatelessWidget {
   OnGoingElectionPage({super.key});
-  List<String> CandidateName = [
+
+  List<String> candidateName = [
     'Harry Brook',
     'Alice Henry',
     'William Washington',
     'Sohaib Zafar',
     'Syed Ali Raza',
     'Asgar Zaidi'
+  ];
+
+  List<String> voteNames = [
+    'Student Representatives',
+    'Free Democratic Party',
+    'Presidential Power Play',
+    'National Liberal Party'
   ];
   @override
   Widget build(BuildContext context) {
@@ -35,16 +44,16 @@ class OnGoingElectionPage extends StatelessWidget {
               // padding: EdgeInsets.all(20),
               // color: Colors.amber,
               child: ListView.builder(
+                itemCount: voteNames.length,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return VoteCard(
-                      title: 'Student Representative',
+                      title: voteNames[index],
                       time: 'April 10th to 11th - 8am to 10pm',
                       description:
                           'Student representatives are known as enrolled scholars at their instituion elected to lobby for student\'s rights and represent the point of view of their peers.');
                 },
-                itemCount: 3,
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
               ),
             ),
 
@@ -71,7 +80,7 @@ class OnGoingElectionPage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return MyProfileAvatar(
-                      name: CandidateName[index],
+                      name: candidateName[index],
                       image: 'assets/images/profile.jpg',
                     );
                   }),

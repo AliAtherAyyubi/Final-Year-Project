@@ -1,8 +1,10 @@
+import 'package:e_voting/Views/Auth/login.dart';
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
 import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -17,16 +19,19 @@ class ForgotPasswordPage extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: const Align(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Align(
                     alignment: Alignment.topLeft,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios),
+                      iconSize: 25,
                     ),
                   )),
               SizedBox(height: 20),

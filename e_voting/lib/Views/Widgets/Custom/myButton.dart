@@ -7,25 +7,29 @@ class MyButton extends StatelessWidget {
   // const MyButton({super.key});
 
   final String text;
-  double? width;
+  final double? width;
+  final double? height;
+  final double? elevation;
+
   // Widget? page = Container();
   // void trigger(){}
 
-  MyButton({required this.text, this.width});
+  MyButton(
+      {required this.text, this.width, this.height = 50, this.elevation = 10});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         // margin: EdgeInsets.only(top: 10),
         width: width,
-        height: 50,
+        height: height,
         // decoration: BoxDecoration(
         //     borderRadius: BorderRadius.circular(50),
-        //     boxShadow: [
+        //     boxShadow: const [
         //       BoxShadow(
-        //           color: Colors.greenAccent,
-        //           blurRadius: 10,
-        //           spreadRadius: 4,
+        //           color: Color.fromARGB(255, 20, 242, 105),
+        //           blurRadius: 8,
+        //           spreadRadius: 2,
         //           offset: Offset(0, 5))
         //     ]),
         child: ElevatedButton(
@@ -35,8 +39,8 @@ class MyButton extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color(0xff2AAA8A),
-            elevation: 10,
-            shadowColor: Colors.greenAccent,
+            elevation: elevation,
+            shadowColor: Colors.green,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),

@@ -1,11 +1,12 @@
 import 'package:e_voting/Views/Auth/login.dart';
 import 'package:e_voting/Views/Widgets/Auth/textfield.dart';
 import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -28,8 +29,15 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
-          leading: Icon(
-            Icons.arrow_back_rounded,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.leftToRight,
+                      child: LoginPage()));
+            },
+            icon: Icon(Icons.arrow_back_ios),
             color: Colors.black,
           ),
           title: Text(
@@ -39,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
         ),
       ),
       body: SingleChildScrollView(
@@ -97,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             alignment: Alignment.center,
                             child: MyButton(
                               text: 'Register',
-                              width: 40.w,
+                              width: 100.w,
                             )),
                       ],
                     )),
@@ -128,8 +136,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       )),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.leftToRight,
+                              child: LoginPage()));
                     },
                     child: Text('Sign in',
                         style: GoogleFonts.poppins(

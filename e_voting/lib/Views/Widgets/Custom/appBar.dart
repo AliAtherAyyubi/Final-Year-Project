@@ -16,7 +16,7 @@ class MyAppBar extends StatelessWidget {
       title: Text(
         logoname,
         style: GoogleFonts.poppins(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
         // textAlign: TextAlign.center,
       ),
       centerTitle: true,
