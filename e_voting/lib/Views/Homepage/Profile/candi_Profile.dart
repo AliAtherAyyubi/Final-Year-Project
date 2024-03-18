@@ -69,15 +69,19 @@ class BottomOvalArcClipper extends CustomClipper<Path> {
     var y = size.height;
     var controlPoint1 = Offset(50, size.height - 100);
     var controlPoint2 = Offset(size.width - 50, size.height);
-    var endPoint = Offset(size.width, size.height - 50);
+    var endPoint = Offset(x, y);
 
     Path path = Path();
     path.lineTo(0, 0);
-    path.lineTo(0, y);
-    path.lineTo(x, y);
+    // path.lineTo(0, y);
+    path.lineTo(0, size.height - 150);
+    path.cubicTo(controlPoint1.dx, controlPoint1.dy, controlPoint2.dx,
+        controlPoint2.dy, endPoint.dx, endPoint.dy);
+    // path.lineTo(x, y + 150);
     path.lineTo(x, 0);
 
-    path.cubicTo(50, controlPoint1.dy, controlPoint2.dx, controlPoint2.dy,endPoint.dx, endPoint.dy);
+    // path.cubicTo(controlPoint2.dx, controlPoint2.dy, controlPoint1.dx,
+    //     controlPoint1.dy, endPoint.dx, endPoint.dy);
 
     path.close();
     return path;

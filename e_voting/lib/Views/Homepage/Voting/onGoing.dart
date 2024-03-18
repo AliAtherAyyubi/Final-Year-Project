@@ -1,7 +1,7 @@
 import 'package:e_voting/Providers/VotingInfo.dart';
-import 'package:e_voting/Views/Widgets/Custom/myButton.dart';
-import 'package:e_voting/Views/Widgets/Custom/profileAvatart.dart';
-import 'package:e_voting/Views/Widgets/homepage/Dashboard/card.dart';
+import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Views/Widgets/profileAvatart.dart';
+import 'package:e_voting/Views/Widgets/homepage/card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
