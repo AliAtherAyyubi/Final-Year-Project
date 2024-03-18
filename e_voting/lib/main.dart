@@ -3,6 +3,7 @@ import 'package:e_voting/Views/Auth/login.dart';
 import 'package:e_voting/Views/Auth/registerPage.dart';
 import 'package:e_voting/Views/Auth/resetPassword.dart';
 import 'package:e_voting/Views/Auth/welcome.dart';
+import 'package:e_voting/Views/Homepage/Profile/candi_Profile.dart';
 import 'package:e_voting/Views/Homepage/Voting/upcoming.dart';
 import 'package:e_voting/Views/Homepage/Voting/vote.dart';
 import 'package:e_voting/Views/Homepage/dashboard.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: VotingPage(),
+        home: CandidateProfile(),
       );
     });
   }

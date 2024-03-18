@@ -5,17 +5,18 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class VoteStepper extends StatefulWidget {
-  const VoteStepper({super.key});
+  // VoteStepper({super.key});
+
+  int currentStepNo;
+  VoteStepper({required this.currentStepNo});
 
   @override
   State<VoteStepper> createState() => _VoteStepperState();
 }
 
 class _VoteStepperState extends State<VoteStepper> {
-  int currentStep = 0;
-
   bool checkStep(int stepNo) {
-    return currentStep >= stepNo ? true : false;
+    return widget.currentStepNo >= stepNo ? true : false;
   }
 
   @override
@@ -27,7 +28,7 @@ class _VoteStepperState extends State<VoteStepper> {
           margin: EdgeInsets.only(top: 10),
           // height: 00,
           child: EasyStepper(
-            activeStep: currentStep,
+            activeStep: widget.currentStepNo,
             lineStyle: const LineStyle(
                 lineLength: 80,
                 lineType: LineType.normal,
@@ -46,7 +47,7 @@ class _VoteStepperState extends State<VoteStepper> {
                   customStep: VoteSteps(isStep: checkStep(0), stepNo: '1'),
                   customTitle: StepLabel(
                     isStep: checkStep(0),
-                    label: 'Choose Candidate',
+                    label: 'Choose\n Candidate',
                   )),
               EasyStep(
                   customStep: VoteSteps(isStep: checkStep(1), stepNo: '2'),
@@ -58,7 +59,7 @@ class _VoteStepperState extends State<VoteStepper> {
                   customStep: VoteSteps(isStep: checkStep(2), stepNo: '3'),
                   customTitle: StepLabel(
                     isStep: checkStep(2),
-                    label: 'Facial Recognition',
+                    label: 'Facial\n Recognition',
                   )),
               EasyStep(
                   customStep: VoteSteps(isStep: checkStep(3), stepNo: '4'),
@@ -67,15 +68,16 @@ class _VoteStepperState extends State<VoteStepper> {
                     label: 'Confirm Vote',
                   )),
             ],
-            onStepReached: (index) => setState(() => currentStep = index),
+            onStepReached: (index) =>
+                setState(() => widget.currentStepNo = index),
           ),
         ),
 
         ElevatedButton(
             onPressed: () {
               setState(() {
-                currentStep++;
-                if (currentStep >= 4) currentStep = 0;
+                widget.currentStepNo++;
+                if (widget.currentStepNo >= 4) widget.currentStepNo = 0;
               });
             },
             child: Text('next'))

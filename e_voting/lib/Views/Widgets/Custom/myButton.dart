@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyButton extends StatelessWidget {
   // const MyButton({super.key});
@@ -10,12 +8,18 @@ class MyButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double? elevation;
-
+  final Color? backClr;
+  final Color? textClr;
   // Widget? page = Container();
   // void trigger(){}
 
   MyButton(
-      {required this.text, this.width, this.height = 50, this.elevation = 10});
+      {required this.text,
+      this.width,
+      this.height = 50,
+      this.elevation = 10,
+      this.backClr,
+      this.textClr});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class MyButton extends StatelessWidget {
             //     context, MaterialPageRoute(builder: (context) => page));
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xff2AAA8A),
+            backgroundColor: backClr,
             elevation: elevation,
             shadowColor: Colors.green,
             shape:
