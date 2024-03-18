@@ -65,12 +65,20 @@ class CandidateProfile extends StatelessWidget {
 class BottomOvalArcClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final arcHeight = size.height * 0.25; // Adjust arc height as needed
-    final path = Path();
-    path.moveTo(0.0, size.height);
-    path.lineTo(0.0, arcHeight);
-    path.quadraticBezierTo(size.width / 2, arcHeight, size.width, arcHeight);
-    path.lineTo(size.width, size.height);
+    var x = size.width;
+    var y = size.height;
+    var controlPoint1 = Offset(50, size.height - 100);
+    var controlPoint2 = Offset(size.width - 50, size.height);
+    var endPoint = Offset(size.width, size.height - 50);
+
+    Path path = Path();
+    path.lineTo(0, 0);
+    path.lineTo(0, y);
+    path.lineTo(x, y);
+    path.lineTo(x, 0);
+
+    path.cubicTo(50, controlPoint1.dy, controlPoint2.dx, controlPoint2.dy,endPoint.dx, endPoint.dy);
+
     path.close();
     return path;
   }
