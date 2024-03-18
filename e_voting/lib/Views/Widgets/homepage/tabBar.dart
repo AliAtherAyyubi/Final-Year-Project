@@ -14,11 +14,9 @@ class MyTabBar extends StatelessWidget {
     return TabBar(
         // tabAlignment: TabAlignment.center,
         controller: controller,
-        indicatorSize: TabBarIndicatorSize.label,
+        indicatorSize: TabBarIndicatorSize.tab,
         // indicatorWeight: 10,
         indicatorPadding: EdgeInsets.only(bottom: 2),
-        // indicatorColor: Color(0xff2AAA8A),
-        // unselectedLabelStyle: TextStyle(color: Colors.grey),
         isScrollable: true,
         labelColor: Color(0xff2AAA8A),
         unselectedLabelColor: Colors.black45,
@@ -33,6 +31,7 @@ class MyTabBar extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Tab(

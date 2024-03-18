@@ -1,14 +1,44 @@
+import 'dart:js_util';
+
 import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
+import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
+import 'package:e_voting/Views/Widgets/myAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class CandidateProfile extends StatelessWidget {
-  const CandidateProfile({super.key});
+class CandidateProfile extends StatefulWidget {
+  @override
+  State<CandidateProfile> createState() => _CandidateProfileState();
+}
+
+class _CandidateProfileState extends State<CandidateProfile>
+    with SingleTickerProviderStateMixin {
+  // CandidateProfile({super.key});
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   bottom: PreferredSize(
+      //     preferredSize: Size.fromHeight(50),
+      //     child:
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -29,31 +59,58 @@ class CandidateProfile extends StatelessWidget {
                 ),
 
                 Positioned(
-                  top: 40,
+                  top: 30,
                   left: 20,
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
                   ),
                 ),
-
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 160),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.green,
-                              blurRadius: 2,
-                              spreadRadius: 2)
-                        ]),
-                    child: const GFAvatar(
-                      radius: 90,
-                      backgroundImage: AssetImage('assets/images/profile.jpg'),
-                    ),
-                  ),
+                //// Profile image ///
+                Container(
+                  margin: EdgeInsets.only(top: 100),
+                  child: Center(
+                      child: MyAvatar(
+                    radius: 80,
+                    image: 'assets/images/profile.jpg',
+                  )),
                 )
               ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                'Ana Pilar Martinez',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            //  Tabs /////
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.only(bottom: 10),
+              child: MyTabBar(
+                text1: 'ABOUT ',
+                text2: 'CONTACT',
+                controller: _tabController,
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 500,
+              color: Colors.amber,
+              child: TabBarView(controller: _tabController, children: [
+                Container(
+                  child: Text('about'),
+                ),
+                Container(
+                  child: Text('contat'),
+                ),
+              ]),
             )
           ],
         ),
