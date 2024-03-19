@@ -8,7 +8,8 @@ import 'package:e_voting/Views/Homepage/Profile/candi_Profile.dart';
 import 'package:e_voting/Views/Homepage/Voting/upcoming.dart';
 import 'package:e_voting/Views/Homepage/Voting/vote.dart';
 import 'package:e_voting/Views/Homepage/dashboard.dart';
-import 'package:e_voting/Views/Widgets/Progressbar.dart';
+import 'package:e_voting/Views/Widgets/ProgressBar/ProgressBar1.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
