@@ -1,8 +1,12 @@
 import 'package:e_voting/Views/Homepage/Profile/candi_Profile.dart';
+import 'package:e_voting/Views/Widgets/ProgressBar/ProgressBar1.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -13,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, orientation, ScreenType) {
-      return MaterialApp(
+      return GetMaterialApp(
         title: 'E-voting App',
         theme: ThemeData(
             // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: CandidateProfile(),
+        home: ProgressBar(),
       );
     });
   }
