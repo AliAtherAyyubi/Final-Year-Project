@@ -1,3 +1,4 @@
+import 'package:e_voting/Views/Auth/Facerecognition1.dart';
 import 'package:e_voting/Views/Auth/forgotPass.dart';
 import 'package:e_voting/Views/Auth/login.dart';
 import 'package:e_voting/Views/Auth/registerPage.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: CandidateProfile(),
+        home: FaceRecognition1(),
       );
     });
   }

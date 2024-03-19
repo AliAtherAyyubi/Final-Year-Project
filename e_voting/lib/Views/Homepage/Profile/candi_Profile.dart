@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
 import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
 import 'package:e_voting/Views/Widgets/myAvatar.dart';
