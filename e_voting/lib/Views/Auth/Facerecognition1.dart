@@ -1,3 +1,4 @@
+import 'package:e_voting/Views/Widgets/Progressbar.dart';
 import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
 import 'package:flutter/material.dart';
 
