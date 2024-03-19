@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyButton extends StatelessWidget {
   // const MyButton({super.key});
 
   final String text;
-  final double? width;
+  double? width = 100.w;
   final double? height;
   final double? elevation;
   final Color? backClr;
@@ -42,8 +43,8 @@ class MyButton extends StatelessWidget {
             //     context, MaterialPageRoute(builder: (context) => page));
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: backClr,
-            elevation: elevation,
+            backgroundColor: Color(0xff2AAA8A),
+            elevation: 10,
             shadowColor: Colors.green,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),

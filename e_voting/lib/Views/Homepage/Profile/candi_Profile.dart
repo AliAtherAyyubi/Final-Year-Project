@@ -3,10 +3,12 @@ import 'dart:js_util';
 import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
 import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
 import 'package:e_voting/Views/Widgets/myAvatar.dart';
+import 'package:e_voting/Views/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateProfile extends StatefulWidget {
   @override
@@ -76,7 +78,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Center(
@@ -101,16 +103,73 @@ class _CandidateProfileState extends State<CandidateProfile>
             ),
             Container(
               width: double.infinity,
-              height: 500,
-              color: Colors.amber,
+              height: 250,
               child: TabBarView(controller: _tabController, children: [
-                Container(
-                  child: Text('about'),
+                SingleChildScrollView(
+                  child: Container(
+                    // color: Colors.amber,
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'SHORT BIOGRAPHY',
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'My name is Ana Pilar, but you can just call me Ani. I am 26 years old and I\'m currently living in Belgrano, CABA. This is my third year studying Architecture in the University UIX. Also, I am working as a part-time teacig assistant.',
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          'ELECTION MANIFESTO',
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'I combine experience with passion. I am incredibly commited to advocating for you. My focus: better mental health resources, fairer assessments, and affordable on-campus living. Open communication, strong advocacy - that\'s my promise. Let\'s make our university thrive!',
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+
+                // 2nd page //
                 Container(
                   child: Text('contat'),
                 ),
               ]),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            MyButton(
+              text: 'VOTE',
+              width: 90.w,
+              height: 60,
+            ),
+            SizedBox(
+              height: 20,
             )
           ],
         ),
