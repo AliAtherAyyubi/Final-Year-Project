@@ -157,77 +157,85 @@ class _CandidateProfileState extends State<CandidateProfile>
                 ),
 
                 // 2nd page //
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'SOCIAL NETWORKS',
-                        style: AppStyle.textStyle2
-                            .copyWith(fontSize: 16, color: Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: AppStyle.primaryColor,
-                            radius: 20,
-                            child: const Icon(
-                              Icons.facebook,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          CircleAvatar(
-                            backgroundColor: AppStyle.primaryColor,
-                            radius: 20,
-                            child: const Icon(
-                              FontAwesomeIcons.instagram,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'CONTACT ME!',
-                        style: AppStyle.textStyle2
-                            .copyWith(fontSize: 16, color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Form(
-                          child: Column(
-                            children: [
-                              AuthTextField(
-                                keyboardType: TextInputType.name,
-                                obscureText: false,
-                                labelText: 'Name',
-                                icon: Icons.person,
+                SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'SOCIAL NETWORKS',
+                          style: AppStyle.textStyle2
+                              .copyWith(fontSize: 16, color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: AppStyle.primaryColor,
+                              radius: 20,
+                              child: const Icon(
+                                Icons.facebook,
+                                color: Colors.white,
                               ),
-                              AuthTextField(
-                                keyboardType: TextInputType.name,
-                                obscureText: false,
-                                labelText: 'Number',
-                                icon: Icons.person,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundColor: AppStyle.primaryColor,
+                              radius: 20,
+                              child: const Icon(
+                                FontAwesomeIcons.instagram,
+                                color: Colors.white,
                               ),
-                            ],
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'CONTACT ME!',
+                          style: AppStyle.textStyle2
+                              .copyWith(fontSize: 16, color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: Form(
+                            child: Column(
+                              children: [
+                                AuthTextField(
+                                  keyboardType: TextInputType.name,
+                                  obscureText: false,
+                                  labelText: 'Name',
+                                  icon: Icons.person,
+                                ),
+                                AuthTextField(
+                                  keyboardType: TextInputType.name,
+                                  obscureText: false,
+                                  labelText: 'Number',
+                                  icon: Icons.phone,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ]),
