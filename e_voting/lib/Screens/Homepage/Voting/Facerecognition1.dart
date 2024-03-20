@@ -1,4 +1,6 @@
-import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
+import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 
 class FaceRecognition1 extends StatefulWidget {
@@ -17,13 +19,11 @@ class FaceRecognition1State extends State<FaceRecognition1> {
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 23),
         child: Column(
           children: [
-            Row(
-              children: [
-                VoteLabel(
-                  voteName: "Vote for student representative",
-                ),
-              ],
-            )
+            VoteLabel(
+              voteName: 'Vote For Student Representatives',
+            ),
+            gap(Height: 50, Width: 20),
+            VoteStepper(currentStepNo: 2)
           ],
         ),
       ),

@@ -1,5 +1,5 @@
-import 'package:e_voting/Views/Widgets/homepage/Voting/stepLabel.dart';
-import 'package:e_voting/Views/Widgets/homepage/Voting/stepNo.dart';
+import 'package:e_voting/Screens/Widgets/Voting/stepLabel.dart';
+import 'package:e_voting/Screens/Widgets/Voting/stepNo.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:google_fonts/google_fonts.dart';

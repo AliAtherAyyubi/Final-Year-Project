@@ -1,6 +1,6 @@
-import 'package:e_voting/Views/Homepage/Voting/onGoing.dart';
-import 'package:e_voting/Views/Homepage/Voting/upcoming.dart';
-import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
+import 'package:e_voting/Screens/Homepage/Voting/onGoing.dart';
+import 'package:e_voting/Screens/Homepage/Voting/upcoming.dart';
+import 'package:e_voting/Screens/Widgets/homepage/tabBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

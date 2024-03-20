@@ -1,36 +1,42 @@
-import 'package:e_voting/Views/Widgets/textfield.dart';
-import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Widgets/textfield.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:page_transition/page_transition.dart';
 
-class ResetPasswordPage extends StatelessWidget {
+class ForgotPasswordPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.white,
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: const Align(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Align(
                     alignment: Alignment.topLeft,
-                    child: Icon(Icons.arrow_back_ios,
-                        size: 20, color: Colors.black),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios),
+                      iconSize: 25,
+                    ),
                   )),
               SizedBox(height: 20),
               Text(
-                'Create New Password',
+                'Forgot Password?',
                 style: GoogleFonts.poppins(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -38,12 +44,20 @@ class ResetPasswordPage extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 20),
-                height: 50.h,
-                width: double.infinity,
+                height: 150,
                 child: Image.asset(
-                  'assets/images/reset.jpg',
+                  'assets/images/forgotpassword.png',
                   filterQuality: FilterQuality.high,
                 ),
+              ),
+              SizedBox(height: 30),
+              Text(
+                'To reset your password, please enter your email address below. We will send you a link to reset your password.',
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 40),
               Form(
@@ -51,29 +65,16 @@ class ResetPasswordPage extends StatelessWidget {
                   child: Column(
                     children: [
                       AuthTextField(
-                        controller: password,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        labelText: 'New Password',
-                        icon: Icons.password,
-                        hidebtn: Icons.visibility_off,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      AuthTextField(
-                        controller: password,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        labelText: 'Confirm New Password',
-                        icon: Icons.lock_reset,
-                        hidebtn: Icons.visibility_off,
-                      ),
+                          controller: email,
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: false,
+                          labelText: 'Enter Your Email',
+                          icon: Icons.alternate_email),
                       SizedBox(
                         height: 10,
                       ),
                       MyButton(
-                        text: 'Submit',
+                        text: 'Send',
                         width: 40.w,
                       )
                     ],

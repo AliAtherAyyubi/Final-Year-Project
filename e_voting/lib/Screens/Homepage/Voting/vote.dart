@@ -1,7 +1,7 @@
-import 'package:e_voting/Views/Widgets/homepage/Voting/Stepper.dart';
-import 'package:e_voting/Views/Homepage/Voting/onGoing.dart';
-import 'package:e_voting/Views/Widgets/homepage/Voting/candidateCard.dart';
-import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
+import 'package:e_voting/Screens/Homepage/Voting/onGoing.dart';
+import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
+import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

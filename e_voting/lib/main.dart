@@ -1,5 +1,4 @@
-import 'package:e_voting/Views/Homepage/Profile/candi_Profile.dart';
-import 'package:e_voting/Views/Widgets/ProgressBar/ProgressBar1.dart';
+import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: ProgressBar(),
+        home: CandidateProfile(),
       );
     });
   }

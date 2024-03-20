@@ -1,7 +1,0 @@
-
-
-Primary  :    0xff2AAA8A
-
-Secondary:    0xff4CBB17
-
-

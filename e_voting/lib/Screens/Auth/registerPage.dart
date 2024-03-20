@@ -1,6 +1,6 @@
-import 'package:e_voting/Views/Auth/login.dart';
-import 'package:e_voting/Views/Widgets/textfield.dart';
-import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Widgets/textfield.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';

@@ -1,8 +1,8 @@
-import 'package:e_voting/Views/Auth/forgotPass.dart';
-import 'package:e_voting/Views/Auth/registerPage.dart';
-import 'package:e_voting/Views/Widgets/textfield.dart';
-import 'package:e_voting/Views/Widgets/appBar.dart';
-import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Screens/Auth/forgotPass.dart';
+import 'package:e_voting/Screens/Auth/registerPage.dart';
+import 'package:e_voting/Screens/Widgets/textfield.dart';
+import 'package:e_voting/Screens/Widgets/appBar.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

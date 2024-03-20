@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,12 +19,12 @@ class VoteLabel extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios, weight: 20),
           iconSize: 22,
           splashRadius: 10,
-          color: Color(0xff2AAA8A),
+          color: AppStyle.primaryColor,
         ),
         Text(
           voteName!,
           style: GoogleFonts.inter(
-              color: Colors.green,
+              color: AppStyle.primaryColor,
               fontSize: 18.sp,
               fontWeight: FontWeight.w500),
         ),

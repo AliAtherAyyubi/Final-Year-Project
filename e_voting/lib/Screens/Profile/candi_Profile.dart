@@ -1,9 +1,12 @@
-import 'package:e_voting/Views/Widgets/homepage/Voting/voteLabel.dart';
-import 'package:e_voting/Views/Widgets/homepage/tabBar.dart';
-import 'package:e_voting/Views/Widgets/myAvatar.dart';
-import 'package:e_voting/Views/Widgets/myButton.dart';
+import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/homepage/tabBar.dart';
+import 'package:e_voting/Screens/Widgets/myAvatar.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/utils/Appstyles.dart';
+import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -154,7 +157,48 @@ class _CandidateProfileState extends State<CandidateProfile>
 
                 // 2nd page //
                 Container(
-                  child: Text('contat'),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'SOCIAL NETWORKS',
+                        style: AppStyle.textStyle2.copyWith(fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: AppStyle.primaryColor,
+                            radius: 20,
+                            child: Icon(
+                              Icons.facebook,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: AppStyle.primaryColor,
+                            radius: 20,
+                            child: Icon(
+                              FontAwesomeIcons.instagram,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ]),
             ),
