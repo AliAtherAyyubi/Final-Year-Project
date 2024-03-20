@@ -3,6 +3,7 @@ import 'package:e_voting/Screens/Widgets/Voting/stepNo.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VoteStepper extends StatefulWidget {
   // VoteStepper({super.key});
@@ -30,7 +31,7 @@ class _VoteStepperState extends State<VoteStepper> {
           child: EasyStepper(
             activeStep: widget.currentStepNo,
             lineStyle: const LineStyle(
-                lineLength: 80,
+                lineLength: 60,
                 lineType: LineType.normal,
                 unreachedLineType: LineType.dashed,
                 defaultLineColor: Colors.grey,
@@ -39,7 +40,7 @@ class _VoteStepperState extends State<VoteStepper> {
             enableStepTapping: false,
             showLoadingAnimation: false,
             internalPadding: 10,
-            stepRadius: 20,
+            stepRadius: 15,
             showStepBorder: false,
             // lineDotRadius: 1.5,
             steps: [
@@ -53,7 +54,7 @@ class _VoteStepperState extends State<VoteStepper> {
                   customStep: VoteSteps(isStep: checkStep(1), stepNo: '2'),
                   customTitle: StepLabel(
                     isStep: checkStep(1),
-                    label: 'ID Validation',
+                    label: 'ID\n Validation',
                   )),
               EasyStep(
                   customStep: VoteSteps(isStep: checkStep(2), stepNo: '3'),
@@ -65,7 +66,7 @@ class _VoteStepperState extends State<VoteStepper> {
                   customStep: VoteSteps(isStep: checkStep(3), stepNo: '4'),
                   customTitle: StepLabel(
                     isStep: checkStep(3),
-                    label: 'Confirm Vote',
+                    label: 'Confirm\n Vote',
                   )),
             ],
             onStepReached: (index) =>

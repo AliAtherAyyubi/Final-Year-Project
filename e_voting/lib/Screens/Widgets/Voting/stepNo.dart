@@ -14,7 +14,7 @@ class VoteSteps extends StatelessWidget {
           stepNo,
           style: GoogleFonts.inter(
               color: isStep ? Colors.white : Colors.grey,
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.w500),
         ));
   }

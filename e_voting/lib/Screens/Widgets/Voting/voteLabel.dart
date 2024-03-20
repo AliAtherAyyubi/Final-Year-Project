@@ -24,7 +24,7 @@ class VoteLabel extends StatelessWidget {
         Text(
           voteName!,
           style: GoogleFonts.inter(
-              color: AppStyle.primaryColor,
+              color: AppStyle.textClr,
               fontSize: 18.sp,
               fontWeight: FontWeight.w500),
         ),
