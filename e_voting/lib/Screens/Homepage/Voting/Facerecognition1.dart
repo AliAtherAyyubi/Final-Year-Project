@@ -35,7 +35,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                 ],
               ),
               VoteStepper(
-                currentStepNo: 3,
+                currentStepNo: 2,
               ),
               Text(
                 "Facial Recognition",

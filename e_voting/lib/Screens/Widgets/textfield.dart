@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -61,13 +62,12 @@ class _AuthTextFieldState extends State<AuthTextField> {
             floatingLabelBehavior: FloatingLabelBehavior.never,
             contentPadding: EdgeInsets.all(15),
             prefixIcon: IconButton(
-              onPressed: () {},
-              icon: Icon(widget.icon),
-              iconSize: 20,
-              splashRadius: 20,
-              padding: EdgeInsets.only(right: 15, left: 15),
-              color: Color(0xff2AAA8A),
-            ),
+                onPressed: () {},
+                icon: Icon(widget.icon),
+                iconSize: 20,
+                splashRadius: 20,
+                padding: EdgeInsets.only(right: 15, left: 15),
+                color: AppStyle.primaryColor),
             suffixIcon: IconButton(
               onPressed: () {
                 setState(() {

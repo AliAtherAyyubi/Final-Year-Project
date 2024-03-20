@@ -18,6 +18,12 @@ class AppStyle {
 
   static Color textcolor = Color.fromARGB(255, 40, 40, 40);
 
+  static TextStyle headstyle = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
   static TextStyle textStyle1 = GoogleFonts.inter(
     fontSize: 40,
     color: primary,

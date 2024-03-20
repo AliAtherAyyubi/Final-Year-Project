@@ -3,6 +3,8 @@ import 'package:e_voting/Screens/Auth/registerPage.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/appBar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -22,12 +24,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: MyAppBar(
-          logoname: 'E-voting',
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(Applayout.getWidth(13.0)),
+                bottomRight: Radius.circular(Applayout.getWidth(13.0))),
+            gradient: AppStyle.Gradientcolor,
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Applayout.getWidth(50.0)),
+          child: Center(
+            child: Text(
+              "E-Voting",
+              style: AppStyle.headstyle,
+            ),
+          ),
         ),
       ),
+      // PreferredSize(
+      //   preferredSize: Size.fromHeight(50),
+      //   child: MyAppBar(
+      //     logoname: 'E-voting',
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -41,7 +62,7 @@ class LoginPage extends StatelessWidget {
                   style: GoogleFonts.poppins(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff2AAA8A)),
+                      color: AppStyle.primaryColor),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -131,7 +152,7 @@ class LoginPage extends StatelessWidget {
                     child: Text('Sign up',
                         style: GoogleFonts.poppins(
                             fontSize: 15,
-                            color: Color(0xff2AAA8A),
+                            color: AppStyle.primaryColor,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1)),
                   )
