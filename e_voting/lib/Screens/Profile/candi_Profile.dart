@@ -166,7 +166,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                       ),
                       Text(
                         'SOCIAL NETWORKS',
-                        style: AppStyle.textStyle2.copyWith(fontSize: 16),
+                        style: AppStyle.textStyle2.copyWith(fontSize: 16,color: Colors.black),
                       ),
                       const SizedBox(
                         height: 10,
@@ -192,10 +192,20 @@ class _CandidateProfileState extends State<CandidateProfile>
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                         ],
+                      ),
+                      Text(
+                        'CONTACT ME!',
+                        style: AppStyle.textStyle2.copyWith(fontSize: 16,color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: ,
                       )
                     ],
                   ),
