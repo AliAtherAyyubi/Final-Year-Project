@@ -3,6 +3,7 @@ import 'package:e_voting/Screens/Widgets/homepage/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
@@ -233,7 +234,7 @@ class _CandidateProfileState extends State<CandidateProfile>
               ]),
             ),
             SizedBox(
-              height: 10,
+              height: Applayout.getheight(50),
             ),
             MyButton(
               text: 'VOTE',

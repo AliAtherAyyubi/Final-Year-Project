@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -43,16 +44,19 @@ class MyButton extends StatelessWidget {
             //     context, MaterialPageRoute(builder: (context) => page));
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xff2AAA8A),
+            backgroundColor: AppStyle.primaryColor,
             elevation: 10,
-            shadowColor: Colors.green,
+            shadowColor: AppStyle.bluecolor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           child: Text(
             text,
             style: GoogleFonts.inter(
-                fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: 1),
+                fontSize: 17,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+                color: Colors.white),
           ),
         ));
   }

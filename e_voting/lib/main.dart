@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: CandidateProfile(),
+        home: LoginPage(),
       );
     });
   }
