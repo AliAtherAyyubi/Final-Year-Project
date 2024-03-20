@@ -9,7 +9,7 @@ class AuthTextField extends StatefulWidget {
   // final double fontSize;
   // final FontWeight fontWeight;
   // final double? letterSpacing;
-  final IconData icon;
+  final IconData? icon;
   IconData? hidebtn;
   final TextEditingController? controller;
   final FormFieldValidator? validator;
@@ -24,7 +24,7 @@ class AuthTextField extends StatefulWidget {
       // required this.fontWeight,
       // this.letterSpacing,
       this.hidebtn,
-      required this.icon});
+      this.icon});
 
   @override
   State<AuthTextField> createState() => _AuthTextFieldState();

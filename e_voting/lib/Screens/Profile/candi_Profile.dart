@@ -2,6 +2,7 @@ import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/Screens/Widgets/homepage/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +210,20 @@ class _CandidateProfileState extends State<CandidateProfile>
                       Container(
                         child: Form(
                           child: Column(
-                            children: [],
+                            children: [
+                              AuthTextField(
+                                keyboardType: TextInputType.name,
+                                obscureText: false,
+                                labelText: 'Name',
+                                icon: Icons.person,
+                              ),
+                              AuthTextField(
+                                keyboardType: TextInputType.name,
+                                obscureText: false,
+                                labelText: 'Number',
+                                icon: Icons.person,
+                              ),
+                            ],
                           ),
                         ),
                       )
