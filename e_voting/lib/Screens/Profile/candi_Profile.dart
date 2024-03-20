@@ -168,7 +168,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                         'SOCIAL NETWORKS',
                         style: AppStyle.textStyle2.copyWith(fontSize: 16),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -176,18 +176,18 @@ class _CandidateProfileState extends State<CandidateProfile>
                           CircleAvatar(
                             backgroundColor: AppStyle.primaryColor,
                             radius: 20,
-                            child: Icon(
+                            child: const Icon(
                               Icons.facebook,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           CircleAvatar(
                             backgroundColor: AppStyle.primaryColor,
                             radius: 20,
-                            child: Icon(
+                            child: const Icon(
                               FontAwesomeIcons.instagram,
                               color: Colors.white,
                             ),

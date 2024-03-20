@@ -23,7 +23,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
               voteName: 'Vote For Student Representatives',
             ),
             gap(Height: 50, Width: 20),
-            VoteStepper(currentStepNo: 2)
+            VoteStepper(currentStepNo: 2),
           ],
         ),
       ),
