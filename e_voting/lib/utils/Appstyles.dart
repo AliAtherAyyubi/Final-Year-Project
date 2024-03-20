@@ -47,4 +47,23 @@ class AppStyle {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
+
+  static TextStyle textstyle2B = GoogleFonts.poppins(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  static TextStyle textstyle2 = GoogleFonts.poppins(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Colors.black,
+  );
+
+  static TextStyle mainbuttonstyle = GoogleFonts.poppins(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1,
+    color: Colors.white,
+  );
 }
