@@ -4,11 +4,8 @@ import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Appstyles.dart';
-import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -19,6 +16,12 @@ class CandidateProfile extends StatefulWidget {
 
 class _CandidateProfileState extends State<CandidateProfile>
     with SingleTickerProviderStateMixin {
+  List<IconData> socialIcons = [
+    FontAwesomeIcons.facebookF,
+    FontAwesomeIcons.instagram,
+    FontAwesomeIcons.twitter,
+    FontAwesomeIcons.linkedinIn
+  ];
   // CandidateProfile({super.key});
   late TabController _tabController;
 
@@ -103,9 +106,11 @@ class _CandidateProfileState extends State<CandidateProfile>
                 controller: _tabController,
               ),
             ),
+
+            // Tabs Content //
             Container(
               width: double.infinity,
-              height: 250,
+              height: 350,
               child: TabBarView(controller: _tabController, children: [
                 SingleChildScrollView(
                   child: Container(
@@ -159,13 +164,10 @@ class _CandidateProfileState extends State<CandidateProfile>
                 // 2nd page //
                 SingleChildScrollView(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 10,
-                        ),
                         Text(
                           'SOCIAL NETWORKS',
                           style: AppStyle.textStyle2
@@ -174,34 +176,30 @@ class _CandidateProfileState extends State<CandidateProfile>
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: AppStyle.primaryColor,
-                              radius: 20,
-                              child: const Icon(
-                                Icons.facebook,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: AppStyle.primaryColor,
-                              radius: 20,
-                              child: const Icon(
-                                FontAwesomeIcons.instagram,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
+                        Container(
+                          height: 50,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: socialIcons.length,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: CircleAvatar(
+                                    backgroundColor: AppStyle.primaryColor,
+                                    radius: 30,
+                                    child: Icon(
+                                      socialIcons[index],
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                );
+                              }),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         Text(
                           'CONTACT ME!',
