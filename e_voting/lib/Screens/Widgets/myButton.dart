@@ -10,7 +10,7 @@ class MyButton extends StatelessWidget {
   double? width = 100.w;
   final double? height;
   final double? elevation;
-  final Color? backClr;
+  Color? backClr;
   final Color? textClr;
   // Widget? page = Container();
   // void trigger(){}
@@ -44,8 +44,8 @@ class MyButton extends StatelessWidget {
             //     context, MaterialPageRoute(builder: (context) => page));
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppStyle.primaryColor,
-            elevation: 10,
+            backgroundColor: backClr,
+            elevation: elevation,
             shadowColor: AppStyle.bluecolor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -56,7 +56,7 @@ class MyButton extends StatelessWidget {
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1,
-                color: Colors.white),
+                color: textClr),
           ),
         ));
   }

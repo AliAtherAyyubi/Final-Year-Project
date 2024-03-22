@@ -1,12 +1,13 @@
+import 'package:e_voting/Screens/Profile/about.dart';
+import 'package:e_voting/Screens/Profile/contact.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
-import 'package:e_voting/Screens/Widgets/homepage/tabBar.dart';
+import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
-import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -17,12 +18,6 @@ class CandidateProfile extends StatefulWidget {
 
 class _CandidateProfileState extends State<CandidateProfile>
     with SingleTickerProviderStateMixin {
-  List<IconData> socialIcons = [
-    FontAwesomeIcons.facebookF,
-    FontAwesomeIcons.instagram,
-    FontAwesomeIcons.twitter,
-    FontAwesomeIcons.linkedinIn
-  ];
   // CandidateProfile({super.key});
   late TabController _tabController;
 
@@ -54,20 +49,17 @@ class _CandidateProfileState extends State<CandidateProfile>
               children: [
                 //      Clipper ///
                 ClipPath(
+                  clipBehavior: Clip.antiAlias,
                   clipper: BottomOvalArcClipper(),
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 172, 246, 212),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 10, color: Colors.black)
-                        ]),
-                    height: 280,
+                    color: Colors.greenAccent[100],
+                    height: 300,
                     width: double.infinity,
                   ),
                 ),
 
                 Positioned(
-                  top: 30,
+                  top: 25,
                   left: 20,
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
@@ -75,18 +67,18 @@ class _CandidateProfileState extends State<CandidateProfile>
                 ),
                 //// Profile image ///
                 Container(
-                  margin: EdgeInsets.only(top: 100),
+                  margin: EdgeInsets.only(top: 80),
                   child: Center(
                       child: MyAvatar(
-                    radius: 80,
+                    radius: 100,
                     image: 'assets/images/profile.jpg',
                   )),
                 )
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             Center(
               child: Text(
                 'Ana Pilar Martinez',
@@ -97,155 +89,33 @@ class _CandidateProfileState extends State<CandidateProfile>
               ),
             ),
 
-            //  Tabs /////
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              margin: EdgeInsets.only(bottom: 10),
-              child: MyTabBar(
-                text1: 'ABOUT ',
-                text2: 'CONTACT',
-                controller: _tabController,
-              ),
+            //  Tab container /////
+            MyTabBar(
+              text1: 'ABOUT ',
+              text2: 'CONTACT',
+              controller: _tabController,
             ),
 
             // Tabs Content //
             Container(
               width: double.infinity,
-              height: 350,
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              height: 300,
               child: TabBarView(controller: _tabController, children: [
-                SingleChildScrollView(
-                  child: Container(
-                    // color: Colors.amber,
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'SHORT BIOGRAPHY',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'My name is Ana Pilar, but you can just call me Ani. I am 26 years old and I\'m currently living in Belgrano, CABA. This is my third year studying Architecture in the University UIX. Also, I am working as a part-time teacig assistant.',
-                          style: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          'ELECTION MANIFESTO',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'I combine experience with passion. I am incredibly commited to advocating for you. My focus: better mental health resources, fairer assessments, and affordable on-campus living. Open communication, strong advocacy - that\'s my promise. Let\'s make our university thrive!',
-                          style: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
+                // !sst Page //
+                AboutContent(),
                 // 2nd page //
-                SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'SOCIAL NETWORKS',
-                          style: AppStyle.textStyle2
-                              .copyWith(fontSize: 16, color: Colors.black),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 50,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: socialIcons.length,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 10),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppStyle.primaryColor,
-                                    radius: 30,
-                                    child: Icon(
-                                      socialIcons[index],
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          'CONTACT ME!',
-                          style: AppStyle.textStyle2
-                              .copyWith(fontSize: 16, color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: Form(
-                            child: Column(
-                              children: [
-                                AuthTextField(
-                                  keyboardType: TextInputType.name,
-                                  obscureText: false,
-                                  labelText: 'Name',
-                                  icon: Icons.person,
-                                ),
-                                AuthTextField(
-                                  keyboardType: TextInputType.name,
-                                  obscureText: false,
-                                  labelText: 'Number',
-                                  icon: Icons.phone,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                ContactPage()
               ]),
             ),
             SizedBox(
-              height: Applayout.getheight(50),
+              height: 20,
             ),
             MyButton(
               text: 'VOTE',
               width: 90.w,
-              height: 60,
+              height: 50,
+              backClr: AppStyle.primaryColor,
             ),
             SizedBox(
               height: 20,
@@ -262,16 +132,16 @@ class BottomOvalArcClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     var x = size.width;
     var y = size.height;
-    var controlPoint1 = Offset(50, size.height - 100);
+    var controlPoint1 = Offset(50, size.height - 50);
     var controlPoint2 = Offset(size.width - 50, size.height);
     var endPoint = Offset(x, y);
 
     Path path = Path();
     path.lineTo(0, 0);
     // path.lineTo(0, y);
-    path.lineTo(0, size.height - 150);
-    path.cubicTo(controlPoint1.dx, controlPoint1.dy, controlPoint2.dx,
-        controlPoint2.dy, endPoint.dx, endPoint.dy);
+    path.lineTo(0, size.height - 130);
+    path.cubicTo(controlPoint1.dx + 60, controlPoint1.dy, controlPoint2.dx,
+        controlPoint2.dy, endPoint.dx + 50, endPoint.dy - 190);
     // path.lineTo(x, y + 150);
     path.lineTo(x, 0);
 

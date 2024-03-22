@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Color primary = Color(0xFF36bb75);
+const Color primary = Color(0xFF36bb75);
 
 class AppStyle {
   static Color primaryColor = primary;
-  static Color textClr = const Color.fromARGB(255, 47, 168, 51);
+  static Color textClr = Color(0xff00A36C);
   static Color bluecolor = Color(0xFF29a0b0);
   static const Color orangeColor = Color(0xfffb9736);
   static const Color darkblueColor = Color(0xff25b9ff);
@@ -19,7 +19,7 @@ class AppStyle {
 
   static Color textcolor = Color.fromARGB(255, 40, 40, 40);
 
-  static TextStyle headstyle = GoogleFonts.poppins(
+  static TextStyle headstyle = GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white,
@@ -55,19 +55,19 @@ class AppStyle {
     fontWeight: FontWeight.normal,
   );
 
-  static TextStyle textstyle2B = GoogleFonts.poppins(
+  static TextStyle textstyle2B = GoogleFonts.inter(
     fontSize: 15,
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
 
-  static TextStyle textstyle2 = GoogleFonts.poppins(
+  static TextStyle textstyle2 = GoogleFonts.inter(
     fontSize: 15,
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
 
-  static TextStyle mainbuttonstyle = GoogleFonts.poppins(
+  static TextStyle mainbuttonstyle = GoogleFonts.inter(
     fontSize: 17,
     fontWeight: FontWeight.w600,
     letterSpacing: 1,

@@ -1,5 +1,4 @@
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
-import 'package:e_voting/Screens/Homepage/Voting/onGoing.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,6 @@ class VotingPage extends StatefulWidget {
 }
 
 class _VotingPageState extends State<VotingPage> {
-  OnGoingElectionPage vote = OnGoingElectionPage();
-
   String voteName = 'Vote for Student Representatives';
 
   List<String> candidateName = [

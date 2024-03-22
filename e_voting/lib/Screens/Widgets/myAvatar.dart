@@ -13,7 +13,7 @@ class MyAvatar extends StatelessWidget {
         BoxShadow(color: Colors.green, blurRadius: 2, spreadRadius: 2)
       ]),
       child: GFAvatar(
-        radius: 90,
+        radius: radius,
         backgroundImage: AssetImage('$image'),
       ),
     );

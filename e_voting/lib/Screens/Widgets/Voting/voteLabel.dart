@@ -16,7 +16,9 @@ class VoteLabel extends StatelessWidget {
           onPressed: () {
             // Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios, weight: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+          ),
           iconSize: 22,
           splashRadius: 10,
           color: AppStyle.primaryColor,

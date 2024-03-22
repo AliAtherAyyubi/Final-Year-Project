@@ -1,9 +1,6 @@
-import 'package:e_voting/Screens/Widgets/Voting/stepLabel.dart';
-import 'package:e_voting/Screens/Widgets/Voting/stepNo.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VoteStepper extends StatefulWidget {
   // VoteStepper({super.key});
@@ -26,7 +23,7 @@ class _VoteStepperState extends State<VoteStepper> {
       children: [
         //            Steppar /////////
         Container(
-          margin: EdgeInsets.only(top: 10),
+          // margin: EdgeInsets.only(top: 10),
           // height: 00,
           child: EasyStepper(
             activeStep: widget.currentStepNo,
@@ -74,15 +71,52 @@ class _VoteStepperState extends State<VoteStepper> {
           ),
         ),
 
-        ElevatedButton(
-            onPressed: () {
-              setState(() {
-                widget.currentStepNo++;
-                if (widget.currentStepNo >= 4) widget.currentStepNo = 0;
-              });
-            },
-            child: Text('next'))
+        // ElevatedButton(
+        //     onPressed: () {
+        //       setState(() {
+        //         widget.currentStepNo++;
+        //         if (widget.currentStepNo >= 4) widget.currentStepNo = 0;
+        //       });
+        //     },
+        //     child: Text('next'))
       ],
     );
+  }
+}
+
+class StepLabel extends StatelessWidget {
+  final String label;
+  final bool isStep;
+
+  StepLabel({required this.label, required this.isStep});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: GoogleFonts.inter(
+          color: isStep ? Colors.black : Colors.grey,
+          fontSize: 13,
+          fontWeight: FontWeight.w700),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class VoteSteps extends StatelessWidget {
+  final bool isStep;
+  final String stepNo;
+
+  VoteSteps({required this.isStep, required this.stepNo});
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+        backgroundColor: isStep ? Color(0xff2AAA8A) : Colors.green.shade100,
+        child: Text(
+          stepNo,
+          style: GoogleFonts.inter(
+              color: isStep ? Colors.white : Colors.grey,
+              fontSize: 15,
+              fontWeight: FontWeight.w500),
+        ));
   }
 }

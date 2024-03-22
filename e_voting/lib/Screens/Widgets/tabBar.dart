@@ -12,14 +12,15 @@ class MyTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
-        // tabAlignment: TabAlignment.center,
         controller: controller,
+        enableFeedback: true,
+        tabAlignment: TabAlignment.center,
         indicatorSize: TabBarIndicatorSize.tab,
         // indicatorWeight: 10,
         indicatorPadding: EdgeInsets.only(bottom: 2),
         isScrollable: true,
         labelColor: Color(0xff2AAA8A),
-        unselectedLabelColor: Colors.black45,
+        unselectedLabelColor: Colors.grey,
         indicator: UnderlineTabIndicator(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(width: 7, color: Color(0xff2AAA8A))),
@@ -29,7 +30,7 @@ class MyTabBar extends StatelessWidget {
               text1,
               style: GoogleFonts.inter(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.center,
             ),
@@ -39,7 +40,7 @@ class MyTabBar extends StatelessWidget {
               text2,
               style: GoogleFonts.inter(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
               ),
             ),
           )
