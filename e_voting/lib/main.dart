@@ -1,5 +1,8 @@
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Screens/Voting/idCheck.dart';
+import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
