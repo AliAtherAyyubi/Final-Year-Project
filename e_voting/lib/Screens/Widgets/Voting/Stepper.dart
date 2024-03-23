@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_stepper/easy_stepper.dart';
@@ -29,7 +30,7 @@ class _VoteStepperState extends State<VoteStepper> {
           child: EasyStepper(
             activeStep: widget.currentStepNo,
             lineStyle: const LineStyle(
-                lineLength: 60,
+                lineLength: 52,
                 lineType: LineType.normal,
                 unreachedLineType: LineType.dashed,
                 defaultLineColor: Colors.grey,
@@ -37,8 +38,8 @@ class _VoteStepperState extends State<VoteStepper> {
                 lineThickness: 3),
             enableStepTapping: false,
             showLoadingAnimation: false,
-            internalPadding: 10,
-            stepRadius: 15,
+            internalPadding: Applayout.getWidth(7),
+            stepRadius: Applayout.getWidth(15),
             showStepBorder: false,
             // lineDotRadius: 1.5,
             steps: [
@@ -96,7 +97,7 @@ class StepLabel extends StatelessWidget {
       label,
       style: GoogleFonts.inter(
           color: isStep ? Colors.black : Colors.black54,
-          fontSize: 13,
+          fontSize: 11,
           fontWeight: FontWeight.w700),
       textAlign: TextAlign.center,
     );

@@ -22,35 +22,35 @@ class FaceRecognition1State extends State<FaceRecognition1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: Applayout.getWidth(5),
+            vertical: Applayout.getheight(40)),
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 30,
-              ),
               VoteLabel(
                 voteName: voteName,
+              ),
+              gap(
+                Height: 10,
               ),
               VoteStepper(
                 currentStepNo: 2,
               ),
-              SizedBox(
-                height: 20,
+              gap(
+                Height: Applayout.getheight(25),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   "Facial Recognition",
-                  style: AppStyle.textStyle2,
+                  style: AppStyle.textStyleB4.copyWith(fontSize: 20),
                 ),
               ),
-              SizedBox(
-                height: 30,
+              gap(
+                Height: Applayout.getheight(30),
               ),
               Center(
                 child: Container(
@@ -68,10 +68,10 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                             border: BorderDirectional(
                           top: BorderSide(
                               width: Applayout.getWidth(3),
-                              color: AppStyle.primaryColor),
+                              color: Colors.black),
                           bottom: BorderSide(
                               width: Applayout.getWidth(3),
-                              color: AppStyle.primaryColor),
+                              color: Colors.black),
                         )),
                         child: Image(
                             image: AssetImage("assets/images/women1.jpg")),
@@ -94,7 +94,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                   ),
                 ),
               ),
-              gap(Height: Applayout.getheight(14), Width: 0),
+              gap(Height: Applayout.getheight(15), Width: 0),
               Center(
                 child: RichText(
                   text: TextSpan(
@@ -109,7 +109,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                   ),
                 ),
               ),
-              gap(Height: Applayout.getheight(40), Width: 0),
+              gap(Height: Applayout.getheight(70), Width: 0),
               Center(
                   child: MyButton(
                 text: "Continue",
