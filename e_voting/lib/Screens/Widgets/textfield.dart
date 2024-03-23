@@ -66,6 +66,12 @@ class _AuthTextFieldState extends State<AuthTextField> {
             fillColor: Colors.grey[200],
             floatingLabelBehavior: FloatingLabelBehavior.never,
             contentPadding: EdgeInsets.all(15),
+            // alignLabelWithHint: true,
+            hintStyle: const TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w200),
+            labelStyle: const TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w200),
+            counterText: '',
             prefixIcon: IconButton(
                 onPressed: () {},
                 icon: Icon(widget.icon),

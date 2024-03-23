@@ -12,6 +12,7 @@ class MyButton extends StatelessWidget {
   final double? elevation;
   Color? backClr;
   final Color? textClr;
+  Function? onPress;
   // Widget? page = Container();
   // void trigger(){}
 
@@ -20,8 +21,13 @@ class MyButton extends StatelessWidget {
       this.width,
       this.height = 50,
       this.elevation = 10,
-      this.backClr,
-      this.textClr});
+      this.backClr = AppStyle.primaryColor,
+      this.textClr,
+      this.onPress});
+
+  void buttonFunction() {
+    onPress!();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +46,7 @@ class MyButton extends StatelessWidget {
         //     ]),
         child: ElevatedButton(
           onPressed: () {
-            // Navigator.push(
-            //     context, MaterialPageRoute(builder: (context) => page));
+            onPress!();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: backClr,

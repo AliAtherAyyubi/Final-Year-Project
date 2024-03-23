@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,17 +14,17 @@ class MyTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBar(
         controller: controller,
-        enableFeedback: true,
-        tabAlignment: TabAlignment.center,
+        // enableFeedback: true,
+        // tabAlignment: TabAlignment.center,
         indicatorSize: TabBarIndicatorSize.tab,
         // indicatorWeight: 10,
         indicatorPadding: EdgeInsets.only(bottom: 2),
         isScrollable: true,
-        labelColor: Color(0xff2AAA8A),
+        labelColor: AppStyle.primaryColor,
         unselectedLabelColor: Colors.grey,
         indicator: UnderlineTabIndicator(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(width: 7, color: Color(0xff2AAA8A))),
+            borderSide: BorderSide(width: 7, color: AppStyle.primaryColor)),
         tabs: [
           Tab(
             child: Text(

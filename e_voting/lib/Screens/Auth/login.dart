@@ -1,5 +1,6 @@
 import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/appBar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -33,22 +34,12 @@ class LoginPage extends StatelessWidget {
             gradient: AppStyle.Gradientcolor,
           ),
         ),
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Applayout.getWidth(50.0)),
-          child: Center(
-            child: Text(
-              "E-Voting",
-              style: AppStyle.headstyle,
-            ),
-          ),
+        title: Text(
+          "E-Voting",
+          style: AppStyle.headstyle,
         ),
+        centerTitle: true,
       ),
-      // PreferredSize(
-      //   preferredSize: Size.fromHeight(50),
-      //   child: MyAppBar(
-      //     logoname: 'E-voting',
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -104,6 +95,12 @@ class LoginPage extends StatelessWidget {
                             child: MyButton(
                               text: 'Login',
                               width: 100.w,
+                              onPress: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard()));
+                              },
                             )),
                       ],
                     )),
@@ -119,8 +116,9 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPasswordPage()));
+                          PageTransition(
+                              child: ForgotPasswordPage(),
+                              type: PageTransitionType.fade));
                     },
                     child: Text(
                       'Forgot Password?',
@@ -143,11 +141,11 @@ class LoginPage extends StatelessWidget {
                       style: GoogleFonts.poppins(fontSize: 15)),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           PageTransition(
-                              type: PageTransitionType.fade,
-                              child: RegisterPage()));
+                              child: RegisterPage(),
+                              type: PageTransitionType.rightToLeft));
                     },
                     child: Text('Sign up',
                         style: GoogleFonts.poppins(

@@ -7,6 +7,7 @@ import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_voting/utils/Appstyles.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FaceRecognition1 extends StatefulWidget {
   const FaceRecognition1({super.key});
@@ -16,32 +17,41 @@ class FaceRecognition1 extends StatefulWidget {
 }
 
 class FaceRecognition1State extends State<FaceRecognition1> {
+  String voteName = 'Vote for Student Representatives';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 13, vertical: 23),
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  VoteLabel(
-                    voteName: "Vote for student representative",
-                  ),
-                ],
+              SizedBox(
+                height: 30,
+              ),
+              VoteLabel(
+                voteName: voteName,
               ),
               VoteStepper(
                 currentStepNo: 2,
               ),
-              Text(
-                "Facial Recognition",
-                style: AppStyle.textStyle1,
+              SizedBox(
+                height: 20,
               ),
-              gap(Height: Applayout.getheight(15), Width: 0),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  "Facial Recognition",
+                  style: AppStyle.textStyle2,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Center(
                 child: Container(
                   //color: Colors.red,
@@ -103,7 +113,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
               Center(
                   child: MyButton(
                 text: "Continue",
-                width: Applayout.getWidth(300),
+                width: 100.w,
               )),
             ],
           ),

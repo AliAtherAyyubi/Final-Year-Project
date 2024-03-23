@@ -14,13 +14,13 @@ class VoteLabel extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            // Navigator.pop(context);
+            Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
           ),
-          iconSize: 22,
-          splashRadius: 10,
+          iconSize: 25,
+          splashRadius: 20,
           color: AppStyle.primaryColor,
         ),
         Text(

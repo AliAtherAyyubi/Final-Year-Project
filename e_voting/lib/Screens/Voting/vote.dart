@@ -1,6 +1,7 @@
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -27,41 +28,46 @@ class _VotingPageState extends State<VotingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            children: [
-              VoteLabel(
-                voteName: voteName,
-              ),
-              // My Stepper //
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            VoteLabel(
+              voteName: voteName,
+            ),
+            // My Stepper //
 
-              VoteStepper(
-                currentStepNo: 0,
-              ),
+            VoteStepper(
+              currentStepNo: 0,
+            ),
 
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Choose your preferred candidate',
-                style: GoogleFonts.inter(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(
-                height: 20,
-              ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Choose your preferred candidate',
+              style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 20,
+            ),
 
-              /// Candidate Card Section ///
+            /// Candidate Card Section ///
 
-              Container(
+            Expanded(
+              child: Container(
                 width: 90.w,
-                height: 800,
+                // height: 400,
                 child: ListView.builder(
                     itemCount: candidateName.length,
                     shrinkWrap: true,
@@ -74,12 +80,12 @@ class _VotingPageState extends State<VotingPage> {
                               'I\'ll let your voice be heard and work towards the fulfillment of your needs.');
                     }),
               ),
+            ),
 
-              // SizedBox(
-              //   height: 30,
-              // )
-            ],
-          ),
+            // SizedBox(
+            //   height: 30,
+            // )
+          ],
         ),
       ),
     );

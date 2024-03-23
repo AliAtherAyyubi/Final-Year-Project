@@ -1,6 +1,8 @@
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -40,11 +42,11 @@ class _RegisterPageState extends State<RegisterPage> {
             icon: Icon(Icons.arrow_back_ios),
             color: Colors.black,
           ),
-          title: Text(
-            'Create Account',
-            style: GoogleFonts.poppins(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
-          ),
+          title: Text('Create Account',
+              style: AppStyle.textStyle1.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black)),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -56,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 20),
+                margin: EdgeInsets.only(top: 30),
                 width: 20.w,
                 child: Image.asset('assets/images/logo.png'),
               ),
@@ -106,6 +108,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: MyButton(
                               text: 'Register',
                               width: 100.w,
+                              onPress: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard()));
+                              },
                             )),
                       ],
                     )),

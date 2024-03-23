@@ -1,6 +1,9 @@
+import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateCard extends StatelessWidget {
@@ -16,7 +19,7 @@ class CandidateCard extends StatelessWidget {
     return //// Candidate Card Section ///
         ///
         Container(
-      margin: EdgeInsets.only(bottom: 40),
+      margin: EdgeInsets.only(bottom: 30),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
@@ -41,7 +44,9 @@ class CandidateCard extends StatelessWidget {
               BoxShadow(color: Colors.green, blurRadius: 2, spreadRadius: 2)
             ]),
             child: const GFAvatar(
-              backgroundImage: AssetImage('assets/images/profile.jpg'),
+              backgroundImage: AssetImage(
+                'assets/images/profile.jpg',
+              ),
               radius: 50,
             ),
           ),
@@ -74,8 +79,11 @@ class CandidateCard extends StatelessWidget {
               width: 40.w,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (context) => page));
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: CandidateProfile(),
+                          type: PageTransitionType.fade));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -102,8 +110,11 @@ class CandidateCard extends StatelessWidget {
               width: 30.w,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (context) => page));
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: idValidationPage(),
+                          type: PageTransitionType.fade));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff2AAA8A),

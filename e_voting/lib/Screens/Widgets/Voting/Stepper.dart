@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +33,7 @@ class _VoteStepperState extends State<VoteStepper> {
                 lineType: LineType.normal,
                 unreachedLineType: LineType.dashed,
                 defaultLineColor: Colors.grey,
-                finishedLineColor: Colors.green,
+                finishedLineColor: AppStyle.primaryColor,
                 lineThickness: 3),
             enableStepTapping: false,
             showLoadingAnimation: false,
@@ -94,7 +95,7 @@ class StepLabel extends StatelessWidget {
     return Text(
       label,
       style: GoogleFonts.inter(
-          color: isStep ? Colors.black : Colors.grey,
+          color: isStep ? Colors.black : Colors.black54,
           fontSize: 13,
           fontWeight: FontWeight.w700),
       textAlign: TextAlign.center,
@@ -110,7 +111,7 @@ class VoteSteps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        backgroundColor: isStep ? Color(0xff2AAA8A) : Colors.green.shade100,
+        backgroundColor: isStep ? AppStyle.primaryColor : Colors.green.shade100,
         child: Text(
           stepNo,
           style: GoogleFonts.inter(

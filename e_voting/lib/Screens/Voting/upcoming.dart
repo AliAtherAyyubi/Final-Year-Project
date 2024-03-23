@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -23,7 +22,6 @@ class _UpcomingElectionState extends State<UpcomingElection> {
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(10),
         margin: EdgeInsets.only(top: 20),
         child: Column(
           children: [
