@@ -22,7 +22,7 @@ class MyButton extends StatelessWidget {
       this.height = 50,
       this.elevation = 10,
       this.backClr = AppStyle.primaryColor,
-      this.textClr,
+      this.textClr = Colors.white,
       this.onPress});
 
   void buttonFunction() {

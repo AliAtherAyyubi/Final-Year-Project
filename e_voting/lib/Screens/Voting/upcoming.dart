@@ -21,16 +21,14 @@ class _UpcomingElectionState extends State<UpcomingElection> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        //color: Colors.red,
+    return ListView(children: [
+      Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: Applayout.getheight(20)),
         child: Column(
           children: [
             //Calendar ////>>
             Container(
-              //  color: Colors.red,
               padding: EdgeInsets.symmetric(horizontal: 10),
               //width: 79.w,
               width: Applayout.getWidth(300),
@@ -96,13 +94,15 @@ class _UpcomingElectionState extends State<UpcomingElection> {
             ),
             //        2nd Section     //
             Container(
-                width: 75.w,
-                height: 100,
+                // width: 75.w,
+                width: Applayout.getWidth(300),
+                height: Applayout.getheight(150),
                 // padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     border: Border(
-                        left: BorderSide(color: Color(0xff2AAA8A), width: 15)),
+                        left: BorderSide(
+                            color: AppStyle.primaryColor, width: 15)),
                     boxShadow: [
                       BoxShadow(
                           color: Colors.grey,
@@ -133,8 +133,8 @@ class _UpcomingElectionState extends State<UpcomingElection> {
                       offset: Offset(5, 0),
                       itemBuilder: (context) {
                         return [
-                          PopupMenuItem(child: Text('item')),
-                          PopupMenuItem(child: Text('item')),
+                          PopupMenuItem(child: Text('item1')),
+                          PopupMenuItem(child: Text('item2')),
                         ];
                       }),
                 )),
@@ -145,6 +145,6 @@ class _UpcomingElectionState extends State<UpcomingElection> {
           ],
         ),
       ),
-    );
+    ]);
   }
 }

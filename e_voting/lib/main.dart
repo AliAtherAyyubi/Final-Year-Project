@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
-        home: Dashboard(),
+        home: LoginPage(),
       );
     });
   }
