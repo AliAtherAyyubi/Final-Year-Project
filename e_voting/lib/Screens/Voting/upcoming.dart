@@ -1,3 +1,5 @@
+import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -21,22 +23,25 @@ class _UpcomingElectionState extends State<UpcomingElection> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        //color: Colors.red,
         width: double.infinity,
-        margin: EdgeInsets.only(top: 20),
+        margin: EdgeInsets.only(top: Applayout.getheight(20)),
         child: Column(
           children: [
             //Calendar ////>>
             Container(
+              //  color: Colors.red,
               padding: EdgeInsets.symmetric(horizontal: 10),
-              width: 75.w,
+              //width: 79.w,
+              width: Applayout.getWidth(300),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(23),
                   boxShadow: const [
                     BoxShadow(
                         color: Colors.grey,
-                        blurRadius: 10,
-                        offset: Offset(0, 5))
+                        blurRadius: 12,
+                        offset: Offset(0, 7))
                   ]),
               child: TableCalendar(
                 firstDay: DateTime.utc(2024, 1, 16),
@@ -83,7 +88,7 @@ class _UpcomingElectionState extends State<UpcomingElection> {
                         shape: BoxShape.circle),
                     isTodayHighlighted: true,
                     todayDecoration: BoxDecoration(
-                        color: Color(0xff2AAA8A), shape: BoxShape.circle)),
+                        color: AppStyle.primaryColor, shape: BoxShape.circle)),
               ),
             ),
             SizedBox(

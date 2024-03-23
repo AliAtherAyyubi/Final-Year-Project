@@ -3,7 +3,9 @@ import 'package:e_voting/Screens/Voting/upcoming.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
+import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,9 +42,9 @@ class _DashboardState extends State<Dashboard>
           child: AppBar(
             actions: [
               Container(
-                margin: EdgeInsets.all(5),
-                height: 60,
-                width: 60,
+                margin: EdgeInsets.all(Applayout.getWidth(5)),
+                height: Applayout.getheight(62),
+                width: Applayout.getWidth(60),
                 decoration: BoxDecoration(
                     color: AppStyle.primaryColor,
                     // borderRadius: BorderRadius.circular(50),
@@ -82,19 +84,17 @@ class _DashboardState extends State<Dashboard>
           child: Column(
             children: [
               SizedBox(
-                height: 20,
+                height: Applayout.getheight(20),
               ),
               //    Tab s//
               Container(
-                height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                margin: EdgeInsets.only(bottom: 10),
-                child: Center(
-                  child: MyTabBar(
-                    text1: 'ONGOING ELECTIONS',
-                    text2: 'UPCOMING ELECTIONS',
-                    controller: _tabController,
-                  ),
+                height: Applayout.getheight(45),
+                padding: EdgeInsets.symmetric(horizontal: 1),
+                margin: EdgeInsets.only(bottom: 12),
+                child: MyTabBar(
+                  text1: 'ONGOING ELECTIONS',
+                  text2: 'UPCOMING ELECTIONS',
+                  controller: _tabController,
                 ),
               ),
               Container(
@@ -110,10 +110,14 @@ class _DashboardState extends State<Dashboard>
                   ],
                 ),
               ),
+              gap(
+                Height: Applayout.getheight(4),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: MyButton(
                   text: 'VOTE NOW',
+                  textClr: Colors.white,
                   width: 90.w,
                   backClr: AppStyle.primaryColor,
                   onPress: () {

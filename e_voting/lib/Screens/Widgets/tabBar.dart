@@ -23,14 +23,14 @@ class MyTabBar extends StatelessWidget {
         labelColor: AppStyle.primaryColor,
         unselectedLabelColor: Colors.grey,
         indicator: UnderlineTabIndicator(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(13),
             borderSide: BorderSide(width: 7, color: AppStyle.primaryColor)),
         tabs: [
           Tab(
             child: Text(
               text1,
               style: GoogleFonts.inter(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ class MyTabBar extends StatelessWidget {
             child: Text(
               text2,
               style: GoogleFonts.inter(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w700,
               ),
             ),
