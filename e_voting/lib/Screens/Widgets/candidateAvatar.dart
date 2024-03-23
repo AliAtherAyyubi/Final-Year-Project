@@ -29,7 +29,7 @@ class MyProfileAvatar extends StatelessWidget {
             child: Text(
               name!,
               style: GoogleFonts.inter(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center,
