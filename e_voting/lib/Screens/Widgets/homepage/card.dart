@@ -31,7 +31,7 @@ class VoteCard extends StatelessWidget {
                 color: Colors.grey.shade500,
                 offset: Offset(1, 8))
           ],
-          gradient: AppStyle.Gradientcolor,
+          gradient: AppStyle.Gradientcolor1,
           // gradient: const LinearGradient(
           //     begin: Alignment.topCenter,
           //     end: Alignment.bottomCenter,
