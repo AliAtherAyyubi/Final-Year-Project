@@ -12,6 +12,8 @@ class VoteLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
           onPressed: () {
@@ -21,7 +23,7 @@ class VoteLabel extends StatelessWidget {
             Icons.arrow_back_ios,
           ),
           iconSize: 25,
-          splashRadius: 25,
+          // splashRadius: 25,
           color: AppStyle.primaryColor,
         ),
         Text(
