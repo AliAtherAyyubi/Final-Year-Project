@@ -37,7 +37,7 @@ class AppStyle {
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle textStyle3 = GoogleFonts.inter(
+  static TextStyle textStyle3 = GoogleFonts.poppins(
       fontSize: 21, color: Colors.black, fontWeight: FontWeight.bold);
 
   static TextStyle headlinestyle3 = GoogleFonts.inter(
