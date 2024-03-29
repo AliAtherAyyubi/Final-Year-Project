@@ -18,25 +18,22 @@ class VoteCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             horizontal: Applayout.getWidth(15),
             vertical: Applayout.getheight(20)),
-        padding: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(5),
-            vertical: Applayout.getheight(20)),
-        width: 81.w,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        width: 75.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Applayout.getWidth(25)),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 12,
-                color: Colors.grey.shade500,
-                offset: Offset(1, 8))
-          ],
-          gradient: AppStyle.Gradientcolor,
-          // gradient: const LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])
-        ),
+            borderRadius: BorderRadius.circular(Applayout.getWidth(25)),
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 12,
+                  color: Colors.grey.shade500,
+                  offset: Offset(1, 8))
+            ],
+            // gradient: AppStyle.Gradientcolor,
+            gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])),
         child: Column(
           children: [
             Text(

@@ -21,6 +21,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
+  bool voted = false;
   late TabController? _tabController;
   @override
   void initState() {
@@ -104,7 +105,8 @@ class _DashboardState extends State<Dashboard>
                   controller: _tabController,
                   children: [
                     /// Tab 1 //
-                    OnGoingElectionPage(),
+                    voted ? VoteCompletePage() : OnGoingElectionPage(),
+
                     //    Tab No.2 ///
                     UpcomingElection(),
                   ],
@@ -116,7 +118,7 @@ class _DashboardState extends State<Dashboard>
               Align(
                 alignment: Alignment.bottomCenter,
                 child: MyButton(
-                  text: 'VOTE NOW',
+                  text: voted ? 'SEE UPCOMING ELCECTIONS' : 'VOTE NOW',
                   textClr: Colors.white,
                   width: 90.w,
                   backClr: AppStyle.primaryColor,
@@ -129,5 +131,66 @@ class _DashboardState extends State<Dashboard>
             ],
           ),
         ));
+  }
+}
+
+class VoteCompletePage extends StatelessWidget {
+  const VoteCompletePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+              height: 200,
+              width: 75.w,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.shade400,
+                        offset: Offset(0, 10),
+                        blurRadius: 10)
+                  ]),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'YOU\'VE JUST VOTED!',
+                    style: AppStyle.textStyle2
+                        .copyWith(color: Colors.black, fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'There are no ongoing elctions. We will send you a reminder for the next election.',
+                    style: AppStyle.textStyle4.copyWith(
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+              height: 200,
+              width: 75.w,
+              child: Image.asset('assets/images/voted.jpg'))
+        ],
+      ),
+    );
   }
 }

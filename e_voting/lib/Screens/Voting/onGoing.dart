@@ -33,16 +33,16 @@ class OnGoingElectionPage extends StatelessWidget {
       Column(
         children: [
           SizedBox(
-            height: Applayout.getheight(10),
+            height: Applayout.getheight(5),
           ),
 
           // Card Section //
           Container(
             color: Colors.transparent,
-            height: Applayout.getheight(320),
-            padding: EdgeInsets.symmetric(
-                horizontal: Applayout.getWidth(2),
-                vertical: Applayout.getheight(1)),
+            height: Applayout.getheight(260),
+            // padding: EdgeInsets.symmetric(
+            //     horizontal: Applayout.getWidth(2),
+            //     vertical: Applayout.getheight(1)),
             // color: Colors.amber,
             child: ListView.builder(
               itemCount: voteNames.length,
