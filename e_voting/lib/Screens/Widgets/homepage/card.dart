@@ -34,6 +34,8 @@ class VoteCard extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])),
+          
+        
         child: Column(
           children: [
             Text(

@@ -1,5 +1,7 @@
+import 'package:e_voting/Screens/Auth/firstscreen.dart';
 import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/appBar.dart';
@@ -27,6 +29,17 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.leftToRight,
+                    child: FirstScreen()));
+          },
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -100,10 +113,7 @@ class LoginPage extends StatelessWidget {
                                 text: 'Login',
                                 width: 100.w,
                                 onPress: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Dashboard()));
+                                  Get.to(() => WelcomePage());
                                 },
                               )),
                         ],

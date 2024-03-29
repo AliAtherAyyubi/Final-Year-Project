@@ -2,6 +2,7 @@ import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -28,15 +29,14 @@ class _VotingPageState extends State<VotingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
+      body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
+            horizontal: Applayout.getWidth(5),
+            vertical: Applayout.getheight(10)),
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
+            gap(
+              Height: Applayout.getheight(30),
             ),
             VoteLabel(
               voteName: voteName,

@@ -1,5 +1,6 @@
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getwidget/getwidget.dart';
@@ -32,7 +33,9 @@ class CandidateCard extends StatelessWidget {
       /// GF card //
       child: GFCard(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
         color: Color.fromARGB(255, 170, 251, 213),
+
         borderRadius: BorderRadius.all(Radius.circular(50)),
         margin: EdgeInsets.all(0),
         padding: EdgeInsets.only(bottom: 15),

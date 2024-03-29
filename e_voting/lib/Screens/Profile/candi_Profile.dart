@@ -114,7 +114,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                 ]),
               ),
               SizedBox(
-                height: 20,
+                height: Applayout.getheight(10),
               ),
               Align(
                 alignment: FractionalOffset.bottomCenter,

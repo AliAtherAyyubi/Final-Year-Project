@@ -1,4 +1,6 @@
+import 'package:e_voting/Screens/Auth/firstscreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -37,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   context,
                   PageTransition(
                       type: PageTransitionType.leftToRight,
-                      child: LoginPage()));
+                      child: FirstScreen()));
             },
             icon: Icon(Icons.arrow_back_ios),
             color: Colors.black,
@@ -112,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Dashboard()));
+                                        builder: (context) => WelcomePage()));
                               },
                             )),
                       ],

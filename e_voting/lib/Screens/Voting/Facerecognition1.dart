@@ -24,7 +24,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(5),
+            horizontal: Applayout.getWidth(10),
             vertical: Applayout.getheight(40)),
         child: SingleChildScrollView(
           child: Column(

@@ -17,6 +17,12 @@ class AppStyle {
     end: Alignment.bottomRight, // Where the gradient ends
   );
 
+  static LinearGradient Gradientcolor1 = const LinearGradient(
+    colors: [Color(0xFF36bb75), Color.fromARGB(255, 223, 223, 223)],
+    begin: Alignment.topLeft, // Where the gradient starts
+    end: Alignment.bottomRight, // Where the gradient ends
+  );
+
   static Color textcolor = Color.fromARGB(255, 40, 40, 40);
 
   static TextStyle headstyle = GoogleFonts.inter(
@@ -37,7 +43,7 @@ class AppStyle {
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle textStyle3 = GoogleFonts.inter(
+  static TextStyle textStyle3 = GoogleFonts.poppins(
       fontSize: 21, color: Colors.black, fontWeight: FontWeight.bold);
 
   static TextStyle headlinestyle3 = GoogleFonts.inter(
