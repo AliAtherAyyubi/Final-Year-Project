@@ -56,7 +56,6 @@ class ConfirmVote extends StatelessWidget {
                       Height: Applayout.getheight(40),
                     ),
                     Container(
-                      //color: Colors.amber,
                       height: Applayout.getheight(360),
                       child: Stack(
                         alignment: Alignment.center,
@@ -81,6 +80,7 @@ class ConfirmVote extends StatelessWidget {
                               top: 0,
                               child: MyProfileAvatar(
                                 radius: 100,
+                                fontsize: 15,
                                 image: 'assets/images/profile.jpg',
                                 name: "Najam-Ud-Din",
                               )),
