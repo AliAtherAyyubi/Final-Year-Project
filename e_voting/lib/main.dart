@@ -5,6 +5,7 @@ import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +31,14 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
+        getPages: [
+          GetPage(
+            name: "/loginpage",
+            page: () => LoginPage(),
+            transition: Transition.rightToLeftWithFade,
+            transitionDuration: Duration(microseconds: 1),
+          )
+        ],
         home: FirstScreen(),
       );
     });

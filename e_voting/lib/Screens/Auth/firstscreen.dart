@@ -96,7 +96,7 @@ class FirstScreen extends StatelessWidget {
                       mouseCursor: MaterialStateMouseCursor.clickable,
                     ),
                     onPressed: () {
-                      Get.to(() => LoginPage());
+                      Get.toNamed("/loginpage");
                     },
                     child: Text(
                       "LOG IN",
