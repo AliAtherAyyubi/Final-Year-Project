@@ -23,8 +23,8 @@ class FirstScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF36bb75).withOpacity(0.5),
-                  Color(0xFF29a0b0)..withOpacity(0.5)
+                  Color(0xFF36bb75).withOpacity(0.8),
+                  Color(0xFF29a0b0)..withOpacity(0.7),
                 ],
                 begin: Alignment.topLeft, // Where the gradient starts
                 end: Alignment.bottomRight, // Where the gradient ends

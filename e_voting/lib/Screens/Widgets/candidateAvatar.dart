@@ -1,5 +1,6 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,7 +26,7 @@ class MyProfileAvatar extends StatelessWidget {
             height: 10,
           ),
           Container(
-            width: 100,
+            width: Applayout.getWidth(130),
             child: Text(
               name!,
               style: GoogleFonts.inter(

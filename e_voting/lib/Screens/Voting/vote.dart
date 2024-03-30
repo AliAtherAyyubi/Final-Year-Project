@@ -23,7 +23,8 @@ class _VotingPageState extends State<VotingPage> {
     'William Washington',
     'Sohaib Zafar',
     'Syed Ali Raza',
-    'Asgar Zaidi'
+    'Asgar Zaidi',
+    'Najam-Ud-Din',
   ];
 
   @override

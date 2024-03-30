@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Voting/Confirmvote.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -7,6 +8,7 @@ import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_voting/utils/Appstyles.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FaceRecognition1 extends StatefulWidget {
@@ -112,6 +114,9 @@ class FaceRecognition1State extends State<FaceRecognition1> {
               gap(Height: Applayout.getheight(70), Width: 0),
               Center(
                   child: MyButton(
+                onPress: () {
+                  Get.to(() => ConfirmVote());
+                },
                 text: "Continue",
                 width: 100.w,
               )),

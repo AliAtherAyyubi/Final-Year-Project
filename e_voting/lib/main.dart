@@ -2,6 +2,7 @@ import 'package:e_voting/Screens/Auth/firstscreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Screens/Voting/Confirmvote.dart';
 import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
