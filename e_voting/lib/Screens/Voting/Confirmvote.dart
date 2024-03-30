@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
@@ -9,6 +10,7 @@ import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class ConfirmVote extends StatelessWidget {
   const ConfirmVote({super.key});
@@ -85,9 +87,15 @@ class ConfirmVote extends StatelessWidget {
                                 name: "Najam-Ud-Din",
                               )),
                           Positioned(
-                              left: 0,
-                              bottom: 10,
-                              child: MyButton(text: "CONFIRM")),
+                            left: 0,
+                            bottom: 10,
+                            child: MyButton(
+                              text: "CONFIRM",
+                              onPress: () {
+                                Get.to(() => VoteSuccess());
+                              },
+                            ),
+                          ),
                           Positioned(
                             right: 0,
                             bottom: 10,
