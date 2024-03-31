@@ -2,7 +2,11 @@ import 'package:e_voting/Screens/Auth/firstscreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+<<<<<<< Updated upstream
 import 'package:e_voting/Screens/Voting/Confirmvote.dart';
+=======
+import 'package:e_voting/Screens/Profile/userProfile.dart';
+>>>>>>> Stashed changes
 import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: ,
             primaryColor: Color(0xff4CBB17)),
         debugShowCheckedModeBanner: false,
+<<<<<<< Updated upstream
         getPages: [
           GetPage(
             name: "/loginpage",
@@ -41,6 +46,9 @@ class MyApp extends StatelessWidget {
           )
         ],
         home: FirstScreen(),
+=======
+        home: LoginPage(),
+>>>>>>> Stashed changes
       );
     });
   }
