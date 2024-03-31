@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -10,7 +12,9 @@ import 'package:e_voting/utils/Appstyles.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FaceRecognition1 extends StatefulWidget {
-  const FaceRecognition1({super.key});
+  // const FaceRecognition1({super.key});
+
+  bool verification = false;
 
   @override
   State<FaceRecognition1> createState() => FaceRecognition1State();
@@ -21,20 +25,24 @@ class FaceRecognition1State extends State<FaceRecognition1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(10),
-            vertical: Applayout.getheight(40)),
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VoteLabel(
-                voteName: voteName,
+              const SizedBox(
+                height: 10,
               ),
-              gap(
-                Height: 10,
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: VoteLabel(
+                  voteName: voteName,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               VoteStepper(
                 currentStepNo: 2,
@@ -43,78 +51,52 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                 Height: Applayout.getheight(25),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   "Facial Recognition",
                   style: AppStyle.textStyleB4.copyWith(fontSize: 20),
+                  textAlign: TextAlign.left,
                 ),
               ),
-              gap(
-                Height: Applayout.getheight(30),
-              ),
+              // gap(
+              //   Height: Applayout.getheight(30),
+              // ),
               Center(
-                child: Container(
-                  //color: Colors.red,
-                  child: Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Applayout.getWidth(10),
-                          vertical: Applayout.getheight(15),
-                        ),
-                        height: Applayout.getheight(250),
-                        width: Applayout.getWidth(250),
-                        decoration: BoxDecoration(
-                            border: BorderDirectional(
-                          top: BorderSide(
-                              width: Applayout.getWidth(3),
-                              color: Colors.black),
-                          bottom: BorderSide(
-                              width: Applayout.getWidth(3),
-                              color: Colors.black),
-                        )),
-                        child: Image(
-                            image: AssetImage("assets/images/women1.jpg")),
-                      ),
-                      Positioned(
-                        top: Applayout.getheight(7.0),
-                        left: Applayout.getWidth(40.0),
-                        child: Container(
-                          width: Applayout.getWidth(170),
-                          height: Applayout.getheight(170),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100.0),
-                              border: Border.all(
-                                width: Applayout.getWidth(3.0),
-                                color: AppStyle.primaryColor,
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: Image(
+                    image: AssetImage(
+                      "assets/icons/${widget.verification ? 'verified' : 'face-scan'}.gif",
+                    ),
+                    height: 250),
               ),
-              gap(Height: Applayout.getheight(15), Width: 0),
+              gap(Height: Applayout.getheight(30)),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: 'To ensure that it  is you who is making this\n ',
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    widget.verification
+                        ? 'Your face verified successfully!'
+                        : 'To ensure that it  is you who is making this request,we will register your face ',
                     style: AppStyle.textstyle2B,
-                    children: [
-                      TextSpan(
-                        text: 'request,we will register your face',
-                        style: AppStyle.textstyle2B,
-                      ),
-                    ],
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
               gap(Height: Applayout.getheight(70), Width: 0),
-              Center(
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: MyButton(
-                text: "Continue",
-                width: 100.w,
-              )),
+                    text: "Continue",
+                    width: 100.w,
+                    onPress: () {
+                      Timer(Duration(seconds: 2), () {
+                        setState(() {
+                          widget.verification == true
+                              ? widget.verification = false
+                              : widget.verification = true;
+                        });
+                      });
+                    },
+                  )),
             ],
           ),
         ),

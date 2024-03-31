@@ -6,6 +6,7 @@ const Color primary = Color(0xFF36bb75);
 class AppStyle {
   static const Color primaryColor = primary;
   static const Color textClr = Color(0xff00A36C);
+  static const Color darkGreen = Color(0xff228B22);
   static const Color bluecolor = Color(0xFF29a0b0);
   static const Color orangeColor = Color(0xfffb9736);
   static const Color darkblueColor = Color(0xff25b9ff);
@@ -32,18 +33,18 @@ class AppStyle {
   );
 
   static TextStyle textStyle1 = GoogleFonts.inter(
-    fontSize: 40,
+    fontSize: 18,
     color: primary,
     fontWeight: FontWeight.bold,
   );
 
   static TextStyle textStyle2 = GoogleFonts.inter(
     fontSize: 20,
-    color: primary,
+    color: textClr,
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle textStyle3 = GoogleFonts.poppins(
+  static TextStyle textStyle3 = GoogleFonts.inter(
       fontSize: 21, color: Colors.black, fontWeight: FontWeight.bold);
 
   static TextStyle headlinestyle3 = GoogleFonts.inter(
@@ -56,20 +57,14 @@ class AppStyle {
   );
 
   static TextStyle textStyle4 = GoogleFonts.inter(
-    fontSize: 15,
+    fontSize: 16,
     color: Colors.black,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w600,
   );
 
   static TextStyle textstyle2B = GoogleFonts.inter(
     fontSize: 15,
     fontWeight: FontWeight.bold,
-    color: Colors.black,
-  );
-
-  static TextStyle textstyle2 = GoogleFonts.inter(
-    fontSize: 15,
-    fontWeight: FontWeight.normal,
     color: Colors.black,
   );
 

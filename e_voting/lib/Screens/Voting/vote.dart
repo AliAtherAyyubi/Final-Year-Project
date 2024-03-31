@@ -28,21 +28,23 @@ class _VotingPageState extends State<VotingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(5),
-            vertical: Applayout.getheight(10)),
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
           children: [
-            gap(
-              Height: Applayout.getheight(30),
+            const SizedBox(
+              height: 10,
             ),
-            VoteLabel(
-              voteName: voteName,
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: VoteLabel(
+                voteName: voteName,
+              ),
             ),
             // My Stepper //
-
+            const SizedBox(
+              height: 10,
+            ),
             VoteStepper(
               currentStepNo: 0,
             ),

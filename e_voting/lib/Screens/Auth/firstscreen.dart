@@ -15,7 +15,7 @@ class FirstScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/elogo.png'),
                   fit: BoxFit.cover)),
@@ -66,7 +66,7 @@ class FirstScreen extends StatelessWidget {
                       mouseCursor: MaterialStateMouseCursor.clickable,
                     ),
                     onPressed: () {
-                      Get.to(() => RegisterPage());
+                      Get.off(() => RegisterPage());
                     },
                     child: Text(
                       "SIGN UP",

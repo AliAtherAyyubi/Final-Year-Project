@@ -1,10 +1,12 @@
 import 'package:e_voting/Providers/VotingInfo.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/homepage/card.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -40,10 +42,6 @@ class OnGoingElectionPage extends StatelessWidget {
           Container(
             color: Colors.transparent,
             height: Applayout.getheight(260),
-            // padding: EdgeInsets.symmetric(
-            //     horizontal: Applayout.getWidth(2),
-            //     vertical: Applayout.getheight(1)),
-            // color: Colors.amber,
             child: ListView.builder(
               itemCount: voteNames.length,
               scrollDirection: Axis.horizontal,
@@ -83,11 +81,8 @@ class OnGoingElectionPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: CandidateProfile(),
-                              type: PageTransitionType.fade));
+                      Get.to(() => CandidateProfile(),
+                          transition: Transition.fade);
                     },
                     child: MyProfileAvatar(
                       name: candidateName[index],
@@ -95,6 +90,13 @@ class OnGoingElectionPage extends StatelessWidget {
                     ),
                   );
                 }),
+          ),
+          MyButton(
+            text: 'VOTE NOW',
+            width: 90.w,
+            onPress: () {
+              Get.to(() => VotingPage(), transition: Transition.fade);
+            },
           ),
           SizedBox(
             height: Applayout.getheight(15),

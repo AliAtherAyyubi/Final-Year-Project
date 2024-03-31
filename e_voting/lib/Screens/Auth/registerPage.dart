@@ -104,6 +104,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           hidebtn: Icons.visibility_off,
                         ),
 
+                        const SizedBox(
+                          height: 20,
+                        ),
                         ////// Register Button ///////
                         Align(
                             alignment: Alignment.center,

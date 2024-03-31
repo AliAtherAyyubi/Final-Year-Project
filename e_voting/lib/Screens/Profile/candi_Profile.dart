@@ -6,11 +6,10 @@ import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
-import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateProfile extends StatefulWidget {
@@ -37,102 +36,90 @@ class _CandidateProfileState extends State<CandidateProfile>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   bottom: PreferredSize(
-      //     preferredSize: Size.fromHeight(50),
-      //     child:
-      //   ),
-      // ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: Applayout.getscreenheight(),
-          // color: Colors.amber,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  //      Clipper ///
-                  ClipPath(
-                    clipBehavior: Clip.antiAlias,
-                    clipper: BottomOvalArcClipper(),
-                    child: Container(
-                      color: Colors.greenAccent[100],
-                      height: 300,
-                      width: double.infinity,
-                    ),
-                  ),
-
-                  Positioned(
-                    top: 30,
-                    left: 10,
-                    child: VoteLabel(
-                      voteName: 'Vote for Student Representatives',
-                    ),
-                  ),
-                  //// Profile image ///
-                  Container(
-                    margin: EdgeInsets.only(top: 80),
-                    child: Center(
-                        child: MyAvatar(
-                      radius: 100,
-                      image: 'assets/images/profile.jpg',
-                    )),
-                  )
-                ],
-              ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              Center(
-                child: Text(
-                  'Ana Pilar Martinez',
-                  style: GoogleFonts.inter(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Stack(
+              children: [
+                //      Clipper ///
+                ClipPath(
+                  clipBehavior: Clip.antiAlias,
+                  clipper: BottomOvalArcClipper(),
+                  child: Container(
+                    color: Color.fromARGB(255, 128, 224, 191),
+                    height: 300,
+                    width: double.infinity,
                   ),
                 ),
-              ),
 
-              //  Tab container /////
-              MyTabBar(
+                Positioned(
+                  top: 30,
+                  left: 10,
+                  child: VoteLabel(
+                    voteName: 'Vote for Student Representatives',
+                  ),
+                ),
+                //// Profile image ///
+                Container(
+                  margin: EdgeInsets.only(top: 80),
+                  child: Center(
+                      child: MyAvatar(
+                    radius: 100,
+                    image: 'assets/images/profile.jpg',
+                  )),
+                )
+              ],
+            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            Center(
+              child: Text(
+                'Ana Pilar Martinez',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            //  Tab container /////
+            Center(
+              child: MyTabBar(
                 text1: 'ABOUT ',
                 text2: 'CONTACT',
                 controller: _tabController,
               ),
+            ),
 
-              // Tabs Content //
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                height: 300,
-                child: TabBarView(controller: _tabController, children: [
-                  // !sst Page //
-                  AboutContent(),
-                  // 2nd page //
-                  ContactPage()
-                ]),
+            // Tabs Content //
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              height: 300,
+              child: TabBarView(controller: _tabController, children: [
+                // !sst Page //
+                AboutContent(),
+                // 2nd page //
+                ContactPage()
+              ]),
+            ),
+            SizedBox(
+              height: Applayout.getheight(10),
+            ),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: MyButton(
+                text: 'VOTE',
+                width: 90.w,
+                height: 50,
+                onPress: () {
+                  Get.to(() => VotingPage());
+                },
               ),
-              SizedBox(
-                height: Applayout.getheight(10),
-              ),
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: MyButton(
-                  text: 'VOTE',
-                  width: 90.w,
-                  height: 50,
-                  onPress: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: VotingPage(),
-                            type: PageTransitionType.fade));
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

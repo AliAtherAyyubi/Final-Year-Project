@@ -35,15 +35,14 @@ class MyButton extends StatelessWidget {
         // margin: EdgeInsets.only(top: 10),
         width: width,
         height: height,
-        // decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(50),
-        //     boxShadow: const [
-        //       BoxShadow(
-        //           color: Color.fromARGB(255, 20, 242, 105),
-        //           blurRadius: 8,
-        //           spreadRadius: 2,
-        //           offset: Offset(0, 5))
-        //     ]),
+        // decoration:
+        //     BoxDecoration(borderRadius: BorderRadius.circular(50), boxShadow: [
+        //   BoxShadow(
+        //       color: Color.fromARGB(255, 114, 247, 118),
+        //       blurRadius: 10,
+        //       spreadRadius: 0,
+        //       offset: Offset(0, 10))
+        // ]),
         child: ElevatedButton(
           onPressed: () {
             onPress!();
@@ -51,17 +50,18 @@ class MyButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: backClr,
             elevation: elevation,
-            shadowColor: AppStyle.bluecolor,
+            shadowColor: AppStyle.primaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           child: Text(
             text,
             style: GoogleFonts.inter(
-                fontSize: 17,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1,
                 color: textClr),
+            textAlign: TextAlign.center,
           ),
         ));
   }

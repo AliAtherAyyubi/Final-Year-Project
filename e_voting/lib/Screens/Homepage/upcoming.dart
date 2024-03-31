@@ -21,7 +21,7 @@ class _UpcomingElectionState extends State<UpcomingElection> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
+    return ListView(scrollDirection: Axis.vertical, children: [
       Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: Applayout.getheight(20)),
@@ -96,7 +96,7 @@ class _UpcomingElectionState extends State<UpcomingElection> {
             Container(
                 // width: 75.w,
                 width: Applayout.getWidth(300),
-                height: Applayout.getheight(150),
+                height: Applayout.getheight(110),
                 // padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
                 decoration: const BoxDecoration(
                     color: Colors.white,

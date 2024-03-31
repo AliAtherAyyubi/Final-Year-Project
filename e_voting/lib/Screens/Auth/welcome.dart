@@ -13,75 +13,77 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: Applayout.getWidth(17),
             vertical: Applayout.getheight(15)),
-        child: ListView(children: [
-          Column(
-            children: [
-              Container(
-                  width: double.infinity,
-                  padding:
-                      EdgeInsets.symmetric(vertical: Applayout.getheight(12)),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(() => FirstScreen());
-                    },
-                    child: const Align(
-                      alignment: Alignment.topLeft,
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        size: 22,
-                      ),
-                    ),
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                'Hi Melina!\nWelcome to \nWeVote!',
+                style: GoogleFonts.inter(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff2AAA8A)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: Applayout.getheight(20),
+            ),
+            Expanded(
+              flex: 1,
+              child: SizedBox(
+                width: 80.w,
                 child: Text(
-                  'Hi Melina!\nWelcome to \nWeVote!',
+                  'Your account has been created successfully!',
                   style: GoogleFonts.inter(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff2AAA8A)),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(
-                height: Applayout.getheight(20),
-              ),
-              Text(
-                'Your account has been created successfully!',
-                style: GoogleFonts.inter(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
-                textAlign: TextAlign.center,
-              ),
-              Container(
+            ),
+            Expanded(
+              flex: 10,
+              child: Container(
                 height: Applayout.getheight(300),
-                width: 100.w,
+                width: 80.w,
                 // margin: EdgeInsets.only(top: 20),
                 child: Image.asset(
-                  'assets/images/castvote.jpg',
+                  'assets/images/voted2.jpg',
                   filterQuality: FilterQuality.high,
                 ),
               ),
-
-              // continue Button //
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: MyButton(
-                  text: 'CONTINUE',
-                  onPress: () {
-                    Get.to(() => Dashboard());
-                  },
-                  width: 100.w,
-                ),
-              )
-            ],
-          ),
-        ]),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            // continue Button //
+            Expanded(
+              flex: 1,
+              child: MyButton(
+                text: 'CONTINUE',
+                width: 100.w,
+                onPress: () {
+                  Get.off(() => Dashboard(),
+                      duration: const Duration(seconds: 1),
+                      transition: Transition.fade);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            )
+          ],
+        ),
       ),
     );
   }
