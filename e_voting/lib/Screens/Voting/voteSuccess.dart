@@ -1,8 +1,10 @@
+import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VoteSuccess extends StatelessWidget {
   const VoteSuccess({super.key});
@@ -50,6 +52,9 @@ class VoteSuccess extends StatelessWidget {
                       Height: Applayout.getheight(15),
                     ),
                     MyButton(
+                      onPress: () {
+                        Get.to(() => ReceiptScreen());
+                      },
                       text: "RECEIPT",
                       width: 250,
                       textClr: AppStyle.primaryColor,
