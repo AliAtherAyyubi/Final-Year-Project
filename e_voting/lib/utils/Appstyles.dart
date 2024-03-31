@@ -12,6 +12,12 @@ class AppStyle {
   static const Color darkblueColor = Color(0xff25b9ff);
   static const Color lightGrayColor = Color(0xff25b9ff);
 
+  static LinearGradient Gradientcolor2 = const LinearGradient(
+    colors: [Color(0xfffb9736), Color(0xFF29a0b0)],
+    begin: Alignment.topLeft, // Where the gradient starts
+    end: Alignment.bottomRight, // Where the gradient ends
+  );
+
   static LinearGradient Gradientcolor = const LinearGradient(
     colors: [Color(0xFF36bb75), Color(0xFF29a0b0)],
     begin: Alignment.topLeft, // Where the gradient starts

@@ -25,4 +25,6 @@ class Applayout {
 
     return getscreenWidth() / x;
   }
+
+  static double pageviewcontainer = getscreenheight() / 3.84;
 }

@@ -70,7 +70,7 @@ class OnGoingElectionPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: Applayout.getheight(25)),
             // padding: EdgeInsets.symmetric(horizontal: 10),
-            // color: Colors.amber,
+            //color: Colors.amber,
             width: double.infinity,
             height: Applayout.getheight(200),
             child: ListView.builder(

@@ -1,5 +1,7 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
+import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,10 +9,16 @@ class MyProfileAvatar extends StatelessWidget {
   // const MyProfileAvatar({super.key});
 
   final String image;
+  final double fontsize;
   final String? name;
   double radius;
 
-  MyProfileAvatar({this.name, this.image = '', this.radius = 50, super.key});
+  MyProfileAvatar(
+      {this.name,
+      this.image = '',
+      this.radius = 50,
+      super.key,
+      this.fontsize = 15});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +29,15 @@ class MyProfileAvatar extends StatelessWidget {
       child: Column(
         children: [
           MyAvatar(radius: radius, image: image),
-          const SizedBox(
-            height: 10,
+          gap(
+            Height: Applayout.getheight(10),
           ),
           Container(
-            width: 100,
+            width: Applayout.getWidth(135),
             child: Text(
               name!,
               style: GoogleFonts.inter(
-                  fontSize: 14,
+                  fontSize: fontsize,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center,
