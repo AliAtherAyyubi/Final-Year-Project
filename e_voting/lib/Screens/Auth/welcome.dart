@@ -23,61 +23,52 @@ class WelcomePage extends StatelessWidget {
             SizedBox(
               height: 100,
             ),
-            Expanded(
-              flex: 3,
+            Text(
+              'Hi Melina!\nWelcome to \nWeVote!',
+              style: GoogleFonts.inter(
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff2AAA8A)),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: Applayout.getheight(20),
+            ),
+            SizedBox(
+              width: 80.w,
               child: Text(
-                'Hi Melina!\nWelcome to \nWeVote!',
+                'Your account has been created successfully!',
                 style: GoogleFonts.inter(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff2AAA8A)),
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(
               height: Applayout.getheight(20),
             ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(
-                width: 80.w,
-                child: Text(
-                  'Your account has been created successfully!',
-                  style: GoogleFonts.inter(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 10,
-              child: Container(
-                height: Applayout.getheight(300),
-                width: 80.w,
-                // margin: EdgeInsets.only(top: 20),
-                child: Image.asset(
-                  'assets/images/voted2.jpg',
-                  filterQuality: FilterQuality.high,
-                ),
+            Container(
+              height: 40.h,
+              width: 80.w,
+              // margin: EdgeInsets.only(top: 20),
+              child: Image.asset(
+                'assets/images/voted2.jpg',
+                filterQuality: FilterQuality.high,
               ),
             ),
             SizedBox(
               height: 20,
             ),
             // continue Button //
-            Expanded(
-              flex: 1,
-              child: MyButton(
-                text: 'CONTINUE',
-                width: 100.w,
-                onPress: () {
-                  Get.off(() => Dashboard(),
-                      duration: const Duration(seconds: 1),
-                      transition: Transition.fade);
-                },
-              ),
+            MyButton(
+              text: 'CONTINUE',
+              width: 100.w,
+              onPress: () {
+                Get.off(() => Dashboard(),
+                    duration: const Duration(seconds: 1),
+                    transition: Transition.fade);
+              },
             ),
             SizedBox(
               height: 20,

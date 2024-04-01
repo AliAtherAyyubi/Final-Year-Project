@@ -33,7 +33,7 @@ class MyProfileAvatar extends StatelessWidget {
             Height: Applayout.getheight(10),
           ),
           Container(
-            width: Applayout.getWidth(135),
+            width: Applayout.getWidth(100),
             child: Text(
               name!,
               style: GoogleFonts.inter(
@@ -42,9 +42,6 @@ class MyProfileAvatar extends StatelessWidget {
                   color: Colors.black),
               textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(
-            height: 1,
           ),
         ],
       ),

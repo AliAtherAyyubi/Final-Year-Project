@@ -31,8 +31,8 @@ class OnGoingElectionPage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      Column(
+    return SingleChildScrollView(
+      child: Column(
         children: [
           SizedBox(
             height: Applayout.getheight(5),
@@ -77,7 +77,7 @@ class OnGoingElectionPage extends StatelessWidget {
                 itemCount: 6,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.only(left: Applayout.getWidth(20)),
+                // padding: EdgeInsets.only(left: Applayout.getWidth(20)),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -103,6 +103,6 @@ class OnGoingElectionPage extends StatelessWidget {
           ),
         ],
       ),
-    ]);
+    );
   }
 }

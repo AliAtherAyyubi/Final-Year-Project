@@ -1,12 +1,10 @@
 import 'package:e_voting/Screens/Profile/userProfile.dart';
 import 'package:e_voting/Screens/Homepage/onGoing.dart';
 import 'package:e_voting/Screens/Homepage/upcoming.dart';
-import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
-import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,8 +12,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({super.key});
-  bool voted = true;
+  // change voted screen var//
+  bool voted = false;
+  late TabController? tabController;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -25,17 +24,10 @@ class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   // Completion screen//
 
-  late TabController? _tabController;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
-  }
-
-  @override
-  void dispose() {
-    _tabController!.dispose();
-    super.dispose();
+    widget.tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -105,29 +97,26 @@ class _DashboardState extends State<Dashboard>
                   child: MyTabBar(
                     text1: 'ONGOING ELECTIONS',
                     text2: 'UPCOMING ELECTIONS',
-                    controller: _tabController,
+                    controller: widget.tabController,
                   ),
                 ),
               ),
               Expanded(
                 flex: 10,
                 child: TabBarView(
-                  controller: _tabController,
+                  controller: widget.tabController,
                   children: [
                     /// Tab 1 //
-                    widget.voted ? VoteCompletePage() : OnGoingElectionPage(),
+                    widget.voted
+                        ? VoteCompletePage(
+                            tabController: widget.tabController,
+                          )
+                        : OnGoingElectionPage(),
 
                     //    Tab No.2 ///
                     UpcomingElection(),
                   ],
                 ),
-              ),
-              gap(
-                Height: Applayout.getheight(4),
-              ),
-
-              SizedBox(
-                height: Applayout.getheight(15),
               ),
             ],
           )),
@@ -136,73 +125,84 @@ class _DashboardState extends State<Dashboard>
 }
 // Completion page class ///
 
-class VoteCompletePage extends StatelessWidget {
-  const VoteCompletePage({super.key});
+class VoteCompletePage extends StatefulWidget {
+  late TabController? tabController;
+  VoteCompletePage({this.tabController});
 
   @override
+  State<VoteCompletePage> createState() => _VoteCompletePageState();
+}
+
+class _VoteCompletePageState extends State<VoteCompletePage> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Expanded(
-          flex: 5,
-          child: Container(
-              height: 200,
-              width: 75.w,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.shade400,
-                        offset: Offset(0, 10),
-                        blurRadius: 10)
-                  ]),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'YOU\'VE JUST VOTED!',
-                    style: AppStyle.textStyle2
-                        .copyWith(color: Colors.black, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'There are no ongoing elctions. We will send you a reminder for the next election.',
-                    style: AppStyle.textStyle4.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.w400),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              )),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Expanded(
-          flex: 10,
-          child: Container(
-              height: 40.h,
-              width: 75.w,
-              child: Image.asset('assets/images/voted3.jpg')),
-        ),
-        Expanded(
-          flex: 0,
-          child: MyButton(
-            text: 'SEE UPCOMING ELECTIONS',
-            width: 90.w,
-            onPress: () {
-              Get.to(() => VotingPage(), transition: Transition.fade);
-            },
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
-      ],
+          Expanded(
+            flex: 5,
+            child: Container(
+                height: 200,
+                width: 75.w,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade400,
+                          offset: Offset(0, 10),
+                          blurRadius: 10)
+                    ]),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'YOU\'VE JUST VOTED!',
+                      style: AppStyle.textStyle2
+                          .copyWith(color: Colors.black, fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'There are no ongoing elctions. We will send you a reminder for the next election.',
+                      style: AppStyle.textStyle4.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            flex: 10,
+            child: Container(
+                height: 40.h,
+                width: 75.w,
+                child: Image.asset('assets/images/voted3.jpg')),
+          ),
+          Expanded(
+            flex: 0,
+            child: MyButton(
+              text: 'SEE UPCOMING ELECTIONS',
+              width: 90.w,
+              onPress: () {
+                widget.tabController!.index =
+                    (widget.tabController!.index + 1) %
+                        widget.tabController!.length;
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
