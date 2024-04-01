@@ -22,75 +22,73 @@ class idValidationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 3.h,
+              ),
+              VoteLabel(
+                voteName: voteName,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              VoteStepper(currentStepNo: 1),
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                'Enter your CNIC below',
+                style: AppStyle.textStyleB4.copyWith(
+                  fontSize: 18,
                 ),
-                VoteLabel(
-                  voteName: voteName,
+                textAlign: TextAlign.left,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: _formKey,
+                child: AuthTextField(
+                  controller: cnic,
+                  keyboardType: TextInputType.number,
+                  labelText: '35201-4565236-5',
+                  obscureText: false,
+                  icon: FontAwesomeIcons.idBadge,
+                  maxlength: 15,
                 ),
-                const SizedBox(
-                  height: 10,
+              ),
+              // SizedBox(
+              //   height: 0,
+              // ),
+              Container(
+                height: 30.h,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/icons/id-card.png',
+                  filterQuality: FilterQuality.high,
+                  color: AppStyle.primaryColor,
                 ),
-                VoteStepper(currentStepNo: 1),
-                SizedBox(
-                  height: 40,
-                ),
-                Text(
-                  'Enter your CNIC below',
-                  style: AppStyle.textStyleB4.copyWith(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Form(
-                  key: _formKey,
-                  child: AuthTextField(
-                    controller: cnic,
-                    keyboardType: TextInputType.number,
-                    labelText: '35201-4565236-5',
-                    obscureText: false,
-                    icon: FontAwesomeIcons.idBadge,
-                    maxlength: 15,
-                  ),
-                ),
-                // SizedBox(
-                //   height: 0,
-                // ),
-                Container(
-                  height: 300,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/icons/id-card.png',
-                    filterQuality: FilterQuality.high,
-                    color: AppStyle.primaryColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                MyButton(
-                  text: 'CONTINUE',
-                  backClr: AppStyle.primaryColor,
-                  width: 100.w,
-                  onPress: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: FaceRecognition1(),
-                            type: PageTransitionType.fade));
-                  },
-                )
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              MyButton(
+                text: 'CONTINUE',
+                backClr: AppStyle.primaryColor,
+                width: 100.w,
+                onPress: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: FaceRecognition1(),
+                          type: PageTransitionType.fade));
+                },
+              )
+            ],
           ),
         ),
       ),

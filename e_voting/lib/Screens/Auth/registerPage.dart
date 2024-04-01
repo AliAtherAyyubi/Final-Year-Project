@@ -5,6 +5,7 @@ import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -109,10 +110,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             text: 'Register',
                             width: 100.w,
                             onPress: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WelcomePage()));
+                              Get.off(() => WelcomePage(),
+                                  transition: Transition.fade);
                             },
                           )),
                     ],

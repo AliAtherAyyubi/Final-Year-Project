@@ -3,7 +3,7 @@ import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
-import 'package:e_voting/Screens/Widgets/homepage/card.dart';
+import 'package:e_voting/Screens/Widgets/voteCard.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +41,7 @@ class OnGoingElectionPage extends StatelessWidget {
           // Card Section //
           Container(
             color: Colors.transparent,
-            height: Applayout.getheight(260),
+            height: 30.h,
             child: ListView.builder(
               itemCount: voteNames.length,
               scrollDirection: Axis.horizontal,

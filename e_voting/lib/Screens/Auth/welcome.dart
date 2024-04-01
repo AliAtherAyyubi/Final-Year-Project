@@ -21,7 +21,7 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 100,
+              height: 10.h,
             ),
             Text(
               'Hi Melina!\nWelcome to \nWeVote!',
@@ -39,7 +39,7 @@ class WelcomePage extends StatelessWidget {
               child: Text(
                 'Your account has been created successfully!',
                 style: GoogleFonts.inter(
-                    fontSize: 16.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.black),
                 textAlign: TextAlign.center,
@@ -48,9 +48,10 @@ class WelcomePage extends StatelessWidget {
             SizedBox(
               height: Applayout.getheight(20),
             ),
-            Container(
-              height: 40.h,
-              width: 80.w,
+            Expanded(
+              flex: 10,
+              // height: 40.h,
+              // width: 80.w,
               // margin: EdgeInsets.only(top: 20),
               child: Image.asset(
                 'assets/images/voted2.jpg',
@@ -66,13 +67,13 @@ class WelcomePage extends StatelessWidget {
               width: 100.w,
               onPress: () {
                 Get.off(() => Dashboard(),
-                    duration: const Duration(seconds: 1),
-                    transition: Transition.fade);
+                    // duration: const Duration(seconds: 1),
+                    transition: Transition.rightToLeft);
               },
             ),
-            SizedBox(
-              height: 20,
-            )
+            // SizedBox(
+            //   height: 10,
+            // )
           ],
         ),
       ),

@@ -22,11 +22,13 @@ class VoteCard extends StatelessWidget {
         width: 75.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Applayout.getWidth(25)),
+            borderRadius: BorderRadius.circular(
+              Applayout.getWidth(20),
+            ),
             boxShadow: [
               BoxShadow(
-                  blurRadius: 12,
-                  color: Colors.grey.shade500,
+                  blurRadius: 8,
+                  color: Colors.grey.shade400,
                   offset: Offset(1, 8))
             ],
             // gradient: AppStyle.Gradientcolor,
@@ -34,14 +36,12 @@ class VoteCard extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])),
-          
-        
         child: Column(
           children: [
             Text(
               'Vote for \n ${title}',
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
+              style: GoogleFonts.inter(
+                  fontSize: 17.sp,
                   height: 1.4,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
@@ -53,18 +53,16 @@ class VoteCard extends StatelessWidget {
             Text(
               time,
               style: GoogleFonts.inter(
-                fontSize: 15,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 2.h),
             Text(
               description,
               style: GoogleFonts.inter(
-                fontSize: 14,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

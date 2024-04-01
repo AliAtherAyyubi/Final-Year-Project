@@ -36,38 +36,38 @@ class _CandidateProfileState extends State<CandidateProfile>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Stack(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               children: [
                 //      Clipper ///
+
                 ClipPath(
-                  clipBehavior: Clip.antiAlias,
                   clipper: BottomOvalArcClipper(),
                   child: Container(
-                    color: Color.fromARGB(255, 128, 224, 191),
-                    height: 300,
+                    color: Colors.orange[100],
+                    height: 280,
                     width: double.infinity,
                   ),
                 ),
 
-                Positioned(
-                  top: 30,
-                  left: 10,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
                   ),
                 ),
                 //// Profile image ///
                 Container(
-                  margin: EdgeInsets.only(top: 80),
-                  child: Center(
-                      child: MyAvatar(
-                    radius: 100,
+                  margin: EdgeInsets.only(top: 60),
+                  alignment: Alignment.center,
+                  child: MyAvatar(
+                    radius: 90,
                     image: 'assets/images/profile.jpg',
-                  )),
+                  ),
                 )
               ],
             ),
@@ -95,9 +95,8 @@ class _CandidateProfileState extends State<CandidateProfile>
 
             // Tabs Content //
             Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              height: 300,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              height: (Applayout.getscreenheight() / 3),
               child: TabBarView(controller: _tabController, children: [
                 // !sst Page //
                 AboutContent(),
@@ -108,16 +107,13 @@ class _CandidateProfileState extends State<CandidateProfile>
             SizedBox(
               height: Applayout.getheight(10),
             ),
-            Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: MyButton(
-                text: 'VOTE',
-                width: 90.w,
-                height: 50,
-                onPress: () {
-                  Get.to(() => VotingPage());
-                },
-              ),
+            MyButton(
+              text: 'VOTE',
+              width: 90.w,
+              height: 50,
+              onPress: () {
+                Get.to(() => VotingPage());
+              },
             ),
           ],
         ),
@@ -139,8 +135,13 @@ class BottomOvalArcClipper extends CustomClipper<Path> {
     path.lineTo(0, 0);
     // path.lineTo(0, y);
     path.lineTo(0, size.height - 130);
-    path.cubicTo(controlPoint1.dx + 60, controlPoint1.dy, controlPoint2.dx,
-        controlPoint2.dy, endPoint.dx + 50, endPoint.dy - 190);
+    path.cubicTo(
+        controlPoint1.dx + 20,
+        controlPoint1.dy - 40,
+        controlPoint2.dx - 70,
+        controlPoint2.dy,
+        endPoint.dx + 70,
+        endPoint.dy - 190);
     // path.lineTo(x, y + 150);
     path.lineTo(x, 0);
 

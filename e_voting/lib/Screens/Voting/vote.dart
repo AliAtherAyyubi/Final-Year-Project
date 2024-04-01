@@ -33,8 +33,8 @@ class _VotingPageState extends State<VotingPage> {
       child: Scaffold(
         body: Column(
           children: [
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 3.h,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),

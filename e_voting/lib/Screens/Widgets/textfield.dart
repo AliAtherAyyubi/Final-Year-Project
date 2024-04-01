@@ -117,13 +117,14 @@ class VoteTextField extends StatefulWidget {
   final int? maxlength;
   final TextEditingController? controller;
   final FormFieldValidator? validator;
-
+  final int? maxline;
   VoteTextField(
       {this.controller,
       this.validator,
       required this.keyboardType,
       required this.labelText,
-      this.maxlength});
+      this.maxlength,
+      this.maxline});
 
   @override
   State<VoteTextField> createState() => _VoteTextFieldState();
@@ -149,7 +150,7 @@ class _VoteTextFieldState extends State<VoteTextField> {
         ),
         cursorColor: Colors.black,
         cursorWidth: 1,
-
+        maxLines: widget.maxline,
         keyboardAppearance: ThemeData.estimateBrightnessForColor(Colors.white),
         decoration: InputDecoration(
           alignLabelWithHint: true,

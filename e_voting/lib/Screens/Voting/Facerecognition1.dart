@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e_voting/Screens/Voting/Confirmvote.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -15,14 +16,13 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class FaceRecognition1 extends StatefulWidget {
   // const FaceRecognition1({super.key});
 
-  bool verification = false;
-
   @override
   State<FaceRecognition1> createState() => FaceRecognition1State();
 }
 
 class FaceRecognition1State extends State<FaceRecognition1> {
   String voteName = 'Vote for Student Representatives';
+  bool verification = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class FaceRecognition1State extends State<FaceRecognition1> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 3.h,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
@@ -65,7 +65,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
               Center(
                 child: Image(
                     image: AssetImage(
-                      "assets/icons/${widget.verification ? 'verified' : 'face-scan'}.gif",
+                      "assets/icons/${verification ? 'verified' : 'face-scan'}.gif",
                     ),
                     height: 250),
               ),
@@ -74,7 +74,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    widget.verification
+                    verification
                         ? 'Your face verified successfully!'
                         : 'To ensure that it  is you who is making this request,we will register your face ',
                     style: AppStyle.textstyle2B,
@@ -89,13 +89,15 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                     text: "Continue",
                     width: 100.w,
                     onPress: () {
-                      Timer(Duration(seconds: 2), () {
+                      Timer(const Duration(microseconds: 500), () {
                         setState(() {
-                          widget.verification == true
-                              ? widget.verification = false
-                              : widget.verification = true;
+                          verification = true;
                         });
                       });
+                      if (verification == true) {
+                        Get.to(() => ConfirmVote(),
+                            transition: Transition.fadeIn);
+                      }
                     },
                   )),
             ],

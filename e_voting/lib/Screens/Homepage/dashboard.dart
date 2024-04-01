@@ -14,7 +14,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class Dashboard extends StatefulWidget {
   // change voted screen var//
   bool voted = false;
-  late TabController? tabController;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -23,11 +22,12 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   // Completion screen//
+  late TabController? tabController;
 
   @override
   void initState() {
     super.initState();
-    widget.tabController = TabController(vsync: this, length: 2);
+    tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -97,19 +97,19 @@ class _DashboardState extends State<Dashboard>
                   child: MyTabBar(
                     text1: 'ONGOING ELECTIONS',
                     text2: 'UPCOMING ELECTIONS',
-                    controller: widget.tabController,
+                    controller: tabController,
                   ),
                 ),
               ),
               Expanded(
                 flex: 10,
                 child: TabBarView(
-                  controller: widget.tabController,
+                  controller: tabController,
                   children: [
                     /// Tab 1 //
                     widget.voted
                         ? VoteCompletePage(
-                            tabController: widget.tabController,
+                            tabController: tabController,
                           )
                         : OnGoingElectionPage(),
 
@@ -195,9 +195,7 @@ class _VoteCompletePageState extends State<VoteCompletePage> {
               text: 'SEE UPCOMING ELECTIONS',
               width: 90.w,
               onPress: () {
-                widget.tabController!.index =
-                    (widget.tabController!.index + 1) %
-                        widget.tabController!.length;
+                widget.tabController!.index = (widget.tabController!.index + 1);
               },
             ),
           ),
