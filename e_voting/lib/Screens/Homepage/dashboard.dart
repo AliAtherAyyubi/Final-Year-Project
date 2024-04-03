@@ -167,7 +167,7 @@ class _VoteCompletePageState extends State<VoteCompletePage> {
                           .copyWith(color: Colors.black, fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(

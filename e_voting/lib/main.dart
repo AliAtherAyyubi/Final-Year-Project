@@ -1,22 +1,19 @@
-import 'package:e_voting/Screens/Auth/firstscreen.dart';
-import 'package:e_voting/Screens/Auth/login.dart';
-import 'package:e_voting/Screens/Auth/welcome.dart';
-import 'package:e_voting/Screens/Homepage/dashboard.dart';
-import 'package:e_voting/Screens/Profile/candi_Profile.dart';
-import 'package:e_voting/Screens/Profile/userProfile.dart';
-import 'package:e_voting/Screens/Voting/Confirmvote.dart';
-import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
-import 'package:e_voting/Screens/Voting/idCheck.dart';
-import 'package:e_voting/Screens/Voting/vote.dart';
-
+import 'package:e_voting/Screens/Voting/receipt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(), // Wrap your app
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,11 +25,11 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer(builder: (context, orientation, ScreenType) {
       return GetMaterialApp(
         title: 'E-voting App',
-        theme: ThemeData(
-            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            // useMaterial3: true,
-            // fontFamily: ,
-            primaryColor: Color(0xff4CBB17)),
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         // getPages: [
         //   GetPage(
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: Dashboard(),
+        home: ReceiptScreen(),
       );
     });
   }

@@ -22,35 +22,44 @@ class idValidationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 3.h,
-              ),
-              VoteLabel(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 3.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: VoteLabel(
                 voteName: voteName,
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              VoteStepper(currentStepNo: 1),
-              SizedBox(
-                height: 40,
-              ),
-              Text(
-                'Enter your CNIC below',
-                style: AppStyle.textStyleB4.copyWith(
-                  fontSize: 18,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            VoteStepper(currentStepNo: 1),
+            SizedBox(
+              height: 4.h,
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Enter your CNIC below',
+                  style: AppStyle.textStyleB4.copyWith(
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.left,
                 ),
-                textAlign: TextAlign.left,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Form(
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Form(
                 key: _formKey,
                 child: AuthTextField(
                   controller: cnic,
@@ -61,22 +70,25 @@ class idValidationPage extends StatelessWidget {
                   maxlength: 15,
                 ),
               ),
-              // SizedBox(
-              //   height: 0,
-              // ),
-              Container(
-                height: 30.h,
-                width: double.infinity,
-                child: Image.asset(
-                  'assets/icons/id-card.png',
-                  filterQuality: FilterQuality.high,
-                  color: AppStyle.primaryColor,
-                ),
+            ),
+            // SizedBox(
+            //   height: 0,
+            // ),
+            Container(
+              height: 30.h,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/icons/id-card.png',
+                filterQuality: FilterQuality.high,
+                color: AppStyle.primaryColor,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              MyButton(
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: MyButton(
                 text: 'CONTINUE',
                 backClr: AppStyle.primaryColor,
                 width: 100.w,
@@ -87,9 +99,9 @@ class idValidationPage extends StatelessWidget {
                           child: FaceRecognition1(),
                           type: PageTransitionType.fade));
                 },
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

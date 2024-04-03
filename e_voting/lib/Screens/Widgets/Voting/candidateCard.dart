@@ -1,7 +1,11 @@
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
+import 'package:e_voting/Screens/Widgets/myAvatar.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -12,15 +16,16 @@ class CandidateCard extends StatelessWidget {
 
   final String name;
   final String description;
+  CandidateCard({required this.name, required this.description, super.key});
 
-  CandidateCard({required this.name, required this.description});
+  double btnHeight = Applayout.smaller290() ? 45 : 60;
 
   @override
   Widget build(BuildContext context) {
     return //// Candidate Card Section ///
         ///
         Container(
-      margin: EdgeInsets.only(bottom: 30),
+      margin: EdgeInsets.only(bottom: Applayout.getheight(30)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
@@ -33,24 +38,21 @@ class CandidateCard extends StatelessWidget {
       /// GF card //
       child: GFCard(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-
-        color: Color.fromARGB(255, 170, 251, 213),
-
-        borderRadius: BorderRadius.all(Radius.circular(50)),
+        color: Color(0xffA4FBBE),
+        // borderRadius: const BorderRadius.all(Radius.circular(20)),
         margin: EdgeInsets.all(0),
-        padding: EdgeInsets.only(bottom: 15),
+        padding: EdgeInsets.only(top: 10, bottom: 15),
+
+        ////                    ///////
+        //// upper part ///
         title: GFListTile(
+          padding: EdgeInsets.all(0),
           //// Avatar ///
-          avatar: Container(
-            margin: EdgeInsets.only(right: 20),
-            decoration: const BoxDecoration(shape: BoxShape.circle, boxShadow: [
-              BoxShadow(color: Colors.green, blurRadius: 2, spreadRadius: 2)
-            ]),
-            child: const GFAvatar(
-              backgroundImage: AssetImage(
-                'assets/images/profile.jpg',
-              ),
-              radius: 50,
+          avatar: Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: MyAvatar(
+              image: 'assets/images/profile.jpg',
+              radius: Applayout.greater760() ? 10.w : 14.w,
             ),
           ),
           title: Padding(
@@ -59,82 +61,46 @@ class CandidateCard extends StatelessWidget {
               name,
               style: GoogleFonts.inter(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
           ),
           subTitle: Text(
             description,
-            style: GoogleFonts.inter(fontSize: 14, color: Colors.black),
+            style: GoogleFonts.inter(fontSize: 17.sp, color: Colors.black),
             textAlign: TextAlign.left,
           ),
         ),
 
         // Buttons
         buttonBar: GFButtonBar(
-          //  padding: EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.all(0),
           crossAxisAlignment: WrapCrossAlignment.center,
-          alignment: WrapAlignment.center,
+          direction: Applayout.smaller290() ? Axis.vertical : Axis.horizontal,
           children: <Widget>[
-            Container(
-              height: 55,
-              width: 40.w,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: CandidateProfile(),
-                          type: PageTransitionType.fade));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shadowColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                child: Text(
-                  'VIEW PROFILE',
-                  style: GoogleFonts.inter(
-                      color: Color(0xff2AAA8A),
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            MyButton(
+              height: btnHeight,
+              width: Applayout.smaller290() ? 80.w : 50.w,
+              text: 'VIEW PROFILE',
+              elevation: 0,
+              backClr: Colors.white,
+              textClr: AppStyle.textClr,
+              onPress: () {
+                Get.to(() => CandidateProfile(), transition: Transition.fade);
+              },
             ),
             SizedBox(
-              width: 10,
+              width: Applayout.smaller290() ? 0 : 5,
             ),
-            Container(
-              height: 55,
-              width: 30.w,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: idValidationPage(),
-                          type: PageTransitionType.fade));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff2AAA8A),
-                  shadowColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                child: Text(
-                  'VOTE',
-                  style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 2),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            MyButton(
+              height: btnHeight,
+              width: Applayout.smaller290() ? 80.w : 30.w,
+              text: 'VOTE',
+              elevation: 0,
+              onPress: () {
+                Get.to(() => idValidationPage(), transition: Transition.fadeIn);
+              },
             ),
           ],
         ),

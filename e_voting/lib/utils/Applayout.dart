@@ -26,5 +26,13 @@ class Applayout {
     return getscreenWidth() / x;
   }
 
+  static greater760() {
+    return getscreenWidth() > 760 ? true : false;
+  }
+
+  static smaller290() {
+    return getscreenWidth() < 290 ? true : false;
+  }
+
   static double pageviewcontainer = getscreenheight() / 3.84;
 }

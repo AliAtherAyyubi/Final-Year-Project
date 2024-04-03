@@ -49,13 +49,13 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                 currentStepNo: 2,
               ),
               gap(
-                Height: Applayout.getheight(25),
+                Height: 4.h,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   "Facial Recognition",
-                  style: AppStyle.textStyleB4.copyWith(fontSize: 20),
+                  style: AppStyle.textStyleB4.copyWith(fontSize: 20.sp),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -82,7 +82,9 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                   ),
                 ),
               ),
-              gap(Height: Applayout.getheight(70), Width: 0),
+              SizedBox(
+                height: 7.h,
+              ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: MyButton(

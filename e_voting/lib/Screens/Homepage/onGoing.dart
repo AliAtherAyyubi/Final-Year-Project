@@ -84,7 +84,7 @@ class OnGoingElectionPage extends StatelessWidget {
                       Get.to(() => CandidateProfile(),
                           transition: Transition.fade);
                     },
-                    child: MyProfileAvatar(
+                    child: CandidateAvatar(
                       name: candidateName[index],
                       image: 'assets/images/profile.jpg',
                     ),

@@ -77,8 +77,8 @@ class ConfirmVote extends StatelessWidget {
                     ),
                     Positioned(
                         top: 0,
-                        child: MyProfileAvatar(
-                          radius: 100,
+                        child: CandidateAvatar(
+                          radius: 30.w,
                           fontsize: 15,
                           image: 'assets/images/profile.jpg',
                           name: "Najam-Ud-Din",

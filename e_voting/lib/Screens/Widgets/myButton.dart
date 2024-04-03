@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,7 @@ class MyButton extends StatelessWidget {
   MyButton(
       {required this.text,
       this.width,
-      this.height = 50,
+      this.height = 60,
       this.elevation = 10,
       this.backClr = AppStyle.primaryColor,
       this.textClr = Colors.white,
@@ -31,7 +32,7 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         // margin: EdgeInsets.only(top: 10),
         width: width,
         height: height,
@@ -57,7 +58,7 @@ class MyButton extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.inter(
-                fontSize: 18,
+                fontSize: Applayout.greater760() ? 15.sp : 17.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1,
                 color: textClr),

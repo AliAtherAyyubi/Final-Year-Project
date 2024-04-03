@@ -5,7 +5,7 @@ import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyProfileAvatar extends StatelessWidget {
+class CandidateAvatar extends StatelessWidget {
   // const MyProfileAvatar({super.key});
 
   final String image;
@@ -13,7 +13,7 @@ class MyProfileAvatar extends StatelessWidget {
   final String? name;
   double radius;
 
-  MyProfileAvatar(
+  CandidateAvatar(
       {this.name,
       this.image = '',
       this.radius = 50,
