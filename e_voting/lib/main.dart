@@ -1,4 +1,6 @@
-import 'package:e_voting/Screens/Auth/firstscreen.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
+import 'package:e_voting/Screens/Auth/splashscreen.dart';
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
@@ -11,12 +13,11 @@ import 'package:device_preview/device_preview.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MyApp(), // Wrap your app
-    ),
-  );
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(), // Wrap your app
+  ));
+  // const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: FirstScreen(),
+        home: Dashboard(),
       );
     });
   }

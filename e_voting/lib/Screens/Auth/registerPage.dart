@@ -1,4 +1,4 @@
-import 'package:e_voting/Screens/Auth/firstscreen.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
@@ -31,17 +31,14 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.leftToRight,
-                      child: FirstScreen()));
-            },
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.black,
-          ),
+          leading: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              )),
           title: Text('Create Account',
               style: AppStyle.textStyle1.copyWith(
                   fontSize: 18,
@@ -56,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: EdgeInsets.only(top: 20),
               width: 20.w,
               child: Image.asset('assets/images/logo.png'),
             ),

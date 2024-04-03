@@ -1,4 +1,4 @@
-import 'package:e_voting/Screens/Auth/firstscreen.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';

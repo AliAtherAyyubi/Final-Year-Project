@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class FirstScreen extends StatelessWidget {
                 'Participate in elections easily!',
                 style: GoogleFonts.inter(
                     color: Colors.white,
-                    fontWeight: FontWeight.w100,
+                    fontWeight: FontWeight.w400,
                     fontSize: 25),
                 textAlign: TextAlign.center,
               ),

@@ -1,4 +1,4 @@
-import 'package:e_voting/Screens/Auth/firstscreen.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
