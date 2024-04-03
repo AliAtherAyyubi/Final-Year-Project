@@ -34,7 +34,7 @@ class _VotingPageState extends State<VotingPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 3.h,
+            height: 6.h,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),

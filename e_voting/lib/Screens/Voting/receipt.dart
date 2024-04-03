@@ -62,6 +62,7 @@ class ReceiptScreen extends StatelessWidget {
                               BoxShadow(
                                 color: Colors.grey.shade400,
                                 blurRadius: 10,
+                                spreadRadius: 5,
                               )
                             ]),
                         child: Column(
@@ -138,7 +139,8 @@ class ReceiptScreen extends StatelessWidget {
                 width: 90.w,
                 elevation: 10,
                 onPress: () {
-                  Get.to(() => Dashboard(), transition: Transition.native);
+                  Get.to(() => Dashboard(),
+                      transition: Transition.leftToRightWithFade);
                 },
               )
             ],

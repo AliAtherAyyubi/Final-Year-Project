@@ -20,17 +20,14 @@ class VoteLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: AppStyle.textClr,
-              size: 6.w,
-            ),
+        GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: AppStyle.textClr,
+            size: 3.h,
           ),
         ),
 
@@ -38,7 +35,6 @@ class VoteLabel extends StatelessWidget {
         //   Width: Applayout.getWidth(3),
         // ),
         Expanded(
-          flex: 15,
           child: Align(
             alignment: alignment!,
             child: Text(

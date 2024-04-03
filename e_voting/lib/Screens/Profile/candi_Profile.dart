@@ -6,6 +6,7 @@ import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
@@ -41,28 +42,31 @@ class _CandidateProfileState extends State<CandidateProfile>
         child: Column(
           children: [
             Stack(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
+              alignment: Alignment.topCenter,
               children: [
                 //      Clipper ///
 
                 ClipPath(
+                  clipBehavior: Clip.antiAlias,
                   clipper: BottomOvalArcClipper(),
                   child: Container(
-                    color: Colors.orange[100],
-                    height: 280,
+                    color: AppStyle.cardClr,
+                    height: Applayout.smaller360() ? 280 : 320,
                     width: double.infinity,
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: EdgeInsets.only(
+                      left: 20, top: Applayout.smaller360() ? 5.h : 6.h),
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
                   ),
                 ),
                 //// Profile image ///
                 Container(
-                  margin: EdgeInsets.only(top: 60),
+                  margin:
+                      EdgeInsets.only(top: Applayout.smaller360() ? 80 : 100),
                   alignment: Alignment.center,
                   child: MyAvatar(
                     radius: 90,
@@ -74,13 +78,11 @@ class _CandidateProfileState extends State<CandidateProfile>
             // const SizedBox(
             //   height: 10,
             // ),
-            Center(
-              child: Text(
-                'Ana Pilar Martinez',
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Ana Pilar Martinez',
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
@@ -110,8 +112,10 @@ class _CandidateProfileState extends State<CandidateProfile>
             MyButton(
               text: 'VOTE',
               width: 90.w,
-              height: 50,
+              // height: 50,
               onPress: () {
+                print(Applayout.getscreenWidth());
+
                 Get.to(() => VotingPage());
               },
             ),

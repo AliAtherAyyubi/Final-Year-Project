@@ -28,7 +28,7 @@ class _VoteStepperState extends State<VoteStepper> {
         EasyStepper(
           activeStep: widget.currentStepNo,
           lineStyle: LineStyle(
-              lineLength: Applayout.smaller290() ? 11.w : 16.w,
+              lineLength: Applayout.smaller290() ? 11.w : 15.w,
               lineType: LineType.normal,
               unreachedLineType: LineType.dashed,
               defaultLineColor: Colors.grey,

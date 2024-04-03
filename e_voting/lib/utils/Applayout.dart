@@ -30,6 +30,10 @@ class Applayout {
     return getscreenWidth() > 760 ? true : false;
   }
 
+  static smaller360() {
+    return getscreenWidth() <= 500 ? true : false;
+  }
+
   static smaller290() {
     return getscreenWidth() < 290 ? true : false;
   }

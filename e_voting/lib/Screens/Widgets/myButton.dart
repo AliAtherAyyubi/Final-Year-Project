@@ -13,6 +13,7 @@ class MyButton extends StatelessWidget {
   final double? elevation;
   Color? backClr;
   final Color? textClr;
+  final bool? border;
   Function? onPress;
   // Widget? page = Container();
   // void trigger(){}
@@ -24,6 +25,7 @@ class MyButton extends StatelessWidget {
       this.elevation = 10,
       this.backClr = AppStyle.primaryColor,
       this.textClr = Colors.white,
+      this.border = false,
       this.onPress});
 
   void buttonFunction() {
@@ -45,21 +47,23 @@ class MyButton extends StatelessWidget {
         //       offset: Offset(0, 10))
         // ]),
         child: ElevatedButton(
-          onPressed: () {
-            onPress!();
-          },
+          onPressed: buttonFunction,
           style: ElevatedButton.styleFrom(
             backgroundColor: backClr,
             elevation: elevation,
             shadowColor: AppStyle.primaryColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+                side: border!
+                    ? BorderSide(color: Colors.white, width: 2)
+                    : BorderSide.none),
+            // side: BorderSide(color: Colors.white)
           ),
           child: Text(
             text,
             style: GoogleFonts.inter(
-                fontSize: Applayout.greater760() ? 15.sp : 17.sp,
-                fontWeight: FontWeight.w600,
+                fontSize: Applayout.greater760() ? 15.sp : 18.sp,
+                fontWeight: FontWeight.bold,
                 letterSpacing: 1,
                 color: textClr),
             textAlign: TextAlign.center,

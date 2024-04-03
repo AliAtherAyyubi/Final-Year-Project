@@ -1,4 +1,7 @@
+import 'package:e_voting/Screens/Auth/firstscreen.dart';
+import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
+import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: ReceiptScreen(),
+        home: FirstScreen(),
       );
     });
   }

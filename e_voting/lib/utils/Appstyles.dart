@@ -6,11 +6,12 @@ const Color primary = Color(0xFF36bb75);
 class AppStyle {
   static const Color primaryColor = primary;
   static const Color textClr = Color(0xff00A36C);
+  static const Color cardClr = Color(0xffA4FBBE);
   static const Color darkGreen = Color(0xff228B22);
   static const Color bluecolor = Color(0xFF29a0b0);
   static const Color orangeColor = Color(0xfffb9736);
   static const Color darkblueColor = Color(0xff25b9ff);
-  static const Color lightGrayColor = Color(0xff25b9ff);
+  static const Color lightskyColor = Color(0xff25b9ff);
 
   static LinearGradient Gradientcolor2 = const LinearGradient(
     colors: [Color(0xfffb9736), Color(0xFF29a0b0)],
@@ -33,7 +34,7 @@ class AppStyle {
   static Color textcolor = Color.fromARGB(255, 40, 40, 40);
 
   static TextStyle headstyle = GoogleFonts.inter(
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
