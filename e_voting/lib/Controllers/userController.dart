@@ -13,27 +13,30 @@ class UserController {
   Future<UserModel?> RegisterUser(
       String name, String cnic, String email, String password) async {
     try {
-      // UserCredential authResult = await _auth.createUserWithEmailAndPassword(
-      //     email: email, password: password);
+      UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
 
-      final userdata = <String, dynamic>{
-        "Username": name,
-        "cnic": cnic,
-        'email': email,
-        'password': password
-      };
+      if (authResult != null) {
+        user.userId = authResult.user!.uid;
+        user.userName = name;
+        user.cnic = cnic;
+        user.email = email;
+        // user.password = password;
+        // user.accountCreated = Timestamp.now();
+
+        userDatabase().CreateUserById(user);
+      }
 
 // Add a new document with a generated ID
-      db.collection("users").add(userdata).then((DocumentReference doc) =>
-          print('DocumentSnapshot added with ID: ${doc.id}'));
+      // await db.collection("users").add(userdata).then((DocumentReference doc) =>
+      //     print('DocumentSnapshot added with ID: ${doc.id}'));
 
-      // userDatabase().CreateUserById(user);
+      userDatabase().CreateUserById(user);
 
       print('Registered Successfully');
       return user;
     } catch (e) {
       print(e.toString());
     }
-    return null;
   }
 }
