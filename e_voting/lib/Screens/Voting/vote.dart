@@ -1,6 +1,6 @@
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';

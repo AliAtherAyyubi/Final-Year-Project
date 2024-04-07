@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:e_voting/Screens/Voting/Confirmvote.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 
 import 'package:e_voting/utils/Applayout.dart';

@@ -1,6 +1,6 @@
 import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';

@@ -1,7 +1,7 @@
 import 'package:e_voting/Screens/Profile/about.dart';
 import 'package:e_voting/Screens/Profile/contact.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -51,22 +51,20 @@ class _CandidateProfileState extends State<CandidateProfile>
                   clipper: BottomOvalArcClipper(),
                   child: Container(
                     color: AppStyle.cardClr,
-                    height: Applayout.smaller360() ? 280 : 320,
+                    height: 320,
                     width: double.infinity,
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, top: Applayout.smaller360() ? 5.h : 6.h),
+                  padding: EdgeInsets.only(left: 20, top: 6.h),
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
                   ),
                 ),
                 //// Profile image ///
                 Container(
-                  margin:
-                      EdgeInsets.only(top: Applayout.smaller360() ? 80 : 100),
+                  margin: EdgeInsets.only(top: 100),
                   alignment: Alignment.center,
                   child: MyAvatar(
                     radius: 90,
@@ -89,16 +87,18 @@ class _CandidateProfileState extends State<CandidateProfile>
             //  Tab container /////
             Center(
               child: MyTabBar(
-                text1: 'ABOUT ',
+                text1: 'ABOUT',
                 text2: 'CONTACT',
+                tabPadding: 40,
                 controller: _tabController,
+                tabBarIndicatorSize: TabBarIndicatorSize.tab,
               ),
             ),
 
             // Tabs Content //
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              height: (Applayout.getscreenheight() / 3),
+              height: 40.h,
               child: TabBarView(controller: _tabController, children: [
                 // !sst Page //
                 AboutContent(),

@@ -35,7 +35,7 @@ class _DashboardState extends State<Dashboard>
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          toolbarHeight: 50,
+          // toolbarHeight: 50,
           automaticallyImplyLeading: false,
           actions: [
             Container(
@@ -81,10 +81,12 @@ class _DashboardState extends State<Dashboard>
             SizedBox(
               height: 2.h,
             ),
+
             //    Tab s//
             Expanded(
               flex: 1,
               child: Container(
+                alignment: Alignment.center,
                 height: Applayout.getheight(45),
                 // padding: EdgeInsets.symmetric(horizontal: 1),
                 margin: EdgeInsets.only(bottom: 12),

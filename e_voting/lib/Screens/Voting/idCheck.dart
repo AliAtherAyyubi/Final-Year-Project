@@ -1,6 +1,6 @@
 import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Applayout.dart';

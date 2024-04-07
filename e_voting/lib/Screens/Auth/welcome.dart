@@ -58,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                 filterQuality: FilterQuality.high,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // continue Button //
@@ -71,9 +71,9 @@ class WelcomePage extends StatelessWidget {
                     transition: Transition.rightToLeft);
               },
             ),
-            // SizedBox(
-            //   height: 10,
-            // )
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),

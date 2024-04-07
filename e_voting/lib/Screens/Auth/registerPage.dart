@@ -1,9 +1,11 @@
-import 'package:e_voting/Screens/Auth/authScreen.dart';
+import 'package:e_voting/Controllers/userController.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
-import 'package:e_voting/utils/Appstyles.dart';
+import 'package:e_voting/Services/textControl.dart';
+import 'package:e_voting/Services/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,65 +22,68 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController cnic = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
+  // TextController fields = TextController();
+  var cnic = TextController().cnic;
+  var username = TextController().name;
+  var email = TextController().email;
+  var password = TextController().password;
+  var confirmPassword = TextController().confirmPassword;
 
+  Validation validate = Validation();
+  UserController user = UserController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: AppBar(
-          leading: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              )),
-          title: Text('Create Account',
-              style: AppStyle.textStyle1.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black)),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-      ),
+          preferredSize: Size.fromHeight(40),
+          child: ScreenTitle(
+            title: 'Create Account',
+          )),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              width: 20.w,
-              child: Image.asset('assets/images/logo.png'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Form(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                width: 20.w,
+                child: Image.asset('assets/images/logo.png'),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Form(
                   key: _formKey,
                   child: Column(
                     children: [
+                      AuthTextField(
+                        controller: username,
+                        keyboardType: TextInputType.number,
+                        obscureText: false,
+                        labelText: 'Name',
+                        hintText: 'Ali Hamza',
+                        maxlength: 13,
+                        icon: Icons.alternate_email,
+                        validator: (value) => validate.isValidName(value),
+                      ),
                       AuthTextField(
                         controller: cnic,
                         keyboardType: TextInputType.number,
                         obscureText: false,
                         labelText: 'CNIC',
+                        hintText: '35201 4565326 2',
+                        maxlength: 13,
                         icon: Icons.badge,
+                        validator: (value) => validate.isValidCnic(value),
                       ),
                       AuthTextField(
                         controller: email,
                         keyboardType: TextInputType.emailAddress,
                         obscureText: false,
                         labelText: 'Email',
-                        icon: Icons.alternate_email,
+                        icon: Icons.email,
+                        validator: (value) => validate.isValidEmail(value),
                       ),
                       AuthTextField(
                         controller: password,
@@ -87,6 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Password',
                         icon: Icons.password,
                         hidebtn: Icons.visibility_off,
+                        validator: (value) => validate.isValidPassword(value),
                       ),
                       AuthTextField(
                         controller: confirmPassword,
@@ -95,6 +101,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Confirm Password',
                         icon: Icons.lock_reset,
                         hidebtn: Icons.visibility_off,
+                        validator: (value) {
+                          if (password.text != confirmPassword.text) {
+                            return 'Password don\'t match';
+                          }
+                          return null;
+                        },
                       ),
 
                       const SizedBox(
@@ -107,55 +119,64 @@ class _RegisterPageState extends State<RegisterPage> {
                             text: 'Register',
                             width: 100.w,
                             onPress: () {
-                              Get.off(() => WelcomePage(),
-                                  transition: Transition.fade);
+                              print(username.text);
+                              if (_formKey.currentState!.validate()) {
+                                user.RegisterUser(username.text, cnic.text,
+                                    email.text, password.text);
+
+                                Future.delayed(
+                                    const Duration(
+                                      seconds: 4,
+                                    ), () {
+                                  Get.off(() => const WelcomePage(),
+                                      opaque: true,
+                                      transition: Transition.rightToLeft);
+                                });
+                              }
                             },
                           )),
                     ],
                   )),
-            ),
-            SizedBox(height: 10),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
+              SizedBox(height: 30),
+              Align(
+                alignment: Alignment.topLeft,
                 child: Text(
                   'By signing up, you agree to our Terms of Service and Privacy Policy',
                   style: GoogleFonts.poppins(
-                      fontSize: 10,
+                      fontSize: 11,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey[600]),
                   textAlign: TextAlign.left,
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            //            Last Line of Login Page //
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Already have an account?',
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                    )),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.leftToRight,
-                            child: LoginPage()));
-                  },
-                  child: Text('Sign in',
+              SizedBox(height: 10),
+              //            Last Line of Login Page //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Already have an account?',
                       style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          color: Color(0xff2AAA8A),
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1)),
-                )
-              ],
-            )
-          ],
+                        fontSize: 15,
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.leftToRight,
+                              child: LoginPage()));
+                    },
+                    child: Text('Sign in',
+                        style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            color: Color(0xff2AAA8A),
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1)),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -50,3 +50,34 @@ class VoteLabel extends StatelessWidget {
     );
   }
 }
+
+class ScreenTitle extends StatelessWidget {
+  String? title;
+  ScreenTitle({super.key, this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: GestureDetector(
+        onTap: () {
+          Get.back();
+        },
+        child: Icon(
+          Icons.arrow_back_ios,
+          color: AppStyle.textClr,
+          size: 3.h,
+        ),
+      ),
+      title: Text(
+        title!,
+        style: GoogleFonts.inter(
+            color: AppStyle.textClr,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600),
+      ),
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+  }
+}

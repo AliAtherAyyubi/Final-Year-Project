@@ -3,7 +3,7 @@ import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
-import 'package:e_voting/Screens/Widgets/voteCard.dart';
+import 'package:e_voting/Screens/Widgets/Voting/voteCard.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

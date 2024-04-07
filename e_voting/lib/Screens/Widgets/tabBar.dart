@@ -10,9 +10,11 @@ class MyTabBar extends StatelessWidget {
   final String text2;
   final TabController? controller;
   TabBarIndicatorSize? tabBarIndicatorSize;
+  double? tabPadding;
   MyTabBar(
       {required this.text1,
       required this.text2,
+      this.tabPadding = 8,
       this.controller,
       this.tabBarIndicatorSize});
 
@@ -23,14 +25,13 @@ class MyTabBar extends StatelessWidget {
         // enableFeedback: true,
         tabAlignment: TabAlignment.center,
         indicatorSize: tabBarIndicatorSize,
-
+        // indicatorPadding: EdgeInsets.only(top: 10),
         // indicatorWeight: 50,
-        // indicatorColor: AppStyle.primaryColor,
-        labelPadding: EdgeInsets.only(right: 10),
+        labelPadding: EdgeInsets.symmetric(horizontal: tabPadding!),
         isScrollable: true,
         labelColor: AppStyle.textClr,
         labelStyle: GoogleFonts.inter(
-          fontSize: 16.sp,
+          fontSize: 17.sp,
           fontWeight: FontWeight.w700,
         ),
         unselectedLabelColor: Colors.grey,

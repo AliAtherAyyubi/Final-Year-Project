@@ -1,6 +1,6 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
-import 'package:e_voting/Screens/Widgets/Voting/voteLabel.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/userprofile.dart';
 import 'package:e_voting/utils/Applayout.dart';
@@ -18,25 +18,30 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30),
+          child: ScreenTitle(
+            title: 'Account',
+          )),
       body: ListView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         children: [
-          SizedBox(
-            height: 5.h,
-          ),
-          VoteLabel(
-            voteName: 'Account',
-            fontWeight: FontWeight.w700,
-            alignment: Alignment.center,
-          ),
+          // // SizedBox(
+          // //   height: 5.h,
+          // // ),
+          // VoteLabel(
+          //   voteName: 'Account',
+          //   fontWeight: FontWeight.w700,
+          //   alignment: Alignment.center,
+          // ),
           const gap(
-            Height: 25,
+            Height: 5,
           ),
           Stack(
+            alignment: Alignment.center,
             children: [
-              Center(
-                  child: GFBorder(
+              GFBorder(
                 color: Colors.green,
                 strokeWidth: 3,
                 type: GFBorderType.circle,
@@ -51,10 +56,10 @@ class UserProfilePage extends StatelessWidget {
                     color: AppStyle.primaryColor,
                   ),
                 ),
-              )),
+              ),
               Positioned(
-                left: 230,
-                top: 110,
+                right: Applayout.getWidth(75),
+                bottom: Applayout.getWidth(20),
                 child: CircleAvatar(
                   radius: 20,
                   backgroundColor: AppStyle.primaryColor,
@@ -63,6 +68,7 @@ class UserProfilePage extends StatelessWidget {
                     icon: const Icon(
                       Icons.add,
                     ),
+                    // splashRadius: 20,
                     color: Colors.white,
                   ),
                 ),
@@ -85,19 +91,19 @@ class UserProfilePage extends StatelessWidget {
           ProfileSetting(title: 'Account Settings'),
           SettingLabel(label: 'Edit your personal information'),
           SettingLabel(label: 'Password reset'),
-          gap(
+          const gap(
             Height: 10,
           ),
           ProfileSetting(title: 'App Settings'),
           SettingLabel(label: 'Notifications'),
-          gap(
+          const gap(
             Height: 10,
           ),
           ProfileSetting(title: 'Support'),
           SettingLabel(label: 'FAQ'),
           SettingLabel(label: 'Contact us'),
 
-          gap(
+          const gap(
             Height: 30,
           ),
           // Button //

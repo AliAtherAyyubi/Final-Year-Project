@@ -1,5 +1,7 @@
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +9,7 @@ class AuthTextField extends StatefulWidget {
   final TextInputType keyboardType;
   bool obscureText;
   final String labelText;
+  final String? hintText;
   final IconData? icon;
   IconData? hidebtn;
   final int? maxlength;
@@ -20,6 +23,7 @@ class AuthTextField extends StatefulWidget {
       required this.obscureText,
       this.maxlength,
       required this.labelText,
+      this.hintText,
       // required this.fontSize,
       // required this.fontWeight,
       // this.letterSpacing,
@@ -42,6 +46,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
         // focusNode: _focusNode,
         validator: widget.validator,
         controller: widget.controller,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
+        // inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'a-z'))],
         keyboardType: widget.keyboardType,
         obscureText: widget.obscureText,
         textAlignVertical: TextAlignVertical.center,
@@ -54,9 +60,10 @@ class _AuthTextFieldState extends State<AuthTextField> {
           fontSize: 16,
           // letterSpacing: letterSpacing,
         ),
+
         decoration: InputDecoration(
             labelText: widget.labelText,
-            hintText: widget.labelText,
+            hintText: widget.hintText,
             hoverColor: Colors.grey[200],
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
@@ -64,14 +71,19 @@ class _AuthTextFieldState extends State<AuthTextField> {
             ),
             filled: true,
             fillColor: Colors.grey[200],
+            counterText: '',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             contentPadding: EdgeInsets.all(15),
-            // alignLabelWithHint: true,
-            hintStyle: const TextStyle(
-                color: Colors.grey, fontWeight: FontWeight.w200),
-            labelStyle: const TextStyle(
-                color: Colors.grey, fontWeight: FontWeight.w200),
-            counterText: '',
+            alignLabelWithHint: true,
+            hintStyle: GoogleFonts.inter(
+                color: Colors.grey, fontWeight: FontWeight.w400),
+            labelStyle: GoogleFonts.inter(
+                color: Colors.grey, fontWeight: FontWeight.w400),
+            errorStyle: GoogleFonts.inter(
+              color: Colors.red,
+              fontSize: 13,
+            ),
+            ///////// icons //////////
             prefixIcon: IconButton(
                 onPressed: () {},
                 icon: Icon(widget.icon),

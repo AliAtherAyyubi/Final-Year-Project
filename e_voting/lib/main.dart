@@ -1,7 +1,12 @@
 import 'package:e_voting/Screens/Auth/authScreen.dart';
+import 'package:e_voting/Screens/Auth/forgotPass.dart';
+import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Auth/registerPage.dart';
+import 'package:e_voting/Screens/Auth/resetPassword.dart';
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Screens/Profile/userProfile.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:flutter/foundation.dart';
@@ -10,9 +15,16 @@ import 'package:get/get.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase intitialization //
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // Main App //
   runApp(DevicePreview(
     enabled: !kReleaseMode,
     builder: (context) => MyApp(), // Wrap your app
@@ -43,7 +55,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: Dashboard(),
+        home: SplashScreen(),
       );
     });
   }

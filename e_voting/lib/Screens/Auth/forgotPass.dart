@@ -1,7 +1,9 @@
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/resetPassword.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/Services/validation.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,12 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: Padding(
+            padding: EdgeInsets.only(left: 10), child: ScreenTitle(title: '')),
+      ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: Applayout.getheight(16),
@@ -25,18 +33,6 @@ class ForgotPasswordPage extends StatelessWidget {
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                  width: double.infinity,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back_ios),
-                      iconSize: 25,
-                    ),
-                  )),
               SizedBox(height: 20),
               Text(
                 'Forgot Password?',
@@ -68,21 +64,28 @@ class ForgotPasswordPage extends StatelessWidget {
                   child: Column(
                     children: [
                       AuthTextField(
-                          controller: email,
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: false,
-                          labelText: 'Enter Your Email',
-                          icon: Icons.alternate_email),
-                      SizedBox(
+                        controller: email,
+                        keyboardType: TextInputType.emailAddress,
+                        obscureText: false,
+                        labelText: 'Enter Your Email',
+                        icon: Icons.alternate_email,
+                        validator: (value) => Validation().isValidEmail(value),
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
                       MyButton(
                         text: 'Send',
                         width: 100.w,
                         onPress: () {
-                          Get.to(() => ResetPasswordPage(),
-                              // duration: const Duration(seconds: 5),
-                              transition: Transition.fade);
+                          if (_formKey.currentState!.validate()) {
+                            Get.snackbar(
+                              'A verification code is sent to your email!',
+                              '',
+                            );
+                            Get.off(() => ResetPasswordPage(),
+                                transition: Transition.rightToLeft);
+                          }
                         },
                       )
                     ],

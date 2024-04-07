@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "601003524489",
-    "project_id": "first-app-65a02",
-    "storage_bucket": "first-app-65a02.appspot.com"
+    "project_number": "210009114284",
+    "project_id": "e-voting-9ab22",
+    "storage_bucket": "e-voting-9ab22.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:601003524489:android:240f2d74aec30afc9de158",
+        "mobilesdk_app_id": "1:210009114284:android:55b5ef9eba20459c8e8109",
         "android_client_info": {
-          "package_name": "com.example.flutter_application_2"
+          "package_name": "com.example.e_voting"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBDkUr2bNogVCpDM6QHa4QqMePwXxZ81gA"
+          "current_key": "AIzaSyALfTAu8KMNjJOSwx8DknjaXt8aeUffDRs"
         }
       ],
       "services": {
