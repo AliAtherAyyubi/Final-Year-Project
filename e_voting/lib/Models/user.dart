@@ -5,7 +5,7 @@ class UserModel {
   String? email;
   String? password;
   String? phone;
-  String? imageURL;
+  String? imageUrl;
   String? role;
 
   // Constructor //
@@ -17,6 +17,6 @@ class UserModel {
       this.email,
       this.password,
       this.phone,
-      this.imageURL,
+      this.imageUrl,
       this.role});
 }

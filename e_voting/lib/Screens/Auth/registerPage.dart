@@ -1,6 +1,7 @@
 import 'package:e_voting/Controllers/userController.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -27,10 +28,38 @@ class _RegisterPageState extends State<RegisterPage> {
   var username = TextController().name;
   var email = TextController().email;
   var password = TextController().password;
-  var confirmPassword = TextController().confirmPassword;
+  // var confirmPassword = TextController().confirmPassword;
 
   Validation validate = Validation();
   UserController user = UserController();
+
+  bool loading = false;
+  void Register() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        loading = true;
+      });
+      String? res = await user.RegisterUser(
+          context, username.text, cnic.text, email.text, password.text);
+
+      if (res == null) {
+        MyAlert.Alert('Account', 'Your account is created successfully!');
+        Future.delayed(
+            const Duration(
+              seconds: 3,
+            ), () {
+          Get.off(() => WelcomePage(),
+              opaque: true, transition: Transition.rightToLeft);
+        });
+      } else {
+        MyAlert.Alert('Error', res.toString());
+        setState(() {
+          loading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: 20.w,
                 child: Image.asset('assets/images/logo.png'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Form(
@@ -72,8 +101,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         keyboardType: TextInputType.number,
                         obscureText: false,
                         labelText: 'CNIC',
-                        hintText: '35201 4565326 2',
-                        maxlength: 13,
+                        hintText: '35201-4565326-2',
+                        maxlength: 15,
                         icon: Icons.badge,
                         validator: (value) => validate.isValidCnic(value),
                       ),
@@ -94,20 +123,20 @@ class _RegisterPageState extends State<RegisterPage> {
                         hidebtn: Icons.visibility_off,
                         validator: (value) => validate.isValidPassword(value),
                       ),
-                      AuthTextField(
-                        controller: confirmPassword,
-                        keyboardType: TextInputType.emailAddress,
-                        obscureText: true,
-                        labelText: 'Confirm Password',
-                        icon: Icons.lock_reset,
-                        hidebtn: Icons.visibility_off,
-                        validator: (value) {
-                          if (password.text != confirmPassword.text) {
-                            return 'Password don\'t match';
-                          }
-                          return null;
-                        },
-                      ),
+                      // AuthTextField(
+                      //   controller: confirmPassword,
+                      //   keyboardType: TextInputType.emailAddress,
+                      //   obscureText: true,
+                      //   labelText: 'Confirm Password',
+                      //   icon: Icons.lock_reset,
+                      //   hidebtn: Icons.visibility_off,
+                      //   validator: (value) {
+                      //     if (password.text != confirmPassword.text) {
+                      //       return 'Password don\'t match';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
 
                       const SizedBox(
                         height: 20,
@@ -118,22 +147,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: MyButton(
                             text: 'Register',
                             width: 100.w,
-                            onPress: () {
-                              print(username.text);
-                              if (_formKey.currentState!.validate()) {
-                                user.RegisterUser(username.text, cnic.text,
-                                    email.text, password.text);
-
-                                Future.delayed(
-                                    const Duration(
-                                      seconds: 4,
-                                    ), () {
-                                  Get.off(() => const WelcomePage(),
-                                      opaque: true,
-                                      transition: Transition.rightToLeft);
-                                });
-                              }
-                            },
+                            loading: loading,
+                            onPress: Register,
                           )),
                     ],
                   )),

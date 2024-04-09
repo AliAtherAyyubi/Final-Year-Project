@@ -1,3 +1,4 @@
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -5,13 +6,15 @@ import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
-
+  // const WelcomePage({super.key});
   @override
   Widget build(BuildContext context) {
+    String username = Provider.of<UserData>(context).username.capitalize!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -24,7 +27,7 @@ class WelcomePage extends StatelessWidget {
               height: 10.h,
             ),
             Text(
-              'Hi Melina!\nWelcome to \nWeVote!',
+              'Hi ${username}!\nWelcome to \nWeVote!',
               style: GoogleFonts.inter(
                   fontSize: 25.sp,
                   fontWeight: FontWeight.bold,

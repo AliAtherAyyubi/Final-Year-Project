@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     ////
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Get.off(() => const AuthScreen(),
           duration: Duration(milliseconds: 100), transition: Transition.native);
     });

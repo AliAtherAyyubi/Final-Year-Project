@@ -1,9 +1,11 @@
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
 import 'package:e_voting/Screens/Auth/resetPassword.dart';
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Profile/userProfile.dart';
@@ -12,6 +14,7 @@ import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:device_preview/device_preview.dart';
@@ -38,25 +41,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(builder: (context, orientation, ScreenType) {
-      return GetMaterialApp(
-        title: 'E-voting App',
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        debugShowCheckedModeBanner: false,
-        // getPages: [
-        //   GetPage(
-        //     name: "/loginpage",
-        //     page: () => LoginPage(),
-        //     transition: Transition.rightToLeftWithFade,
-        //     transitionDuration: Duration(microseconds: 1),
-        //   )
-        // ],
-        home: SplashScreen(),
-      );
-    });
+    return MultiProvider(
+      // Provider //
+      providers: [ChangeNotifierProvider(create: (context) => UserData())],
+
+      /// Responsiveness //
+      child: ResponsiveSizer(builder: (context, orientation, ScreenType) {
+        return GetMaterialApp(
+          title: 'E-voting App',
+          // useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          debugShowCheckedModeBanner: false,
+          // getPages: [
+          //   GetPage(
+          //     name: "/loginpage",
+          //     page: () => LoginPage(),
+          //     transition: Transition.rightToLeftWithFade,
+          //     transitionDuration: Duration(microseconds: 1),
+          //   )
+          // ],
+          home: SplashScreen(),
+        );
+      }),
+    );
   }
 }

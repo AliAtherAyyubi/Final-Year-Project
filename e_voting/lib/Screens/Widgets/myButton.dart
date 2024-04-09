@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class MyButton extends StatelessWidget {
   Color? backClr;
   final Color? textClr;
   final bool? border;
+  final bool? loading;
   Function? onPress;
   // Widget? page = Container();
   // void trigger(){}
@@ -26,6 +28,7 @@ class MyButton extends StatelessWidget {
       this.backClr = AppStyle.primaryColor,
       this.textClr = Colors.white,
       this.border = false,
+      this.loading = false,
       this.onPress});
 
   void buttonFunction() {
@@ -59,15 +62,17 @@ class MyButton extends StatelessWidget {
                     : BorderSide.none),
             // side: BorderSide(color: Colors.white)
           ),
-          child: Text(
-            text,
-            style: GoogleFonts.inter(
-                fontSize: Applayout.greater760() ? 15.sp : 18.sp,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1,
-                color: textClr),
-            textAlign: TextAlign.center,
-          ),
+          child: loading!
+              ? Loading()
+              : Text(
+                  text,
+                  style: GoogleFonts.inter(
+                      fontSize: Applayout.greater760() ? 15.sp : 18.sp,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                      color: textClr),
+                  textAlign: TextAlign.center,
+                ),
         ));
   }
 }

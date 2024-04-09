@@ -1,11 +1,14 @@
+import 'package:e_voting/Controllers/userController.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Services/regExp.dart';
+import 'package:e_voting/Services/textControl.dart';
 import 'package:e_voting/Services/validation.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
@@ -17,16 +20,49 @@ import 'package:page_transition/page_transition.dart';
 
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   // TextEditingController cnic = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  var email = TextController().email;
+  var password = TextController().password;
 
   // Validation class //
   Validation valid = Validation();
-  // TextEditingController confirmPassword = TextEditingController();
+  bool loading = false;
+  UserController user = UserController();
+  // Sign in function from userController //
+  void Signin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        loading = true;
+      });
+      String? res = await user.Signin(context, email.text, password.text);
+
+      if (res != null) {
+        MyAlert.Alert('Success', res);
+        Future.delayed(
+            const Duration(
+              seconds: 1,
+            ), () {
+          Get.off(() => Dashboard(), transition: Transition.rightToLeft);
+        });
+      }
+      // for invalid users //
+      else {
+        MyAlert.Alert('Error', 'Invalid Username and Password');
+        setState(() {
+          loading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +134,8 @@ class LoginPage extends StatelessWidget {
                         icon: Icons.password,
                         hidebtn: Icons.visibility_off,
                         validator: (value) {
-                          return valid.isValidPassword(value);
+                          if (value == null) return 'Enter your password!';
+                          return null;
                         },
                       ),
                       const SizedBox(
@@ -110,13 +147,8 @@ class LoginPage extends StatelessWidget {
                           child: MyButton(
                             text: 'Login',
                             width: 100.w,
-                            onPress: () {
-                              if (_formKey.currentState!.validate()) {
-                                Get.off(() => Dashboard(),
-                                    // duration: const Duration(seconds: 2),
-                                    transition: Transition.rightToLeft);
-                              }
-                            },
+                            loading: loading,
+                            onPress: Signin,
                           )),
                     ],
                   )),

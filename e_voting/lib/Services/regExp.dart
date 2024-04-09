@@ -26,8 +26,8 @@ extension extString on String {
     return phoneRegExp.hasMatch(this);
   }
 
-  bool get isValidNumber {
-    final numberRegExp = RegExp(r"[0-9]");
+  bool get isValidCnic {
+    final numberRegExp = RegExp(r"^\d{5}-\d{7}-\d$");
     return numberRegExp.hasMatch(this);
   }
 }
