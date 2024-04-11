@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class UserData with ChangeNotifier {
-  String username = 'user name';
-
+class UserData extends ChangeNotifier {
+  var username = 'user name';
+  var userID = "";
   void setname(String n) {
     username = n;
-    print(username);
+    notifyListeners();
+  }
+
+  //set User ID //
+  void setUserId(String id) {
+    userID = id;
+    print('UserID: $userID');
     notifyListeners();
   }
 }

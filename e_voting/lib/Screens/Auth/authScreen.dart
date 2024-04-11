@@ -14,84 +14,85 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppStyle.primaryColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Logo //
-          SizedBox(
-            height: 40,
-          ),
-          Expanded(
-            flex: 6,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                'WeVote',
-                style: AppStyle.headstyle.copyWith(
-                  color: Colors.white,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: AppStyle.primaryColor,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Logo //
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              flex: 6,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  'WeVote',
+                  style: AppStyle.headstyle.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          Expanded(
-            flex: 3,
-            child: SizedBox(
-              width: 80.w,
-              child: Text(
-                'Participate in elections easily!',
-                style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 25),
-                textAlign: TextAlign.center,
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                width: 80.w,
+                child: Text(
+                  'Participate in elections easily!',
+                  style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
 
-          Expanded(
-              flex: 6,
-              child: Column(
-                children: [
-                  MyButton(
-                    elevation: 0,
-                    width: 90.w,
-                    text: 'SIGN UP',
-                    backClr: Colors.white,
-                    textClr: AppStyle.textClr,
-                    onPress: () {
-                      Get.to(() => const RegisterPage(),
-                          duration: const Duration(milliseconds: 200),
-                          transition: Transition.rightToLeft);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  MyButton(
-                    elevation: 0,
-                    width: 90.w,
-                    text: 'LOG IN',
-                    backClr: AppStyle.primaryColor,
-                    border: true,
-                    textClr: Colors.white,
-                    onPress: () {
-                      Get.to(() => LoginPage(),
-                          duration: Duration(milliseconds: 100),
-                          transition: Transition.rightToLeft);
-                    },
-                  ),
-                ],
-              ))
-        ],
+            Expanded(
+                flex: 6,
+                child: Column(
+                  children: [
+                    MyButton(
+                      elevation: 0,
+                      width: 90.w,
+                      text: 'SIGN UP',
+                      backClr: Colors.white,
+                      textClr: AppStyle.textClr,
+                      onPress: () {
+                        Get.to(() => const RegisterPage(),
+                            transition: Transition.rightToLeft);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    MyButton(
+                      elevation: 0,
+                      width: 90.w,
+                      text: 'LOG IN',
+                      backClr: AppStyle.primaryColor,
+                      border: true,
+                      textClr: Colors.white,
+                      onPress: () {
+                        Get.to(() => LoginPage(),
+                            transition: Transition.rightToLeft);
+                      },
+                    ),
+                  ],
+                ))
+          ],
+        ),
+
+        // padding: EdgeInsets.symmetric(
+        //       horizontal: Applayout.getWidth(15),
+        //       vertical: Applayout.getheight(50)),
       ),
-
-      // padding: EdgeInsets.symmetric(
-      //       horizontal: Applayout.getWidth(15),
-      //       vertical: Applayout.getheight(50)),
     );
   }
 }

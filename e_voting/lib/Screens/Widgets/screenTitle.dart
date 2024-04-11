@@ -72,7 +72,7 @@ class ScreenTitle extends StatelessWidget {
         title!,
         style: GoogleFonts.inter(
             color: AppStyle.textClr,
-            fontSize: 18.sp,
+            fontSize: 19.sp,
             fontWeight: FontWeight.w600),
       ),
       centerTitle: true,

@@ -76,9 +76,9 @@ class _AuthTextFieldState extends State<AuthTextField> {
             contentPadding: EdgeInsets.all(15),
             alignLabelWithHint: true,
             hintStyle: GoogleFonts.inter(
-                color: Colors.black54, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontWeight: FontWeight.w500),
             labelStyle: GoogleFonts.inter(
-                color: Colors.black54, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontWeight: FontWeight.w500),
             errorStyle: GoogleFonts.inter(
               color: Colors.red,
               fontSize: 13,

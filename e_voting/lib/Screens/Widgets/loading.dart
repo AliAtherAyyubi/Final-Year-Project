@@ -1,3 +1,4 @@
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatelessWidget {

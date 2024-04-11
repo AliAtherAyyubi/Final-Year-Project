@@ -28,11 +28,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Main App //
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ));
-  // const MyApp());
+  // runApp(DevicePreview(
+  //   enabled: !kReleaseMode,
+  //   builder: (context) => MyApp(), // Wrap your app
+  // ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -42,18 +42,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      // Provider //
       providers: [ChangeNotifierProvider(create: (context) => UserData())],
-
-      /// Responsiveness //
       child: ResponsiveSizer(builder: (context, orientation, ScreenType) {
         return GetMaterialApp(
           title: 'E-voting App',
           // useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          // locale: DevicePreview.locale(context),
+          // builder: DevicePreview.appBuilder,
+          // theme: ThemeData.light(),
+          // darkTheme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
           // getPages: [
           //   GetPage(

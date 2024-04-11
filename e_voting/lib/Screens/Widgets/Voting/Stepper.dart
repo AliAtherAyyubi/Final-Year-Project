@@ -95,7 +95,7 @@ class StepLabel extends StatelessWidget {
       style: GoogleFonts.inter(
           color: isStep ? Colors.black : Colors.black54,
           fontSize: Applayout.smaller290() ? 14.sp : 15.sp,
-          fontWeight: FontWeight.w700),
+          fontWeight: FontWeight.w600),
       textAlign: TextAlign.center,
     );
   }
