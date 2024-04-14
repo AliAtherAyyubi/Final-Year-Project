@@ -51,10 +51,10 @@ class _AuthTextFieldState extends State<AuthTextField> {
         keyboardType: widget.keyboardType,
         obscureText: widget.obscureText,
         textAlignVertical: TextAlignVertical.center,
-
         cursorColor: Colors.black,
         cursorWidth: 1,
         maxLength: widget.maxlength,
+        // styles //
         style: GoogleFonts.inter(
           fontWeight: FontWeight.w500,
           fontSize: 16,

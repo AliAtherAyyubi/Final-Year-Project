@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserData extends ChangeNotifier {
-  var username = 'user name';
-  var userID = "";
-  void setname(String n) {
-    username = n;
-    notifyListeners();
+class UserData extends GetxController {
+  var username = 'user name'.obs;
+  var userID = "".obs;
+  void setname(n) {
+    username.value = n.toString();
+    print(username);
   }
 
   //set User ID //
-  void setUserId(String id) {
-    userID = id;
+  void setUserId(id) {
+    userID.value = id.toString();
     print('UserID: $userID');
-    notifyListeners();
   }
 }

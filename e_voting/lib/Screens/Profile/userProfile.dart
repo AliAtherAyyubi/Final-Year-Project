@@ -15,7 +15,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class UserProfilePage extends StatelessWidget {
   UserData data = Get.put(UserData());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,16 +79,14 @@ class UserProfilePage extends StatelessWidget {
           gap(
             Height: Applayout.getheight(20),
           ),
-          Text(
-            Provider.of<UserData>(context, listen: false)
-                .username
-                .toUpperCase(),
-            style: AppStyle.textStyle1.copyWith(
-              fontSize: 25,
-              color: AppStyle.textClr,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          Obx(() => Text(
+                data.username.toString().toUpperCase(),
+                style: AppStyle.textStyle1.copyWith(
+                  fontSize: 25,
+                  color: AppStyle.textClr,
+                ),
+                textAlign: TextAlign.center,
+              )),
           const gap(
             Height: 20,
           ),

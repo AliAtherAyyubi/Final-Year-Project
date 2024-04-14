@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
-import 'package:e_voting/Controllers/user_db.dart';
+import 'package:e_voting/Database/user_db.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +12,9 @@ class UserController {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  BuildContext? context;
   UserModel user = UserModel();
-  dynamic user1;
 
+  // Getx States Manager //
   UserData userState = Get.put(UserData());
 
   /// Registration of User into Database //
@@ -60,7 +59,7 @@ class UserController {
   // Sign in Function //
 
   Future<String?> Signin(
-      BuildContext context, String email, String password) async {
+      BuildContext? context, String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -70,12 +69,10 @@ class UserController {
         user = await userDatabase().getUserById(credential.user!.uid);
         //
 
-        // userState.setname(user.userName);
-        // userState.setUserId(credential.user!.uid);
-        Provider.of<UserData>(context, listen: false).setname(user.userName!);
+        userState.setname(user.userName);
         // Set User ID //
-        Provider.of<UserData>(context, listen: false)
-            .setUserId(credential.user!.uid);
+        userState.setUserId(credential.user!.uid);
+
         // await db.collection('users').doc(credential.user!.uid).get().then(
         //   (DocumentSnapshot doc) {
         //     final data = doc.data() as Map<String, dynamic>;

@@ -13,8 +13,7 @@ class WelcomePage extends StatelessWidget {
   // const WelcomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    // UserData data = Get.put(UserData());
-    String username = Provider.of<UserData>(context).username.capitalize!;
+    UserData user = Get.put(UserData());
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -29,13 +28,15 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              Text(
-                'Hi ${username}!\nWelcome to \nWeVote!',
-                style: GoogleFonts.inter(
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff2AAA8A)),
-                textAlign: TextAlign.center,
+              Obx(
+                () => Text(
+                  'Hi ${user.username.toString().capitalize}!\nWelcome to \nWeVote!',
+                  style: GoogleFonts.inter(
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff2AAA8A)),
+                  textAlign: TextAlign.center,
+                ),
               ),
               SizedBox(
                 height: Applayout.getheight(20),
