@@ -13,7 +13,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Dashboard extends StatefulWidget {
   // change voted screen var//
-  bool voted = false;
+  bool voted = true;
 
   @override
   State<Dashboard> createState() => _DashboardState();

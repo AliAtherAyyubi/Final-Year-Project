@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Controllers/election_control.dart';
 import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Database/org_db.dart';
+import 'package:e_voting/Models/election.dart';
+import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Appstyles.dart';
@@ -33,13 +37,15 @@ class Sample extends StatelessWidget {
   UserData data = Get.put(UserData());
   @override
   Widget build(BuildContext context) {
-    String name = data.username.toString();
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Obx(() => Text(name)),
+          Obx(() => Text(
+                data.username.toString().toUpperCase(),
+                style: TextStyle(fontSize: 24),
+              )),
           Text(
             'First Login Please',
             style: AppStyle.textStyle1,
@@ -48,39 +54,90 @@ class Sample extends StatelessWidget {
               text: 'Sign in',
               width: 90.w,
               onPress: () async {
-                await UserController()
-                    .Signin(context, 'najam@gmail.com', '123456');
+                await UserController().Signin('ali@gmail.com', '123456');
               }),
-          MyButton(
-              text: 'Create Organization',
-              width: 90.w,
-              loading: true,
-              onPress: () async {
-                var id = Get.put(UserData()).userID.toString();
-                OrgController().createOrg(id);
-              }),
+          // MyButton(
+          //     text: 'Update user',
+          //     width: 90.w,
+          //     onPress: () async {
+          //       UserController().updateUserCnic('35201-5631623-2');
+          //       // UserController().updateUserEmail('info2atherayyubi@gmail.com');
+          //       await UserController().updateUserName('Ali Ather');
+          //       // UserController().updateUserPassword('123456');
+          //     }),
+          // MyButton(
+          //     text: 'Create Organization',
+          //     width: 90.w,
+          //     loading: false,
+          //     onPress: () async {
+          //       OrgController().createOrg();
+          //     }),
+          // MyButton(
+          //     text: 'Update Organization',
+          //     width: 90.w,
+          //     loading: false,
+          //     onPress: () async {
+          //       OrgModel org = OrgModel();
+          //       org.orgName = 'Apple';
+          //       org.description =
+          //           'Samsung made big electronic modern machines like smartphones etc';
+          //       OrgDatabase().updateOrg(org);
+          //     }),
           MyButton(
               text: 'Create Election',
               width: 90.w,
-              // loading: true,
+              loading: false,
               onPress: () async {
-                print(DateTime.timestamp());
-                String startDate = DateTime.now().day.toString() +
-                    " " +
-                    getMonthName(DateTime.now().month);
-                String endDate =
-                    DateTime(DateTime.now().year, 5, 11).day.toString() +
-                        " " +
-                        getMonthName(DateTime.june);
-
-                ElectionController().createElection('Unity Vote 2024',
-                    'Democracy Now', 'OnGoing', startDate, endDate);
+                ElectionController().createElection(
+                  'Unity Rise 2024',
+                  'Emphasizing solidarity and collaboration for progress, this election campaign pledges to unite diverse voices and forge a path towards a brighter future for all.',
+                  'OnGoing',
+                  Timestamp.fromDate(DateTime(2024, 4, 17)),
+                  Timestamp.fromDate(DateTime(2024, 4, 25)),
+                );
+                ElectionController().createElection(
+                  'Visionary Vanguard',
+                  'Championing forward-thinking leadership, this campaign promises innovative solutions and strategic planning to address pressing issues and propel society towards prosperity and equity.',
+                  'OnGoing',
+                  Timestamp.fromDate(DateTime(2024, 4, 17)),
+                  Timestamp.fromDate(DateTime(2024, 4, 25)),
+                );
+                ElectionController().createElection(
+                  'Empowerment Express',
+                  'Centered on empowerment and representation, this election movement aims to amplify voices, promote equality, and empower individuals to shape their destinies and communities.',
+                  'OnGoing',
+                  Timestamp.fromDate(DateTime(2024, 4, 17)),
+                  Timestamp.fromDate(DateTime(2024, 4, 25)),
+                );
               }),
+          // MyButton(
+          //   text: 'Update Elections',
+          //   onPress: () async {
+          //     QuerySnapshot? querySnapshot =
+          //         await ElectionController().fetchElections();
+          //     String id = querySnapshot!.docs[1].get('electionId');
+
+          //     ElectionModel e = ElectionModel();
+          //     e.electionName = 'Student Rpresentative';
+          //     e.description = 'University elections are going to held';
+          //     e.status = 'upcoming';
+          //     e.electionId = id;
+          //     await ElectionController().updateElection(e);
+          //   },
+          // ),
           MyButton(
-            text: 'Get OrgId',
+            text: 'Fetch Elections by ID',
             onPress: () async {
-              var id = await OrgDatabase().GetOrgId();
-              print('OrgID:$id');
+              QuerySnapshot? querySnapshot =
+                  await ElectionController().fetchElections();
+
+              ElectionModel? e = ElectionModel();
+              var size = querySnapshot.docs.length;
+              for (var i = 0; i < size; i++) {
+                e = await ElectionDatabase()
+                    .fetchElectionById(querySnapshot.docs[i].id);
+                print(e!.startDate!.toDate());
+              }
             },
           )
         ],

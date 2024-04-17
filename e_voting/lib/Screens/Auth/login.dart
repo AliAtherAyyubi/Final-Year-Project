@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loading = true;
       });
-      String? res = await user.Signin(context, email.text, password.text);
+      String? res = await user.Signin(email.text, password.text);
 
       if (res != null) {
         MyAlert.Alert('Success', res);

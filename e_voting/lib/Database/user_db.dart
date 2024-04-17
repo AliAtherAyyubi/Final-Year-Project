@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Providers/userData.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 class userDatabase {
-  // MyUser user = MyUser();
-
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> CreateUserById(UserModel user) async {
+  Future<void> createUserById(UserModel user) async {
     firestore.collection('users').doc(user.userId).set({
       'userId': user.userId,
       'username': user.userName!.toLowerCase(),
@@ -18,6 +20,21 @@ class userDatabase {
       'phone': user.phone,
       'role': user.role
       // 'accountCreated': user.accountCreated,
+    });
+  }
+
+  // To update user info //
+
+  Future<void> updateUser(String field, String value) async {
+    UserData data = Get.put(UserData());
+    DocumentReference docRef =
+        firestore.collection('users').doc(data.userID.toString());
+    docRef.update({field: value}).then(
+      (_) {
+        print('Updated Successfully');
+      },
+    ).catchError((_) {
+      print('Cannot updated');
     });
   }
 

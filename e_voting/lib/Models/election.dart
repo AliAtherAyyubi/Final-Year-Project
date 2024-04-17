@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ElectionModel {
   String? electionId;
   String? electionName;
   // String? address;
   String? description;
-  String? startDate;
-  String? endDate;
+  Timestamp? startDate;
+  Timestamp? endDate;
   String? status;
   String? orgId;
 

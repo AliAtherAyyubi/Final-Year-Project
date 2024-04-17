@@ -23,4 +23,24 @@ class ElectionDatabase {
       print('error :$e');
     }
   }
+  // Fetch Eelction by ID //
+
+  Future<ElectionModel?> fetchElectionById(String id) async {
+    try {
+      DocumentSnapshot doc =
+          await firestore.collection('election').doc(id).get();
+
+      return ElectionModel(
+          electionName: doc['name'],
+          description: doc['description'],
+          electionId: doc['electionId'],
+          orgId: doc['orgId'],
+          startDate: doc['startDate'],
+          endDate: doc['endDate'],
+          status: doc['status']);
+    } on FirebaseException catch (e) {
+      print('Error while fetching Election details');
+      return null;
+    }
+  }
 }

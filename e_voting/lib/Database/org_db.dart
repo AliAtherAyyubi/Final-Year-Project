@@ -9,17 +9,20 @@ class OrgDatabase {
 
   Future<void> createOrgDB(OrgModel org) async {
     try {
-      DocumentReference docRef = await firestore
-          .collection('organization')
-          .add({
-        'name': org.orgName,
-        'description': org.description,
-        'adminId': org.adminId
-      });
+      String? checkOrg = await GetOrgId();
 
-      await docRef.update({'orgId': docRef.id});
-
-      print('Added Organization');
+      if (checkOrg == null) {
+        // Retrieve the orgId from the first matching document
+        await firestore.collection('organization').add({
+          'name': org.orgName,
+          'description': org.description,
+          'adminId': org.adminId
+        });
+        print('Added Organization');
+      } else {
+        // No documents found with the provided adminId
+        print('You can only create one organization at one time only!');
+      }
     } on FirebaseException catch (e) {
       print('Error from firebase,${e.toString()}');
     }
@@ -36,7 +39,7 @@ class OrgDatabase {
 
       if (querySnapshot.docs.isNotEmpty) {
         // Retrieve the orgId from the first matching document
-        String orgId = querySnapshot.docs.first.get('orgId');
+        String orgId = querySnapshot.docs.first.id;
         return orgId;
       } else {
         // No documents found with the provided adminId
@@ -46,9 +49,63 @@ class OrgDatabase {
       // print('${id}');
     } on FirebaseException catch (e) {
       print('Error:${e.toString()}');
-      return e.toString();
+      return null;
     } catch (e) {
       print('Error');
+      return null;
+    }
+  }
+  // Fetch Organization //
+
+  Future<OrgModel?> fetchOrg() async {
+    try {
+      var orgid = await GetOrgId();
+
+      DocumentSnapshot doc =
+          await firestore.collection('organization').doc(orgid).get();
+
+      return OrgModel(
+          orgName: doc['name'],
+          description: doc['description'],
+          adminId: doc['adminId']);
+      // print('${id}');
+    } on FirebaseException catch (e) {
+      print('Error while fetching organization details');
+      return null;
+    } catch (e) {
+      print('Error');
+      return null;
+    }
+  }
+  // Update Organization //
+
+  Future<void> updateOrg(OrgModel org) async {
+    try {
+      var orgid = await GetOrgId();
+
+      await firestore.collection('organization').doc(orgid).update({
+        'name': org.orgName,
+        'description': org.description,
+        // 'adminId': org.adminId
+      });
+
+      print('updated Organization');
+    } on FirebaseException catch (e) {
+      print('Error from firebase cannot update');
+    }
+  }
+
+  // Delete Organization //
+
+  Future<void> deleteOrg() async {
+    try {
+      var orgid = await GetOrgId();
+
+      await firestore.collection('organization').doc(orgid).delete();
+
+      print('Deleted Organization');
+    } on FirebaseException catch (e) {
+      print('Error from firebase cannot update');
     }
   }
 }

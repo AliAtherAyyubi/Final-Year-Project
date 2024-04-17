@@ -10,7 +10,6 @@ import 'package:e_voting/Services/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -40,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
         loading = true;
       });
       String? res = await user.RegisterUser(
-          context, username.text, cnic.text, email.text, password.text);
+          username.text, cnic.text, email.text, password.text);
 
       if (res == null) {
         MyAlert.Alert('Account', 'Your account is created successfully!');
@@ -176,7 +175,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         )),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                        Get.off(LoginPage(),
+                            transition: Transition.leftToRight);
                       },
                       child: Text('Sign in',
                           style: GoogleFonts.poppins(

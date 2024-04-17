@@ -4,13 +4,12 @@ class UserData extends GetxController {
   var username = 'user name'.obs;
   var userID = "".obs;
   void setname(n) {
-    username.value = n.toString();
-    print(username);
+    username.value = n;
   }
 
   //set User ID //
   void setUserId(id) {
-    userID.value = id.toString();
+    userID.value = id;
     print('UserID: $userID');
   }
 }
