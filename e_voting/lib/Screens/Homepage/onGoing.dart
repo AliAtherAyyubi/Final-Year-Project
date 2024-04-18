@@ -68,6 +68,16 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
     });
   }
 
+  String getDate(int index) {
+    var startDay = querySnapshot.docs[index].get('startDate').toDate().day;
+    var endDay = querySnapshot.docs[index].get('endDate').toDate().day;
+    String month =
+        getMonthName(querySnapshot.docs[index].get('startDate').toDate().month);
+
+    String time = '$month $startDay - $endDay';
+    return time;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -87,11 +97,9 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      String time =
-                          '${getMonthName(querySnapshot.docs[index].get('startDate').toDate().month)} ${querySnapshot.docs[index].get('startDate').toDate().day}th to ${querySnapshot.docs[index].get('endDate').toDate().day}th';
                       return VoteCard(
                         title: querySnapshot.docs[index].get('name'),
-                        time: time,
+                        time: getDate(index),
                         description:
                             querySnapshot.docs[index].get('description'),
                       );
@@ -147,10 +155,13 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                 ),
               ],
             )
-          : Center(
-              child: CircularProgressIndicator(
-              color: AppStyle.primaryColor,
-            )),
+          : const Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: Center(
+                  child: CircularProgressIndicator(
+                color: AppStyle.textClr,
+              )),
+            ),
     );
   }
 }

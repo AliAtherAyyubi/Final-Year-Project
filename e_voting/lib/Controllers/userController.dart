@@ -2,17 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
-import 'package:e_voting/Screens/Widgets/alert.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class UserController {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
-
   UserModel user = UserModel();
 
   // Getx States Manager //
@@ -111,13 +108,10 @@ class UserController {
     await _auth.currentUser!.updatePassword(value);
   }
 
-  Future<void> updateUserImage(String value) async {
-    await userDatabase().updateUser('imageUrl', value);
-  }
-
   Future<void> updateUserPhone(String value) async {
     await userDatabase().updateUser('phone', value);
   }
+
   // to Delete accounts of all users //
 
 // Future<void> deleteAllUserAccounts() async {
