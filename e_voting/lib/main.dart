@@ -15,6 +15,7 @@ import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +31,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Main App //
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ));
-  // runApp(const MyApp());
+  // runApp(DevicePreview(
+  //   enabled: !kReleaseMode,
+  //   builder: (context) => MyApp(), // Wrap your app
+  // ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -46,11 +47,11 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer(builder: (context, orientation, ScreenType) {
       return GetMaterialApp(
         title: 'E-voting App',
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
+        // builder: FToastBuilder(),
+        // useInheritedMediaQuery: true,
+        // locale: DevicePreview.locale(context),
+        // builder: DevicePreview.appBuilder,
+
         debugShowCheckedModeBanner: false,
         // getPages: [
         //   GetPage(
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: Sample(),
+        home: RegisterPage(),
       );
     });
   }

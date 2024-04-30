@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AboutContent extends StatelessWidget {
-  const AboutContent({super.key});
+  List<dynamic>? description;
+  AboutContent({super.key, this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class AboutContent extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'My name is Ana Pilar, but you can just call me Ani. I am 26 years old and I\'m currently living in Belgrano, CABA. This is my third year studying Architecture in the University UIX. Also, I am working as a part-time teacig assistant.',
+            description![0] ?? " ",
             style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -41,7 +42,7 @@ class AboutContent extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'I combine experience with passion. I am incredibly commited to advocating for you. My focus: better mental health resources, fairer assessments, and affordable on-campus living. Open communication, strong advocacy - that\'s my promise. Let\'s make our university thrive!',
+            description![1] ?? " ",
             style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w500,

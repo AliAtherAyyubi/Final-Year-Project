@@ -52,6 +52,10 @@ dependencies:
   firebase_storage: ^11.6.0
   image_picker: ^1.0.8
   file_picker: ^8.0.0+1
+  fluttertoast: ^8.2.5
+  http: ^1.1.0
+  mask_text_input_formatter: ^2.9.0
+  flutter_image_compress: ^2.2.0
 
 dev_dependencies:
   flutter_test:

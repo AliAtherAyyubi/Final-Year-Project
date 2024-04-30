@@ -17,7 +17,12 @@ class UserController {
 
   /// Registration of User into Database //
   Future<String?> RegisterUser(
-      String name, String cnic, String email, String password) async {
+    String name,
+    String cnic,
+    role,
+    String email,
+    String password,
+  ) async {
     try {
       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -28,6 +33,7 @@ class UserController {
         user.userName = name;
         user.cnic = cnic;
         user.email = email;
+        user.role = role;
         //
         userDatabase().createUserById(user);
         // Meanwhile Sign in //
@@ -62,7 +68,7 @@ class UserController {
         userState.setname(user.userName);
         // Set User ID //
         userState.setUserId(credential.user!.uid);
-
+        userState.setUserImage(user.imageUrl ?? "");
         return 'Signed in successfully';
       }
       return null;

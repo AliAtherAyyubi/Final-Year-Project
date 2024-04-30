@@ -28,18 +28,21 @@ class _RegisterPageState extends State<RegisterPage> {
   var email = TextController().email;
   var password = TextController().password;
   // var confirmPassword = TextController().confirmPassword;
+  String? role;
 
   Validation validate = Validation();
   UserController user = UserController();
-
   bool loading = false;
+  // User Register Method //
   void Register() async {
+    print(role);
+
     if (_formKey.currentState!.validate()) {
       setState(() {
         loading = true;
       });
       String? res = await user.RegisterUser(
-          username.text, cnic.text, email.text, password.text);
+          username.text, cnic.text, role, email.text, password.text);
 
       if (res == null) {
         MyAlert.Alert('Account', 'Your account is created successfully!');
@@ -104,6 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: '35201-4565326-2',
                           maxlength: 15,
                           icon: Icons.badge,
+                          inputFormat: validate.maskFormatter,
                           validator: (value) => validate.isValidCnic(value),
                         ),
                         AuthTextField(
@@ -123,6 +127,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           hidebtn: Icons.visibility_off,
                           validator: (value) => validate.isValidPassword(value),
                         ),
+                        DropDownItems(
+                          onRoleChanged: (value) {
+                            setState(() {
+                              role = value;
+                            });
+                          },
+                        ),
+
                         // AuthTextField(
                         //   controller: confirmPassword,
                         //   keyboardType: TextInputType.emailAddress,
@@ -154,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     )),
                 SizedBox(height: 30),
                 Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     'By signing up, you agree to our Terms of Service and Privacy Policy',
                     style: GoogleFonts.poppins(

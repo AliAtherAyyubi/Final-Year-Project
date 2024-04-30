@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Models/election.dart';
 
 class ElectionDatabase {

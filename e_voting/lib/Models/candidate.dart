@@ -1,19 +1,21 @@
-class Candidate {
-  String? candidateID;
-  String? electionID;
-  String? candidateName;
-  String? description;
-  String? designation;
+class CandidateModel {
+  String? candidateId;
+  String? userId;
+  // String? electionId;
+  String? orgId;
+  String? cnic;
+  List<String>? description;
   int? voteCount;
-  // String? imageURL;
-  String? orgID;
+  List<String>? links;
 
-  Candidate(
-      {this.candidateID,
-      this.electionID,
-      this.candidateName,
-      this.description,
-      this.designation,
-      this.voteCount,
-      this.orgID});
+  CandidateModel({
+    this.candidateId,
+    this.userId,
+    this.orgId,
+    this.cnic,
+    // this.electionId,
+    this.description,
+    this.voteCount,
+    this.links,
+  });
 }

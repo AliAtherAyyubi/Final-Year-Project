@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Controllers/candidate_control.dart';
 import 'package:e_voting/Controllers/election_control.dart';
+import 'package:e_voting/Database/user_db.dart';
+import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/VotingInfo.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
+import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteCard.dart';
+import 'package:e_voting/Services/dateTime.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -21,42 +26,23 @@ class OnGoingElectionPage extends StatefulWidget {
 
 class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   // OnGoingElectionPage({super.key});
-  String getMonthName(int monthNumber) {
-    List<String> monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    return monthNames[
-        monthNumber - 1]; // Adjust index since month numbers start from 1
-  }
 
-  List<String> candidateName = [
-    'Harry Brook',
-    'Alice Henry',
-    'William Washington',
-    'Sohaib Zafar',
-    'Syed Ali Raza',
-    'Asgar Zaidi'
-  ];
+  List<String>? candidateName = [];
   late QuerySnapshot querySnapshot;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    fetchElection();
-  }
+  QuerySnapshot? queryCandidate;
+  late var doc;
 
   bool data = false;
+  String getDate(int index) {
+    var startDay = querySnapshot.docs[index].get('startDate').toDate().day;
+    var endDay = querySnapshot.docs[index].get('endDate').toDate().day;
+    String month = TimeService().getMonthName(
+        querySnapshot.docs[index].get('startDate').toDate().month);
+
+    String time = '$month $startDay - $endDay';
+    return time;
+  }
+
   Future<void> fetchElection() async {
     QuerySnapshot Snapshot = await ElectionController().fetchElections();
 
@@ -68,14 +54,25 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
     });
   }
 
-  String getDate(int index) {
-    var startDay = querySnapshot.docs[index].get('startDate').toDate().day;
-    var endDay = querySnapshot.docs[index].get('endDate').toDate().day;
-    String month =
-        getMonthName(querySnapshot.docs[index].get('startDate').toDate().month);
+  UserModel user = UserModel();
+  Future<void> fetchCanddiates() async {
+    queryCandidate = await CandidateController().fetchCandidates();
+    doc = queryCandidate!.docs;
+    for (var i = 0; i < queryCandidate!.docs.length; i++) {
+      var uid = queryCandidate!.docs[i].get('userId');
+      user = await userDatabase().getUserById(uid);
+      candidateName!.add(user.userName.toString());
+    }
+    // print(candidateName);
+    setState(() {});
+  }
 
-    String time = '$month $startDay - $endDay';
-    return time;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchElection();
+    fetchCanddiates();
   }
 
   @override
@@ -114,7 +111,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                 /// Candidates Section //
 
                 Text(
-                  '6 Candidates',
+                  '${candidateName!.length} Candidate',
                   style: GoogleFonts.inter(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
@@ -125,23 +122,36 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                   //color: Colors.amber,
                   width: double.infinity,
                   height: Applayout.getheight(200),
-                  child: ListView.builder(
-                      itemCount: 6,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      // padding: EdgeInsets.only(left: Applayout.getWidth(20)),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => CandidateProfile(),
-                                transition: Transition.fade);
-                          },
-                          child: CandidateAvatar(
-                            name: candidateName[index],
-                            image: 'assets/images/profile.jpg',
+                  child: candidateName != null
+                      ? ListView.builder(
+                          itemCount: candidateName!.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                    () => CandidateProfile(
+                                          name:
+                                              candidateName![index].capitalize,
+                                          description:
+                                              doc[index].get('description'),
+                                        ),
+                                    transition: Transition.fade);
+                              },
+                              child: CandidateAvatar(
+                                name: candidateName![index].capitalize,
+                                image: 'assets/images/profile.jpg',
+                              ),
+                            );
+                          })
+                      : SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: Loading(
+                            color: AppStyle.textClr,
                           ),
-                        );
-                      }),
+                        ),
                 ),
                 MyButton(
                   text: 'VOTE NOW',

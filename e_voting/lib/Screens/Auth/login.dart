@@ -45,17 +45,12 @@ class _LoginPageState extends State<LoginPage> {
       String? res = await user.Signin(email.text, password.text);
 
       if (res != null) {
-        MyAlert.Alert('Success', res);
-        Future.delayed(
-            const Duration(
-              seconds: 1,
-            ), () {
-          Get.off(() => Dashboard(), transition: Transition.rightToLeft);
-        });
+        MyAlert.Alert('Success', 'Signed in successfully!');
+        Get.off(() => Dashboard(), transition: Transition.rightToLeft);
       }
       // for invalid users //
       else {
-        MyAlert.Alert('Error', 'Invalid Username and Password');
+        MyAlert.Alert("Error", 'Invalid Username and Password');
         setState(() {
           loading = false;
         });
@@ -74,9 +69,6 @@ class _LoginPageState extends State<LoginPage> {
           elevation: 10,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              // borderRadius: BorderRadius.only(
-              //     bottomLeft: Radius.circular(Applayout.getWidth(13.0)),
-              //     bottomRight: Radius.circular(Applayout.getWidth(13.0))),
               gradient: AppStyle.Gradientcolor,
             ),
           ),
@@ -164,6 +156,9 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.only(left: 20),
                   child: GestureDetector(
                     onTap: () {
+                      setState(() {
+                        loading = false;
+                      });
                       Get.to(() => ForgotPasswordPage(),
                           transition: Transition.rightToLeft);
                     },
@@ -188,6 +183,9 @@ class _LoginPageState extends State<LoginPage> {
                       style: GoogleFonts.poppins(fontSize: 15)),
                   GestureDetector(
                     onTap: () {
+                      setState(() {
+                        loading = false;
+                      });
                       Get.to(RegisterPage(),
                           duration: Duration(milliseconds: 500),
                           transition: Transition.rightToLeft);

@@ -1,36 +1,48 @@
+import 'dart:io';
+
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ImageController {
   FirebaseStorage storage = FirebaseStorage.instance;
-
+  UserData user = Get.put(UserData());
   // CRUD //
   Future<void> updateUserImage(String value) async {
     await userDatabase().updateUser('imageUrl', value);
   }
 
   //    Uploading User/Admin/Candidate image//
-  Future<void> uploadImage(filename, image) async {
+  Future<String?> uploadImage(filename, File image) async {
     try {
-      // Upload image to Firebase Storage
+      // Compress and Upload image to Firebase Storage//
+      final compressedImage = await FlutterImageCompress.compressAndGetFile(
+        image.path,
+        image.path,
+        minWidth: 1024,
+        minHeight: 1024,
+        quality: 80,
+      );
+      image = File(compressedImage!.path);
       final ref = storage.ref('profile_images/$filename');
-      await ref.putData(image);
-
+      await ref.putFile(image);
+      print(image.lengthSync());
       // Get download URL
       final String downloadURL = await ref.getDownloadURL();
-
+      user.setUserImage(downloadURL);
       // Store download URL in Firestore
       updateUserImage(downloadURL);
 
       // Show success message or navigate to next screen
       print('Uploaded Image');
-    } catch (error) {
+      return null;
+    } on FirebaseException catch (error) {
       // Handle error
       print('Error uploading image: $error');
+      return 'System Error';
     }
   }
 
@@ -39,35 +51,15 @@ class ImageController {
     String uid = Get.put(UserData()).userID.toString();
     // Get download URL
     UserModel user = await userDatabase().getUserById(uid);
-
     return user.imageUrl!;
   }
 
-  // to get from gallery and upload //
-  Future<void> getImage() async {
-    // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: false,
-    );
+  // Future<void> downloadImageToLocalFile(String url) async {
+  //   final String fileName = 'user_profile_image.jpg';
+  //   final Directory systemTempDir = await getTemporaryDirectory();
+  //   final File tempFile = File('${systemTempDir.path}/$fileName');
 
-    if (result != null) {
-      final file = result.files.first;
-
-      // Check if the selected file is an image
-      if (file.extension != 'jpg' &&
-          file.extension != 'jpeg' &&
-          file.extension != 'png' &&
-          file.extension != 'gif') {
-        print('Please select an image file.');
-        return;
-      }
-      final fileBytes = result.files.first.bytes;
-      final fileName = result.files.first.name;
-      // var fileName = 'user';
-      uploadImage(fileName, fileBytes);
-    } else {
-      print('Please Select image only');
-    }
-  }
+  //   http.Response response = await http.get(url);
+  //   await tempFile.writeAsBytes(response.bodyBytes);
+  // }
 }
