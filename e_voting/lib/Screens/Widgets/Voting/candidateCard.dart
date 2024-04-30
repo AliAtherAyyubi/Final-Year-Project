@@ -74,6 +74,7 @@ class CandidateCard extends StatelessWidget {
         ),
 
         // Buttons
+
         buttonBar: GFButtonBar(
           padding: EdgeInsets.all(0),
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -99,7 +100,7 @@ class CandidateCard extends StatelessWidget {
               text: 'VOTE',
               elevation: 0,
               onPress: () {
-                Get.to(() => idValidationPage(), transition: Transition.fadeIn);
+                Get.to(() => idValidationPage(), transition: Transition.fade);
               },
             ),
           ],

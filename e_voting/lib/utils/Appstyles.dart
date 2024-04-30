@@ -66,7 +66,7 @@ class AppStyle {
   static TextStyle textStyle4 = GoogleFonts.inter(
     fontSize: 16,
     color: Colors.black,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
   );
 
   static TextStyle textstyle2B = GoogleFonts.inter(

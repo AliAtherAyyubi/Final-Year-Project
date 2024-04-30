@@ -23,7 +23,7 @@ class MyButton extends StatelessWidget {
   MyButton(
       {required this.text,
       this.width,
-      this.height = 60,
+      this.height = 55,
       this.elevation = 10,
       this.backClr = AppStyle.primaryColor,
       this.textClr = Colors.white,
@@ -50,8 +50,10 @@ class MyButton extends StatelessWidget {
         //       offset: Offset(0, 10))
         // ]),
         child: ElevatedButton(
-          onPressed: buttonFunction,
+          onPressed: loading! ? null : buttonFunction,
+          // style
           style: ElevatedButton.styleFrom(
+            disabledBackgroundColor: AppStyle.primaryColor,
             backgroundColor: backClr,
             elevation: elevation,
             shadowColor: AppStyle.primaryColor,

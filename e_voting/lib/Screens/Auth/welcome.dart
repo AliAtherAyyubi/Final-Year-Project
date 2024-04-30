@@ -13,71 +13,76 @@ class WelcomePage extends StatelessWidget {
   // const WelcomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    String username = Provider.of<UserData>(context).username.capitalize!;
+    UserData user = Get.put(UserData());
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(17),
-            vertical: Applayout.getheight(15)),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'Hi ${username}!\nWelcome to \nWeVote!',
-              style: GoogleFonts.inter(
-                  fontSize: 25.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff2AAA8A)),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: Applayout.getheight(20),
-            ),
-            SizedBox(
-              width: 80.w,
-              child: Text(
-                'Your account has been created successfully!',
-                style: GoogleFonts.inter(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-                textAlign: TextAlign.center,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: Applayout.getWidth(17),
+              vertical: Applayout.getheight(15)),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
               ),
-            ),
-            SizedBox(
-              height: Applayout.getheight(20),
-            ),
-            Expanded(
-              flex: 10,
-              // height: 40.h,
-              // width: 80.w,
-              // margin: EdgeInsets.only(top: 20),
-              child: Image.asset(
-                'assets/images/voted2.jpg',
-                filterQuality: FilterQuality.high,
+              Obx(
+                () => Text(
+                  'Hi ${user.username.toString().capitalize}!\nWelcome to \nWeVote!',
+                  style: GoogleFonts.inter(
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff2AAA8A)),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            // continue Button //
-            MyButton(
-              text: 'CONTINUE',
-              width: 100.w,
-              onPress: () {
-                Get.off(() => Dashboard(),
-                    // duration: const Duration(seconds: 1),
-                    transition: Transition.rightToLeft);
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            )
-          ],
+              SizedBox(
+                height: Applayout.getheight(20),
+              ),
+              SizedBox(
+                width: 80.w,
+                child: Text(
+                  'Your account has been created successfully!',
+                  style: GoogleFonts.inter(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: Applayout.getheight(20),
+              ),
+              Expanded(
+                flex: 10,
+                // height: 40.h,
+                // width: 80.w,
+                // margin: EdgeInsets.only(top: 20),
+                child: Image.asset(
+                  'assets/images/voted2.jpg',
+                  filterQuality: FilterQuality.high,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              // continue Button //
+              MyButton(
+                text: 'CONTINUE',
+                width: 100.w,
+                onPress: () {
+                  Get.off(() => Dashboard(),
+                      // duration: const Duration(seconds: 1),
+                      transition: Transition.rightToLeft);
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ),
       ),
     );

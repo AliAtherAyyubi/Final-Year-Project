@@ -1,6 +1,15 @@
 import 'package:e_voting/Services/regExp.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Validation {
+  // Cnic Mask  formatter//
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '#####-#######-#',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  ///
+  // validation for name
   String? isValidName(String? value) {
     if (value!.isEmpty) {
       return 'Can\'t be empty';

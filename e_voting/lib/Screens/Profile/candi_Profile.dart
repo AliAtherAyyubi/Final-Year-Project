@@ -14,6 +14,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateProfile extends StatefulWidget {
+  String? name;
+  List<dynamic>? description;
+  List<String>? links;
+  CandidateProfile({this.name, this.description, this.links});
   @override
   State<CandidateProfile> createState() => _CandidateProfileState();
 }
@@ -21,6 +25,7 @@ class CandidateProfile extends StatefulWidget {
 class _CandidateProfileState extends State<CandidateProfile>
     with SingleTickerProviderStateMixin {
   // CandidateProfile({super.key});
+
   late TabController _tabController;
 
   @override
@@ -60,6 +65,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                   padding: EdgeInsets.only(left: 20, top: 6.h),
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
+                    alignment: Alignment.center,
                   ),
                 ),
                 //// Profile image ///
@@ -77,7 +83,7 @@ class _CandidateProfileState extends State<CandidateProfile>
             //   height: 10,
             // ),
             Text(
-              'Ana Pilar Martinez',
+              widget.name.toString().capitalize!,
               style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -101,7 +107,9 @@ class _CandidateProfileState extends State<CandidateProfile>
               height: 40.h,
               child: TabBarView(controller: _tabController, children: [
                 // !sst Page //
-                AboutContent(),
+                AboutContent(
+                  description: widget.description,
+                ),
                 // 2nd page //
                 ContactPage()
               ]),

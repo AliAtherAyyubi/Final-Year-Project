@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class AuthTextField extends StatefulWidget {
@@ -15,7 +17,8 @@ class AuthTextField extends StatefulWidget {
   final int? maxlength;
   final TextEditingController? controller;
   final FormFieldValidator? validator;
-
+  final MaskTextInputFormatter? inputFormat;
+  final Function(String value)? onChange;
   AuthTextField(
       {this.controller,
       this.validator,
@@ -24,9 +27,8 @@ class AuthTextField extends StatefulWidget {
       this.maxlength,
       required this.labelText,
       this.hintText,
-      // required this.fontSize,
-      // required this.fontWeight,
-      // this.letterSpacing,
+      this.onChange,
+      this.inputFormat,
       this.hidebtn,
       this.icon});
 
@@ -47,20 +49,19 @@ class _AuthTextFieldState extends State<AuthTextField> {
         validator: widget.validator,
         controller: widget.controller,
         // autovalidateMode: AutovalidateMode.onUserInteraction,
-        // inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'a-z'))],
+
+        inputFormatters:
+            widget.inputFormat != null ? [widget.inputFormat!] : null,
         keyboardType: widget.keyboardType,
         obscureText: widget.obscureText,
         textAlignVertical: TextAlignVertical.center,
-
         cursorColor: Colors.black,
         cursorWidth: 1,
         maxLength: widget.maxlength,
-        style: GoogleFonts.inter(
-          fontWeight: FontWeight.w500,
-          fontSize: 16,
-          // letterSpacing: letterSpacing,
-        ),
-
+        // styles //
+        style: AppStyle.textStyle4,
+        onChanged: widget.onChange,
+        // Style //
         decoration: InputDecoration(
             labelText: widget.labelText,
             hintText: widget.hintText,
@@ -76,9 +77,9 @@ class _AuthTextFieldState extends State<AuthTextField> {
             contentPadding: EdgeInsets.all(15),
             alignLabelWithHint: true,
             hintStyle: GoogleFonts.inter(
-                color: Colors.black54, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontWeight: FontWeight.w500),
             labelStyle: GoogleFonts.inter(
-                color: Colors.black54, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontWeight: FontWeight.w500),
             errorStyle: GoogleFonts.inter(
               color: Colors.red,
               fontSize: 13,
@@ -113,6 +114,75 @@ class _AuthTextFieldState extends State<AuthTextField> {
             ),
       ),
     );
+  }
+}
+
+// DropDown button //
+
+class DropDownItems extends StatefulWidget {
+  String? selectedValue;
+
+  final ValueChanged<String?>? onRoleChanged;
+
+  DropDownItems({super.key, this.onRoleChanged});
+  @override
+  State<DropDownItems> createState() => _DropDownItemsState();
+}
+
+class _DropDownItemsState extends State<DropDownItems> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+        style: AppStyle.textStyle4,
+        borderRadius: BorderRadius.circular(10),
+        isExpanded: true,
+        decoration: InputDecoration(
+          enabled: true,
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          // contentPadding: EdgeInsets.all(15),
+          // enabledBorder: OutlineInputBorder(
+          //   borderSide: BorderSide.none,
+          //   borderRadius: BorderRadius.circular(10),
+          // ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          hintText: 'Choose your role',
+
+          errorStyle: GoogleFonts.inter(
+            color: Colors.red,
+            fontSize: 13,
+          ),
+        ),
+        validator: (value) => value == null ? "Please choose your role!" : null,
+        dropdownColor: Colors.grey.shade100,
+        value: widget.selectedValue,
+        onChanged: (newValue) {
+          setState(() {
+            widget.selectedValue = newValue;
+          });
+          widget.onRoleChanged?.call(newValue);
+        },
+        items: const [
+          DropdownMenuItem(
+            child: Text('Owner'),
+            value: 'Owner',
+          ),
+          DropdownMenuItem(
+            child: Text('Candidate'),
+            value: 'Candidate',
+          ),
+          DropdownMenuItem(
+            child: Text('Voter'),
+            value: 'Voter',
+          ),
+        ]);
   }
 }
 

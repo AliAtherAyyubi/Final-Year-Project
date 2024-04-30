@@ -1,11 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class UserData with ChangeNotifier {
-  String username = 'user name';
+class UserData extends GetxController {
+  var username = 'user name'.obs;
+  var userID = "".obs;
+  var userImage = "".obs;
 
-  void setname(String n) {
-    username = n;
-    print(username);
-    notifyListeners();
+  void setname(n) {
+    username.value = n;
+  }
+
+  //set User ID //
+  void setUserId(id) {
+    userID.value = id;
+    print('UserID: $userID');
+  }
+
+  void setUserImage(image) {
+    userImage.value = image;
   }
 }

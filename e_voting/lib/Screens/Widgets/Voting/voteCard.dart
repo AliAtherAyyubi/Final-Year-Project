@@ -39,7 +39,7 @@ class VoteCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Vote for \n ${title}',
+              'Vote for \n $title',
               style: GoogleFonts.inter(
                   fontSize: 17.sp,
                   height: 1.4,
@@ -63,7 +63,7 @@ class VoteCard extends StatelessWidget {
               description,
               style: GoogleFonts.inter(
                 fontSize: 15.sp,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
             ),
