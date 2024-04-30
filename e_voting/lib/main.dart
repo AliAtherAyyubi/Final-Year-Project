@@ -9,12 +9,11 @@ import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Profile/userProfile.dart';
-import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
+import 'package:e_voting/Screens/test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
