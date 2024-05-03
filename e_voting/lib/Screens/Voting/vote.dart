@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Controllers/candidate_control.dart';
+import 'package:e_voting/Database/user_db.dart';
+import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
+import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -15,17 +22,30 @@ class VotingPage extends StatefulWidget {
 }
 
 class _VotingPageState extends State<VotingPage> {
+  candidateData candi_data = Get.put(candidateData());
+  //
   String voteName = 'Vote for Student Representatives';
+  // QuerySnapshot? queryCandidate;
+  bool loading = true;
+  //
+  List<Map<String, dynamic>> candidateInfo = [];
+  void fetchCandidates() {
+    setState(() {
+      candidateInfo = candi_data.candidatesList
+          .map((item) => item as Map<String, dynamic>)
+          .toList();
+      loading = false;
+    });
+  }
 
-  List<String> candidateName = [
-    'Harry Brook',
-    'Alice Henry',
-    'William Washington',
-    'Sohaib Zafar',
-    'Syed Ali Raza',
-    'Asgar Zaidi',
-    'Najam-Ud-Din',
-  ];
+  // UserModel user = UserModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchCandidates();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,24 +94,29 @@ class _VotingPageState extends State<VotingPage> {
 
           /// Candidate Card Section ///
 
-          Expanded(
-            child: SizedBox(
-              width: Applayout.getscreenWidth() > 760 ? 70.w : 100.w,
+          loading
+              ? Loading(
+                  color: Colors.green,
+                )
+              : Expanded(
+                  child: SizedBox(
+                    width: Applayout.getscreenWidth() > 760 ? 70.w : 100.w,
 
-              // height: 400,e
-              child: ListView.builder(
-                  itemCount: candidateName.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  itemBuilder: (context, index) {
-                    return CandidateCard(
-                        name: candidateName[index],
-                        description:
-                            'I\'ll let your voice be heard and work towards the fulfillment of your needs.');
-                  }),
-            ),
-          ),
+                    // height: 400,e
+                    child: ListView.builder(
+                        itemCount: candidateInfo.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        itemBuilder: (context, index) {
+                          return CandidateCard(
+                            name: candidateInfo[index]['name'] ?? "",
+                            description:
+                                candidateInfo[index]['description'] ?? "",
+                          );
+                        }),
+                  ),
+                ),
 
           // SizedBox(
           //   height: 30,

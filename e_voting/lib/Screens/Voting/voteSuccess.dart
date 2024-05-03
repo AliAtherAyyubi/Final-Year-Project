@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
@@ -5,6 +6,7 @@ import 'package:e_voting/utils/Appstyles.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VoteSuccess extends StatelessWidget {
   const VoteSuccess({super.key});
@@ -25,12 +27,14 @@ class VoteSuccess extends StatelessWidget {
                       gap(
                         Height: Applayout.getheight(70),
                       ),
-                      Textwidget(
-                        text: "Thank You",
+                      Container(
+                        width: 50.w,
+                        child: Text(
+                          'Thank you! Your vote has submitted successfully.',
+                          style: AppStyle.textStyle2.copyWith(fontSize: 30),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      Textwidget(text: "Your Vote has"),
-                      Textwidget(text: "Submittted"),
-                      Textwidget(text: "Successfully."),
                       gap(
                         Height: Applayout.getheight(30),
                       ),
@@ -38,29 +42,39 @@ class VoteSuccess extends StatelessWidget {
                       gap(
                         Height: Applayout.getheight(36),
                       ),
-                      Text(
-                        "The receipt is send to your",
-                        style: AppStyle.textStyle4,
-                      ),
-                      Text(
-                        "email address",
-                        style: AppStyle.textStyle4,
+                      Container(
+                        width: 60.w,
+                        child: Text(
+                          "The receipt is send to your email address.",
+                          style: AppStyle.textStyle4
+                              .copyWith(fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       gap(
                         Height: Applayout.getheight(45),
                       ),
-                      MyButton(text: "BACK YO HOME SCREEN"),
+                      MyButton(
+                        text: "BACK TO HOME SCREEN",
+                        width: 95.w,
+                        onPress: () {
+                          Get.to(() => Dashboard(),
+                              transition: Transition.rightToLeft);
+                        },
+                      ),
                       gap(
-                        Height: Applayout.getheight(15),
+                        Height: Applayout.getheight(10),
                       ),
                       MyButton(
                         onPress: () {
                           Get.to(() => ReceiptScreen());
                         },
                         text: "RECEIPT",
-                        width: 250,
-                        textClr: AppStyle.primaryColor,
-                        backClr: Colors.white,
+                        width: 40.w,
+                        textClr: AppStyle.textClr,
+                        backClr: Colors.transparent,
+                        elevation: 0,
+                        border: false,
                       ),
                     ],
                   ),

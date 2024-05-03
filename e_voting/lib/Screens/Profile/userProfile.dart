@@ -34,34 +34,34 @@ class _UserProfilePageState extends State<UserProfilePage> {
     try {
       XFile? pickedFile =
           await ImagePicker().pickImage(source: ImageSource.gallery);
-      final File path = File(pickedFile!.path);
-
-      // final name = pickedFile.name;
-      final id = data.userID;
-      setState(() {
-        loading = true;
-      });
-      var res = await ImageController().uploadImage(id, path);
-      if (res == null) {
-        fetchImage();
-        MyAlert.Alert("", 'Uploaded Successfully!');
-      } else
-        MyAlert.Alert("", res.toString());
+      if (pickedFile != null) {
+        final File path = File(pickedFile.path);
+        // final name = pickedFile.name;
+        final id = data.userID;
+        setState(() {
+          imageUrl = "";
+          loading = true;
+        });
+        var res = await ImageController().uploadImage(id, path);
+        if (res == null) {
+          fetchImage();
+          MyAlert.Alert("", 'Uploaded Successfully!');
+        } else
+          MyAlert.Alert("", res.toString());
+      }
     } catch (e) {
       MyAlert.Alert("", 'System Error');
 
-      print('System Error');
+      // print('System Error');
     }
   }
 
   Future<void> fetchImage() async {
-    // String url = await ImageController().fetchImage();
-    // data.setUserImage(url);
     setState(() {
       imageUrl = data.userImage.toString();
+      print(imageUrl);
       loading = false;
     });
-    print(imageUrl);
   }
 
   @override
@@ -84,9 +84,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         scrollDirection: Axis.vertical,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         children: [
-          const gap(
-            Height: 5,
-          ),
+          // const gap(
+          //   Height: 5,
+          // ),
+
           Stack(
             alignment: Alignment.center,
             children: [
@@ -99,7 +100,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       padding: EdgeInsets.all(0),
                       child: GFAvatar(
                           backgroundColor: Colors.transparent,
-                          radius: 80,
+                          radius: 90,
                           child: loading
                               ? Loading(
                                   color: AppStyle.primaryColor,
@@ -110,7 +111,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   color: AppStyle.primaryColor,
                                 )))
                   : CircularProfileAvatar(
-                      imageUrl!,
+                      imageUrl,
                       radius: 90,
                       cacheImage: true,
                       elevation: 10,
@@ -137,7 +138,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             Height: Applayout.getheight(20),
           ),
           Obx(() => Text(
-                data.username.toString().toUpperCase(),
+                data.username.toUpperCase(),
                 style: AppStyle.textStyle1.copyWith(
                   fontSize: 25,
                   color: AppStyle.textClr,
@@ -174,7 +175,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             // loading: true,
             onPress: () async {
               await UserController().signOut();
-              Get.off(() => LoginPage(),
+              Get.offAll(() => LoginPage(),
                   // duration: const Duration(seconds: 1),
                   transition: Transition.native);
             },

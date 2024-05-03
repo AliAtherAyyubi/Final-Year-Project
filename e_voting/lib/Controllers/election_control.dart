@@ -4,9 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Models/election.dart';
+import 'package:e_voting/Providers/electionData.dart';
+import 'package:e_voting/Services/dateTime.dart';
+import 'package:get/get.dart';
 
 class ElectionController {
   ElectionModel e = ElectionModel();
+  electionData elec_data = Get.put(electionData());
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // create election //
@@ -24,16 +28,26 @@ class ElectionController {
   }
   // Fetch Elections //
 
-  Future<QuerySnapshot> fetchElections() async {
+  Future<void> fetchElections() async {
+    List<Map<String, dynamic>> electionList = [];
+
     QuerySnapshot querySnapshot = await firestore.collection('election').get();
-    // var len = querySnapshot.docs.length;
-    // print('No of Elections:$len');
-    // print(querySnapshot.docs[1].get('electionId'));
-    // querySnapshot.docs.forEach((element) {
-    //   print(element.data());
-    //   print('\n');
-    // });
-    return querySnapshot;
+    if (querySnapshot.docs.isNotEmpty) {
+      var doc = querySnapshot.docs;
+      // for looop
+      for (var i = 0; i < doc.length; i++) {
+        Map<String, dynamic> electionInfo = {
+          'name': doc[i].get('name').toString().capitalize,
+          'description': doc[i].get('description'),
+          'date': TimeService().displayDate(i, querySnapshot),
+          // Add more fields as needed
+        };
+        electionList.add(electionInfo);
+      }
+      elec_data.setElections(electionList);
+    } else {
+      print('Elections are empty');
+    }
   }
   // Update Organization //
 

@@ -71,7 +71,7 @@ class _SampleState extends State<Sample> {
               ? Container(
                   height: 50,
                   width: 80,
-                  child: Image.asset(imageFile!.toString()),
+                  child: Image.file(imageFile!),
                 )
               // ? CircularProfileAvatar(
               //     imageUrl!,

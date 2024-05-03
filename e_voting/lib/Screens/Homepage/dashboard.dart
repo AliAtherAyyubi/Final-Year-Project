@@ -56,7 +56,7 @@ class _DashboardState extends State<Dashboard>
                     ]),
                 child: IconButton(
                   onPressed: () {
-                    Get.to(UserProfilePage(),
+                    Get.to(() => UserProfilePage(),
                         transition: Transition.rightToLeft);
                   },
                   icon: Icon(FontAwesomeIcons.user),

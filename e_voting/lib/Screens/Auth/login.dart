@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       String? res = await user.Signin(email.text, password.text);
 
       if (res != null) {
-        MyAlert.Alert('Success', 'Signed in successfully!');
+        // MyAlert.Alert('Success', 'Signed in successfully!');
         Get.off(() => Dashboard(), transition: Transition.rightToLeft);
       }
       // for invalid users //

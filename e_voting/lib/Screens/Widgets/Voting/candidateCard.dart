@@ -15,10 +15,13 @@ class CandidateCard extends StatelessWidget {
   // const CandidateCard({super.key});
 
   final String name;
-  final String description;
-  CandidateCard({required this.name, required this.description, super.key});
+  // final String description;
+  List<dynamic>? description;
+  List<String>? links;
+  CandidateCard(
+      {required this.name, required this.description, this.links, super.key});
 
-  double btnHeight = Applayout.smaller290() ? 45 : 60;
+  double btnHeight = Applayout.smaller290() ? 45 : 55;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +33,15 @@ class CandidateCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
-                blurRadius: 10,
-                offset: Offset(0, 10),
-                color: Color.fromARGB(255, 110, 215, 166))
+                blurRadius: 7,
+                offset: Offset(0, 3),
+                color: Color.fromARGB(255, 105, 215, 157))
           ]),
 
       /// GF card //
       child: GFCard(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: Color(0xffA4FBBE),
+        color: AppStyle.cardClr,
         // borderRadius: const BorderRadius.all(Radius.circular(20)),
         margin: EdgeInsets.all(0),
         padding: EdgeInsets.only(top: 10, bottom: 15),
@@ -52,7 +55,7 @@ class CandidateCard extends StatelessWidget {
             padding: const EdgeInsets.only(right: 15),
             child: MyAvatar(
               image: 'assets/images/profile.jpg',
-              radius: Applayout.greater760() ? 10.w : 14.w,
+              radius: 15.w,
             ),
           ),
           title: Padding(
@@ -61,20 +64,18 @@ class CandidateCard extends StatelessWidget {
               name,
               style: GoogleFonts.inter(
                   color: Colors.black,
-                  fontSize: 18.sp,
+                  fontSize: 19.sp,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
           ),
           subTitle: Text(
-            description,
-            style: GoogleFonts.inter(fontSize: 17.sp, color: Colors.black),
+            description![0],
+            style: GoogleFonts.inter(fontSize: 15.sp, color: Colors.black),
             textAlign: TextAlign.left,
           ),
         ),
-
         // Buttons
-
         buttonBar: GFButtonBar(
           padding: EdgeInsets.all(0),
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -88,7 +89,12 @@ class CandidateCard extends StatelessWidget {
               backClr: Colors.white,
               textClr: AppStyle.textClr,
               onPress: () {
-                Get.to(() => CandidateProfile(), transition: Transition.fade);
+                Get.to(
+                    () => CandidateProfile(
+                          name: name,
+                          description: description,
+                        ),
+                    transition: Transition.fade);
               },
             ),
             SizedBox(

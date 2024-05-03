@@ -18,6 +18,7 @@ class AuthScreen extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: AppStyle.primaryColor,
+
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         AuthTextField(
                           controller: password,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           labelText: 'Password',
                           icon: Icons.password,

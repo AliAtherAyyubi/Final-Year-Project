@@ -16,20 +16,11 @@ class ImageController {
   }
 
   //    Uploading User/Admin/Candidate image//
-  Future<String?> uploadImage(filename, File image) async {
+  Future<String?> uploadImage(filename, image) async {
     try {
-      // Compress and Upload image to Firebase Storage//
-      final compressedImage = await FlutterImageCompress.compressAndGetFile(
-        image.path,
-        image.path,
-        minWidth: 1024,
-        minHeight: 1024,
-        quality: 80,
-      );
-      image = File(compressedImage!.path);
       final ref = storage.ref('profile_images/$filename');
       await ref.putFile(image);
-      print(image.lengthSync());
+      // print(image.lengthSync());
       // Get download URL
       final String downloadURL = await ref.getDownloadURL();
       user.setUserImage(downloadURL);

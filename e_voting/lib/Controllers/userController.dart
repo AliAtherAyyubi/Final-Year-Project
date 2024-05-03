@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +38,7 @@ class UserController {
         //
         userDatabase().createUserById(user);
         // Meanwhile Sign in //
-        print('Registered Successfully');
+        // print('Registered Successfully');
         await Signin(email, password);
         return null;
       }
@@ -45,17 +46,17 @@ class UserController {
       // Catch FirebaseAuthException to handle specific errors
       if (e.code == 'email-already-in-use') {
         // Email is already in use, handle this case
-        print('Email is not valid');
+        // print('Email is not valid');
         return 'Email already exist'; // Return error message
       } else {
         // Handle other FirebaseAuthException errors
-        print('Email is not valid');
+        // print('Email is not valid');
         return 'Error: ${e.message}'; // Return error message
       }
     }
   }
 
-  // Sign in Function //
+  // Sign in Function //w
 
   Future<String?> Signin(String email, String password) async {
     try {
@@ -64,7 +65,8 @@ class UserController {
       // Checking Crdentials //
       if (credential.user != null) {
         user = await userDatabase().getUserById(credential.user!.uid);
-        //
+        // //
+        print(user.userName);
         userState.setname(user.userName);
         // Set User ID //
         userState.setUserId(credential.user!.uid);
@@ -85,6 +87,8 @@ class UserController {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
+      userState.dispose;
+      Get.find<candidateData>().dispose();
       print('User signed out successfully ');
     } catch (e) {
       print('Error signing out: $e');

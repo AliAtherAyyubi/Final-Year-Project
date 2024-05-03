@@ -1,3 +1,4 @@
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -52,59 +53,63 @@ class ConfirmVote extends StatelessWidget {
               ),
             ),
             gap(
-              Height: Applayout.getheight(40),
+              Height: Applayout.getheight(20),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              height: Applayout.getheight(360),
+              height: Applayout.getheight(380),
+              // color: Colors.amber,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    height: Applayout.getheight(180),
+                    height: Applayout.getheight(200),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppStyle.textcolor.withOpacity(0.7),
-                              spreadRadius: 0.7,
-                              blurRadius: 1,
-                              offset: Offset(0, 6))
-                        ],
-                        borderRadius:
-                            BorderRadius.circular(Applayout.getheight(20)),
-                        gradient: AppStyle.Gradientcolor1),
+                      color: Color.fromARGB(255, 92, 250, 163),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Color.fromARGB(255, 39, 171, 79),
+                            spreadRadius: 0,
+                            blurRadius: 5,
+                            offset: Offset(0, 5))
+                      ],
+                      borderRadius:
+                          BorderRadius.circular(Applayout.getheight(30)),
+                    ),
                   ),
                   Positioned(
                       top: 0,
                       child: CandidateAvatar(
-                        radius: 25.w,
-                        fontsize: 15,
+                        radius: 24.w,
+                        fontsize: 20,
                         image: 'assets/images/profile.jpg',
                         name: "Najam-Ud-Din",
                       )),
-                  Positioned(
-                    left: 0,
-                    bottom: 10,
-                    child: MyButton(
-                      text: "CONFIRM",
-                      onPress: () {
-                        Get.to(() => VoteSuccess());
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 10,
-                    child: MyButton(
-                      text: "CANCEL",
-                      backClr: Colors.white,
-                      textClr: Colors.black,
-                    ),
-                  ),
                 ],
               ),
-            )
+            ),
+            MyButton(
+              text: 'CONFIRM',
+              width: 95.w,
+              onPress: () {
+                Get.to(() => VoteSuccess(), transition: Transition.native);
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            MyButton(
+              text: 'CANCEL',
+              width: 95.w,
+              textClr: AppStyle.textClr,
+              elevation: 0,
+              border: false,
+              backClr: Colors.transparent,
+              onPress: () {
+                Get.to(() => Dashboard(), transition: Transition.fadeIn);
+              },
+            ),
           ],
         ),
       ),

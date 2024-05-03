@@ -37,18 +37,19 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         // margin: EdgeInsets.only(top: 10),
         width: width,
         height: height,
-        // decoration:
-        //     BoxDecoration(borderRadius: BorderRadius.circular(50), boxShadow: [
-        //   BoxShadow(
-        //       color: Color.fromARGB(255, 114, 247, 118),
-        //       blurRadius: 10,
-        //       spreadRadius: 0,
-        //       offset: Offset(0, 10))
-        // ]),
+        // decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(50),
+        //     boxShadow: const [
+        //       BoxShadow(
+        //           color: Color.fromARGB(185, 161, 255, 189),
+        //           blurRadius: 3,
+        //           spreadRadius: 0,
+        //           offset: Offset(0, 5))
+        //     ]),
         child: ElevatedButton(
           onPressed: loading! ? null : buttonFunction,
           // style
@@ -57,6 +58,7 @@ class MyButton extends StatelessWidget {
             backgroundColor: backClr,
             elevation: elevation,
             shadowColor: AppStyle.primaryColor,
+
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
                 side: border!

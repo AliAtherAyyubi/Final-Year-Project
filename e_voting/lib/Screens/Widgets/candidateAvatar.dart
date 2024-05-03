@@ -33,7 +33,7 @@ class CandidateAvatar extends StatelessWidget {
             Height: Applayout.getheight(10),
           ),
           Container(
-            width: Applayout.getWidth(100),
+            // width: Applayout.getWidth(100),
             child: Text(
               name!,
               style: GoogleFonts.inter(

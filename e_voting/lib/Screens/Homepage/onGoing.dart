@@ -1,9 +1,10 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Controllers/candidate_control.dart';
 import 'package:e_voting/Controllers/election_control.dart';
-import 'package:e_voting/Database/user_db.dart';
+import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Models/user.dart';
-import 'package:e_voting/Providers/VotingInfo.dart';
+import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
@@ -26,53 +27,36 @@ class OnGoingElectionPage extends StatefulWidget {
 
 class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   // OnGoingElectionPage({super.key});
-
-  List<String>? candidateName = [];
-  late QuerySnapshot querySnapshot;
-  QuerySnapshot? queryCandidate;
-  late var doc;
-
+  candidateData candi_data = Get.put(candidateData());
+  electionData elec_data = Get.put(electionData());
+  // //
+  List<Map<String, dynamic>> candidateInfo = [];
+  List<Map<String, dynamic>> electionList = [];
+//
   bool data = false;
-  String getDate(int index) {
-    var startDay = querySnapshot.docs[index].get('startDate').toDate().day;
-    var endDay = querySnapshot.docs[index].get('endDate').toDate().day;
-    String month = TimeService().getMonthName(
-        querySnapshot.docs[index].get('startDate').toDate().month);
 
-    String time = '$month $startDay - $endDay';
-    return time;
-  }
-
-  Future<void> fetchElection() async {
-    QuerySnapshot Snapshot = await ElectionController().fetchElections();
+  Future<void> fetchInfo() async {
+    if (elec_data.electionList.isEmpty) {
+      await ElectionController().fetchElections();
+      await CandidateController().fetchCandidates();
+    }
 
     setState(() {
-      if (Snapshot.docs.isNotEmpty) {
-        querySnapshot = Snapshot;
-        data = true;
-      }
+      electionList = elec_data.electionList
+          .map((element) => element as Map<String, dynamic>)
+          .toList();
+      candidateInfo = candi_data.candidatesList
+          .map((item) => item as Map<String, dynamic>)
+          .toList();
+      data = true;
     });
-  }
-
-  UserModel user = UserModel();
-  Future<void> fetchCanddiates() async {
-    queryCandidate = await CandidateController().fetchCandidates();
-    doc = queryCandidate!.docs;
-    for (var i = 0; i < queryCandidate!.docs.length; i++) {
-      var uid = queryCandidate!.docs[i].get('userId');
-      user = await userDatabase().getUserById(uid);
-      candidateName!.add(user.userName.toString());
-    }
-    // print(candidateName);
-    setState(() {});
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchElection();
-    fetchCanddiates();
+    fetchInfo();
   }
 
   @override
@@ -87,22 +71,24 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 
                 // Card Section //
                 Container(
-                  color: Colors.transparent,
-                  height: 30.h,
-                  child: ListView.builder(
-                    itemCount: querySnapshot.docs.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return VoteCard(
-                        title: querySnapshot.docs[index].get('name'),
-                        time: getDate(index),
-                        description:
-                            querySnapshot.docs[index].get('description'),
-                      );
-                    },
-                  ),
-                ),
+                    color: Colors.transparent,
+                    // width: 400,
+                    height: 30.h,
+                    child: Swiper(
+                        itemCount: electionList.length,
+                        loop: false,
+                        pagination: SwiperPagination(
+                            alignment: Alignment.bottomCenter,
+                            margin: EdgeInsets.only(top: 20)),
+                        itemBuilder: (BuildContext context, int index) {
+                          final election = electionList[index];
+                          return VoteCard(
+                            title: election['name'] ?? "",
+                            time: election['date'] ?? "",
+                            description:
+                                election['description'] ?? "Network error",
+                          );
+                        })),
 
                 SizedBox(
                   height: Applayout.getheight(10),
@@ -111,51 +97,41 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                 /// Candidates Section //
 
                 Text(
-                  '${candidateName!.length} Candidate',
+                  '${candidateInfo.length} Candidate',
                   style: GoogleFonts.inter(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 // Candidates List>>>>>>
                 Container(
-                  margin: EdgeInsets.only(top: Applayout.getheight(25)),
-                  // padding: EdgeInsets.symmetric(horizontal: 10),
-                  //color: Colors.amber,
-                  width: double.infinity,
-                  height: Applayout.getheight(200),
-                  child: candidateName != null
-                      ? ListView.builder(
-                          itemCount: candidateName!.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                    () => CandidateProfile(
-                                          name:
-                                              candidateName![index].capitalize,
-                                          description:
-                                              doc[index].get('description'),
-                                        ),
-                                    transition: Transition.fade);
-                              },
-                              child: CandidateAvatar(
-                                name: candidateName![index].capitalize,
-                                image: 'assets/images/profile.jpg',
-                              ),
-                            );
-                          })
-                      : SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Loading(
-                            color: AppStyle.textClr,
-                          ),
-                        ),
-                ),
+                    margin: EdgeInsets.only(top: Applayout.getheight(25)),
+                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    //color: Colors.amber,
+                    width: double.infinity,
+                    height: Applayout.getheight(200),
+                    child: ListView.builder(
+                        itemCount: candidateInfo.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                  () => CandidateProfile(
+                                        name: candidateInfo[index]['name'],
+                                        description: candidateInfo[index]
+                                            ['description'],
+                                      ),
+                                  transition: Transition.fade);
+                            },
+                            child: CandidateAvatar(
+                              name: candidateInfo[index]['name'],
+                              image: 'assets/images/profile.jpg',
+                            ),
+                          );
+                        })),
                 MyButton(
                   text: 'VOTE NOW',
-                  width: 90.w,
+                  width: 95.w,
                   onPress: () {
                     Get.to(() => VotingPage(), transition: Transition.fade);
                   },
