@@ -15,22 +15,22 @@ class VoteLabel extends StatelessWidget {
       {this.voteName,
       this.fontsize = 18,
       this.fontWeight = FontWeight.w500,
-      this.alignment = Alignment.topLeft});
+      this.alignment});
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: AppStyle.textClr,
-            size: 3.h,
+            size: 25,
           ),
         ),
-
         // gap(
         //   Width: Applayout.getWidth(3),
         // ),
@@ -41,7 +41,8 @@ class VoteLabel extends StatelessWidget {
               voteName!,
               style: GoogleFonts.inter(
                   color: AppStyle.textClr,
-                  fontSize: Applayout.smaller290() ? 17.sp : 18.sp,
+                  // fontSize: 18.sp,
+                  fontSize: fontsize,
                   fontWeight: fontWeight),
             ),
           ),

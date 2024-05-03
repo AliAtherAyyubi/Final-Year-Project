@@ -65,6 +65,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                   padding: EdgeInsets.only(left: 20, top: 6.h),
                   child: VoteLabel(
                     voteName: 'Vote for Student Representatives',
+                    alignment: Alignment.center,
                   ),
                 ),
                 //// Profile image ///
