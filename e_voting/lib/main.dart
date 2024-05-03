@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         //     transitionDuration: Duration(microseconds: 1),
         //   )
         // ],
-        home: RegisterPage(),
+        home: SplashScreen(),
       );
     });
   }
