@@ -18,8 +18,7 @@ class CandidateCard extends StatelessWidget {
   // final String description;
   List<dynamic>? description;
   List<String>? links;
-  CandidateCard(
-      {required this.name, required this.description, this.links, super.key});
+  CandidateCard({required this.name, this.description, this.links, super.key});
 
   double btnHeight = Applayout.smaller290() ? 45 : 55;
 

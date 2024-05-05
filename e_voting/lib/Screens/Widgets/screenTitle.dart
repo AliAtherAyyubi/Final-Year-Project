@@ -21,31 +21,27 @@ class VoteLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
-          onTap: () {
+        IconButton(
+          onPressed: () {
             Get.back();
           },
-          child: const Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
-            color: AppStyle.textClr,
-            size: 25,
           ),
+          color: AppStyle.textClr,
+          iconSize: 25,
+          splashRadius: 20,
         ),
         // gap(
         //   Width: Applayout.getWidth(3),
         // ),
-        Expanded(
-          child: Align(
-            alignment: alignment!,
-            child: Text(
-              voteName!,
-              style: GoogleFonts.inter(
-                  color: AppStyle.textClr,
-                  // fontSize: 18.sp,
-                  fontSize: fontsize,
-                  fontWeight: fontWeight),
-            ),
-          ),
+        Text(
+          voteName!,
+          style: GoogleFonts.inter(
+              color: AppStyle.textClr,
+              // fontSize: 18.sp,
+              fontSize: fontsize,
+              fontWeight: fontWeight),
         ),
       ],
     );

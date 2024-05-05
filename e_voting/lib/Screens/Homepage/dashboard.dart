@@ -1,3 +1,6 @@
+import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Profile/userProfile.dart';
 import 'package:e_voting/Screens/Homepage/onGoing.dart';
 import 'package:e_voting/Screens/Homepage/upcoming.dart';
@@ -5,10 +8,12 @@ import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Dashboard extends StatefulWidget {
@@ -23,11 +28,18 @@ class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   // Completion screen//
   late TabController? tabController;
+  UserData data = Get.put(UserData());
+  Future<void> setUserId() async {
+    UserModel user = await UserLocalData().fetchLocalUser();
+    data.setUserId(user.userId);
+    print(data.userID);
+  }
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(vsync: this, length: 2);
+    setUserId();
   }
 
   @override

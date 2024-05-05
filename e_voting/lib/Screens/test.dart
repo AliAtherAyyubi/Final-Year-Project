@@ -35,17 +35,16 @@ class _SampleState extends State<Sample> {
     super.initState();
   }
 
-  File? imageFile;
+  XFile? imageFile;
 // to get from gallery and upload //
   Future<void> getImage() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    final File path = File(pickedFile!.path);
+    // final File path = File(pickedFile!.path);
     // final name = pickedFile.name;
-    final name = data.userID;
     setState(() {
       // imageUrl = null;
-      imageFile = path;
+      imageFile = pickedFile;
     });
 
     // await ImageController().uploadImage(name, path);
@@ -68,16 +67,15 @@ class _SampleState extends State<Sample> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           imageFile != null
-              ? Container(
-                  height: 50,
-                  width: 80,
-                  child: Image.file(imageFile!),
+              ? CircularProfileAvatar(
+                  "",
+                  radius: 80,
+                  cacheImage: true,
+                  child: Image.file(
+                    File(imageFile!.path),
+                    fit: BoxFit.cover,
+                  ),
                 )
-              // ? CircularProfileAvatar(
-              //     imageUrl!,
-              //     radius: 80,
-              //     cacheImage: true,
-              //   )
               : CircularProgressIndicator(),
           Obx(() => Text(
                 data.username.toString().toUpperCase(),
@@ -103,7 +101,7 @@ class _SampleState extends State<Sample> {
                 c.cnic = '35201-45653161-1';
                 c.description = [
                   'Dynamic leader with vision, integrity, and dedication, transforming organizations positively.',
-                  'Dynamic leader with vision, integrity, and dedication, transforming organizations positively.'
+                  'I\'m  a student at GC University Lahore leading students to tech environment and in future students will be able to make '
                 ];
                 c.userId = data.userID.toString();
 

@@ -12,10 +12,11 @@ class UserData extends GetxController {
   //set User ID //
   void setUserId(id) {
     userID.value = id;
-    print('UserID: $userID');
+    // print('UserID: $userID');
   }
 
   void setUserImage(image) {
     userImage.value = image;
+    // print(userImage.value);
   }
 }

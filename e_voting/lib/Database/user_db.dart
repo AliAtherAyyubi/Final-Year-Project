@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
@@ -27,8 +28,8 @@ class userDatabase {
 
   Future<void> updateUser(String field, String value) async {
     UserData data = Get.put(UserData());
-    DocumentReference docRef =
-        firestore.collection('users').doc(data.userID.toString());
+    String uid = data.userID.toString();
+    DocumentReference docRef = firestore.collection('users').doc(uid);
     docRef.update({field: value}).then(
       (_) {
         print('Updated Successfully');
@@ -36,6 +37,14 @@ class userDatabase {
     ).catchError((_) {
       print('Cannot updated');
     });
+    DocumentSnapshot doc = await getUserJsonData(uid);
+    await UserLocalData().setLocalUser(doc);
+  }
+
+  Future<DocumentSnapshot> getUserJsonData(String uid) async {
+    DocumentSnapshot doc = await firestore.collection('users').doc(uid).get();
+    // print(doc.data());
+    return doc;
   }
 
   Future<UserModel> getUserById(String uid) async {

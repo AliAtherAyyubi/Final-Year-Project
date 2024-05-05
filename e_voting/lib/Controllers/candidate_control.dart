@@ -22,10 +22,10 @@ class CandidateController {
         user = await userDatabase().getUserById(uid);
         //
         Map<String, dynamic> candidateInfo = {
-          'name': user.userName.toString().capitalize,
-          'description': querySnapshot.docs[i].get('description'),
-          'links': querySnapshot.docs[i].get('links'),
-          'votes': querySnapshot.docs[i].get('voteCount'),
+          'name': user.userName.toString().capitalize ?? "",
+          'description': querySnapshot.docs[i].get('description') ?? "",
+          'links': querySnapshot.docs[i].get('links') ?? "",
+          'votes': querySnapshot.docs[i].get('voteCount') ?? "",
           // Add more fields as needed
         };
         candidatesList.add(candidateInfo);

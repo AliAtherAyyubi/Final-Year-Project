@@ -23,18 +23,20 @@ class VotingPage extends StatefulWidget {
 
 class _VotingPageState extends State<VotingPage> {
   candidateData candi_data = Get.put(candidateData());
-  //
-  String voteName = 'Vote for Student Representatives';
-  // QuerySnapshot? queryCandidate;
-  bool loading = true;
-  //
   List<Map<String, dynamic>> candidateInfo = [];
+
+  //
+  // String voteName = '';
+  // QuerySnapshot? queryCandidate;
+  bool data = false;
+  //
   void fetchCandidates() {
     setState(() {
       candidateInfo = candi_data.candidatesList
           .map((item) => item as Map<String, dynamic>)
           .toList();
-      loading = false;
+      // print(candidateInfo);
+      data = true;
     });
   }
 
@@ -59,7 +61,7 @@ class _VotingPageState extends State<VotingPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: VoteLabel(
-              voteName: voteName,
+              voteName: "Vote for Student Representatives",
               // alignment: Alignment.center,
             ),
           ),
@@ -94,29 +96,26 @@ class _VotingPageState extends State<VotingPage> {
 
           /// Candidate Card Section ///
 
-          loading
-              ? Loading(
-                  color: Colors.green,
-                )
-              : Expanded(
-                  child: SizedBox(
-                    width: Applayout.getscreenWidth() > 760 ? 70.w : 100.w,
+          Expanded(
+            child: SizedBox(
+              width: Applayout.getscreenWidth() > 760 ? 70.w : 100.w,
 
-                    // height: 400,e
-                    child: ListView.builder(
-                        itemCount: candidateInfo.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        itemBuilder: (context, index) {
-                          return CandidateCard(
-                            name: candidateInfo[index]['name'] ?? "",
-                            description:
-                                candidateInfo[index]['description'] ?? "",
-                          );
-                        }),
-                  ),
-                ),
+              // height: 400,e
+              child: ListView.builder(
+                itemCount: candidateInfo.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                itemBuilder: (context, index) {
+                  final candidate = candidateInfo[index];
+                  return CandidateCard(
+                    name: candidate['name'],
+                    description: candidate['description'],
+                  );
+                },
+              ),
+            ),
+          )
 
           // SizedBox(
           //   height: 30,

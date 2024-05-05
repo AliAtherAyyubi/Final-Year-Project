@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
@@ -64,13 +65,18 @@ class UserController {
           email: email, password: password);
       // Checking Crdentials //
       if (credential.user != null) {
-        user = await userDatabase().getUserById(credential.user!.uid);
+        DocumentSnapshot doc =
+            await userDatabase().getUserJsonData(credential.user!.uid);
+
+        await UserLocalData().setLocalUser(doc);
+        // user = await userDatabase().getUserById(credential.user!.uid);
         // //
-        print(user.userName);
-        userState.setname(user.userName);
-        // Set User ID //
+
+        // print(user.userName);
+        // userState.setname(user.userName);
+        // // Set User ID //
         userState.setUserId(credential.user!.uid);
-        userState.setUserImage(user.imageUrl ?? "");
+        // userState.setUserImage(user.imageUrl ?? "");
         return 'Signed in successfully';
       }
       return null;
@@ -87,8 +93,9 @@ class UserController {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
+      await UserLocalData().removeUser();
       userState.dispose;
-      Get.find<candidateData>().dispose();
+      // Get.find<candidateData>().dispose();
       print('User signed out successfully ');
     } catch (e) {
       print('Error signing out: $e');

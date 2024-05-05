@@ -7,6 +7,11 @@ import 'package:e_voting/Screens/Auth/resetPassword.dart';
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
+import 'package:e_voting/Screens/Voting/idCheck.dart';
+import 'package:e_voting/Screens/Voting/vote.dart';
+import 'package:e_voting/Screens/Voting/voteSuccess.dart';
+import 'package:e_voting/Screens/test.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -25,11 +30,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Main App //
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ));
-  // runApp(const MyApp());
+  // runApp(DevicePreview(
+  //   enabled: !kReleaseMode,
+  //   builder: (context) => MyApp(), // Wrap your app
+  // ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -47,7 +52,7 @@ class MyApp extends StatelessWidget {
         builder: DevicePreview.appBuilder,
 
         debugShowCheckedModeBanner: false,
-        // getPages: [
+        // getPages: [z
         //   GetPage(
         //     name: "/loginpage",
         //     page: () => LoginPage(),

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Controllers/image_control.dart';
 import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
@@ -27,8 +29,10 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   UserData data = Get.put(UserData());
+  UserModel user = UserModel();
 // to get from gallery and upload //
   String imageUrl = "";
+  String name = "";
   bool loading = false;
   Future<void> getImage() async {
     try {
@@ -44,7 +48,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         });
         var res = await ImageController().uploadImage(id, path);
         if (res == null) {
-          fetchImage();
+          fetchUserInfo();
           MyAlert.Alert("", 'Uploaded Successfully!');
         } else
           MyAlert.Alert("", res.toString());
@@ -56,10 +60,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  Future<void> fetchImage() async {
+  Future<void> fetchUserInfo() async {
+    UserModel getuser = await UserLocalData().fetchLocalUser();
+    print(getuser.userName);
     setState(() {
-      imageUrl = data.userImage.toString();
-      print(imageUrl);
+      user = getuser;
+      imageUrl = user.imageUrl!;
+      name = user.userName!.toUpperCase();
       loading = false;
     });
   }
@@ -68,7 +75,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchImage();
+    fetchUserInfo();
   }
 
   @override
@@ -137,14 +144,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
           gap(
             Height: Applayout.getheight(20),
           ),
-          Obx(() => Text(
-                data.username.toUpperCase(),
-                style: AppStyle.textStyle1.copyWith(
-                  fontSize: 25,
-                  color: AppStyle.textClr,
-                ),
-                textAlign: TextAlign.center,
-              )),
+          Text(
+            name,
+            style: AppStyle.textStyle1.copyWith(
+              fontSize: 25,
+              color: AppStyle.textClr,
+            ),
+            textAlign: TextAlign.center,
+          ),
           const gap(
             Height: 20,
           ),

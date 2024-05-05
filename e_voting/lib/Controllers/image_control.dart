@@ -6,6 +6,8 @@ import 'package:e_voting/Providers/userData.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class ImageController {
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -26,7 +28,7 @@ class ImageController {
       user.setUserImage(downloadURL);
       // Store download URL in Firestore
       updateUserImage(downloadURL);
-
+      // downloadAndSaveImage(downloadURL);
       // Show success message or navigate to next screen
       print('Uploaded Image');
       return null;
@@ -45,12 +47,21 @@ class ImageController {
     return user.imageUrl!;
   }
 
-  // Future<void> downloadImageToLocalFile(String url) async {
-  //   final String fileName = 'user_profile_image.jpg';
-  //   final Directory systemTempDir = await getTemporaryDirectory();
-  //   final File tempFile = File('${systemTempDir.path}/$fileName');
+  // Storing Image Locally //
+  Future<void> downloadAndSaveImage(String imageUrl) async {
+    // final response = await storage.refFromURL(imageUrl).getDownloadURL();
+    final imageResponse = await HttpClient().getUrl(Uri.parse(imageUrl));
+    final imageFile = File(
+        '${(await getTemporaryDirectory()).path}/${path.basename(imageUrl)}');
+    final downloadedImage = await imageResponse.close();
+    await imageFile.writeAsBytes(downloadedImage as List<int>);
+  }
 
-  //   http.Response response = await http.get(url);
-  //   await tempFile.writeAsBytes(response.bodyBytes);
-  // }
+  Future<File> getLocalImageFile(String imageUrl) async {
+    final imageName = path.basename(imageUrl);
+    final localImagePath = '${(await getTemporaryDirectory()).path}/$imageName';
+    final localImageFile = File(localImagePath);
+    print(localImageFile.path);
+    return localImageFile;
+  }
 }
