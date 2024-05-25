@@ -3,8 +3,13 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Validation {
   // Cnic Mask  formatter//
-  var maskFormatter = MaskTextInputFormatter(
+  var cnicFormatter = MaskTextInputFormatter(
       mask: '#####-#######-#',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  var phoneFormatter = MaskTextInputFormatter(
+      mask: '####-#######',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
@@ -25,12 +30,11 @@ class Validation {
   String? isValidCnic(String? value) {
     if (value!.isEmpty) {
       return 'Can\'t be empty';
+    } else if (value.length < 15) {
+      return 'Enter a valid CNIC number';
+    } else if (!extString(value).isValidCnic) {
+      return 'Enter a valid CNIC Number!';
     }
-    // else if (value.length < 15) {
-    //   return 'Enter a valid CNIC number';
-    // } else if (!extString(value).isValidCnic) {
-    //   return 'Enter a valid CNIC Number!';
-    // }
 
     return null;
   }
@@ -55,6 +59,16 @@ class Validation {
     // else if (!extString(value).isValidEmail) {
     //   return 'Enter a valid password!';
     // }
+    return null;
+  }
+
+  String? isValidPhone(String? value) {
+    if (value!.isEmpty) {
+      return 'Can\'t be empty';
+    } else if (value.length < 13 && !extString(value).isValidPhone) {
+      return 'Invalid Phone Number!';
+    }
+
     return null;
   }
 }

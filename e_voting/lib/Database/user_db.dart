@@ -9,7 +9,10 @@ import 'package:get/get.dart';
 
 class userDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  UserData data = Get.put(UserData());
+  UserModel user = UserModel();
 
+  ///
   Future<void> createUserById(UserModel user) async {
     firestore.collection('users').doc(user.userId).set({
       'userId': user.userId,
@@ -19,7 +22,7 @@ class userDatabase {
       // 'password': user.password,
       'imageUrl': user.imageUrl,
       'phone': user.phone,
-      'role': user.role
+      'role': user.role!.toLowerCase()
       // 'accountCreated': user.accountCreated,
     });
   }
@@ -27,7 +30,6 @@ class userDatabase {
   // To update user info //
 
   Future<void> updateUser(String field, String value) async {
-    UserData data = Get.put(UserData());
     String uid = data.userID.toString();
     DocumentReference docRef = firestore.collection('users').doc(uid);
     docRef.update({field: value}).then(
@@ -37,14 +39,8 @@ class userDatabase {
     ).catchError((_) {
       print('Cannot updated');
     });
-    DocumentSnapshot doc = await getUserJsonData(uid);
-    await UserLocalData().setLocalUser(doc);
-  }
-
-  Future<DocumentSnapshot> getUserJsonData(String uid) async {
-    DocumentSnapshot doc = await firestore.collection('users').doc(uid).get();
-    // print(doc.data());
-    return doc;
+    user = await getUserById(uid);
+    await UserLocalData().setLocalUser(user);
   }
 
   Future<UserModel> getUserById(String uid) async {
@@ -60,5 +56,16 @@ class userDatabase {
         role: doc['role']
         // accountCreated: doc['accountCreated'],
         );
+  }
+
+  Future<bool> checkUserbyEmail(String email) async {
+    QuerySnapshot querySnapshot = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) return true;
+
+    return false;
   }
 }

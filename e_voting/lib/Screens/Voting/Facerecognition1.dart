@@ -15,13 +15,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FaceRecognition1 extends StatefulWidget {
   // const FaceRecognition1({super.key});
-
   @override
   State<FaceRecognition1> createState() => FaceRecognition1State();
 }
 
 class FaceRecognition1State extends State<FaceRecognition1> {
-  String voteName = 'Vote for Student Representatives';
   bool verification = false;
 
   @override
@@ -32,15 +30,7 @@ class FaceRecognition1State extends State<FaceRecognition1> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 6.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: VoteLabel(
-                voteName: voteName,
-              ),
-            ),
+            VoteLabel(),
             const SizedBox(
               height: 10,
             ),

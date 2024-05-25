@@ -27,7 +27,7 @@ class ImageController {
       final String downloadURL = await ref.getDownloadURL();
       user.setUserImage(downloadURL);
       // Store download URL in Firestore
-      updateUserImage(downloadURL);
+      await updateUserImage(downloadURL);
       // downloadAndSaveImage(downloadURL);
       // Show success message or navigate to next screen
       print('Uploaded Image');

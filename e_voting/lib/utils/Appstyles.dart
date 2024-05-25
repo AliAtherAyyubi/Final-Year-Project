@@ -5,33 +5,49 @@ const Color primary = Color(0xFF36bb75);
 
 class AppStyle {
   static const Color primaryColor = primary;
-  static const Color textClr = Color(0xff00A36C);
+  static const Color textClr = Color.fromARGB(255, 83, 163, 69);
   static const Color cardClr = Color(0xffA4FBBE);
-  static const Color darkGreen = Color(0xff228B22);
-  static const Color bluecolor = Color(0xFF29a0b0);
-  static const Color orangeColor = Color(0xfffb9736);
-  static const Color darkblueColor = Color(0xff25b9ff);
-  static const Color lightskyColor = Color(0xff25b9ff);
+  static const Color darkGreen = Color(0xff488f3c);
+  static const Color iconClr = textClr;
 
-  static LinearGradient Gradientcolor2 = const LinearGradient(
-    colors: [Color(0xfffb9736), Color(0xFF29a0b0)],
-    begin: Alignment.topLeft, // Where the gradient starts
-    end: Alignment.bottomRight, // Where the gradient ends
+  TextStyle h1 = GoogleFonts.inter(
+    fontSize: 36,
+    fontWeight: FontWeight.bold,
+    color: textClr,
   );
 
-  static LinearGradient Gradientcolor = const LinearGradient(
-    colors: [Color(0xFF36bb75), Color(0xFF29a0b0)],
-    begin: Alignment.topLeft, // Where the gradient starts
-    end: Alignment.bottomRight, // Where the gradient ends
+  TextStyle h2 = GoogleFonts.inter(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: textClr,
   );
 
-  static LinearGradient Gradientcolor1 = const LinearGradient(
-    colors: [Color(0xFF36bb75), Color.fromARGB(255, 223, 223, 223)],
-    begin: Alignment.topLeft, // Where the gradient starts
-    end: Alignment.bottomRight, // Where the gradient ends
+  TextStyle h3 = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: textClr,
   );
 
-  static Color textcolor = Color.fromARGB(255, 40, 40, 40);
+  TextStyle txt1 = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+  TextStyle txt2 = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+  TextStyle txt3 = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+  TextStyle txt4 = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w100,
+    color: Colors.black,
+  );
 
   static TextStyle headstyle = GoogleFonts.inter(
     fontSize: 40,
@@ -41,7 +57,7 @@ class AppStyle {
 
   static TextStyle textStyle1 = GoogleFonts.inter(
     fontSize: 18,
-    color: primary,
+    color: textClr,
     fontWeight: FontWeight.bold,
   );
 
@@ -75,10 +91,15 @@ class AppStyle {
     color: Colors.black,
   );
 
-  static TextStyle mainbuttonstyle = GoogleFonts.inter(
-    fontSize: 17,
-    fontWeight: FontWeight.w600,
-    letterSpacing: 1,
-    color: Colors.white,
+  static LinearGradient Gradientcolor = const LinearGradient(
+    colors: [Color(0xFF36bb75), Color(0xFF29a0b0)],
+    begin: Alignment.topLeft, // Where the gradient starts
+    end: Alignment.bottomRight, // Where the gradient ends
+  );
+
+  static LinearGradient Gradientcolor1 = const LinearGradient(
+    colors: [Color(0xFF36bb75), Color.fromARGB(255, 223, 223, 223)],
+    begin: Alignment.topLeft, // Where the gradient starts
+    end: Alignment.bottomRight, // Where the gradient ends
   );
 }

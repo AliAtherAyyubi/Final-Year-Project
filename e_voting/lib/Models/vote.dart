@@ -1,16 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class VoteModel {
   String? voteId;
   String? userId;
   String? electionId;
   String? candidateId;
-  int? totalVotes;
-  DateTime? Timestamp;
+  String? orgId;
+  String? votedFor;
+  Timestamp? time;
 
   VoteModel(
       {this.voteId,
       this.userId,
       this.electionId,
       this.candidateId,
-      this.totalVotes,
-      this.Timestamp});
+      this.orgId,
+      this.votedFor,
+      this.time});
 }

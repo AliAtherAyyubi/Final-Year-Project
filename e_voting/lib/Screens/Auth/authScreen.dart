@@ -31,11 +31,11 @@ class AuthScreen extends StatelessWidget {
               flex: 6,
               child: Container(
                 alignment: Alignment.center,
-                child: Text(
-                  'WeVote',
-                  style: AppStyle.headstyle.copyWith(
-                    color: Colors.white,
-                  ),
+                child: Image.asset(
+                  'assets/logo/logo.png',
+                  color: Colors.white,
+                  height: 150,
+                  width: 150,
                 ),
               ),
             ),

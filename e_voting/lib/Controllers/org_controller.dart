@@ -6,14 +6,29 @@ import 'package:provider/provider.dart';
 
 class OrgController {
   OrgModel org = OrgModel();
+  UserData userData = Get.put(UserData());
   // creating organization //
-  Future<void> createOrg() async {
+  Future<void> createOrg(name, address, description) async {
     var id = Get.put(UserData()).userID.toString();
 
-    org.orgName = 'ElectiCast';
-    org.description = 'ElectiCast is a cutting-edge mobile voting platform ';
+    org.orgName = name;
+    org.address = address;
+    org.description = description;
     org.adminId = id;
 
-    OrgDatabase().createOrgDB(org);
+    await OrgDatabase().createOrgDB(org);
+  }
+  //
+
+  Future<bool> isOrgExist() async {
+    var res = await OrgDatabase().GetOrgId();
+    if (res != null) return true;
+    return false;
+  }
+
+  String getOrgId() {
+    String id = userData.orgId.toString();
+    print(id);
+    return id;
   }
 }

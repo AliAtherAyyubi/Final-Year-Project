@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Controllers/org_controller.dart';
+import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Providers/userData.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class OrgDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
+  UserLocalData user = UserLocalData();
   Future<void> createOrgDB(OrgModel org) async {
     try {
       String? checkOrg = await GetOrgId();
@@ -15,22 +19,29 @@ class OrgDatabase {
         // Retrieve the orgId from the first matching document
         await firestore.collection('organization').add({
           'name': org.orgName,
+          'address': org.address,
           'description': org.description,
           'adminId': org.adminId
         });
+        MyAlert.showToast(1, 'Saved Successfully');
         print('Added Organization');
       } else {
         // No documents found with the provided adminId
+        MyAlert.showToast(0, 'Your Organization is already registered!');
+
         print('You can only create one organization at one time only!');
       }
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System or Network error');
+
       print('Error from firebase,${e.toString()}');
     }
   }
 
   Future<String?> GetOrgId() async {
     try {
-      String adminid = Get.put(UserData()).userID.toString();
+      var adminid = await UserController().getUserID();
+      print('adminId: ${adminid}');
 
       QuerySnapshot querySnapshot = await firestore
           .collection('organization')
@@ -41,14 +52,11 @@ class OrgDatabase {
         // Retrieve the orgId from the first matching document
         String orgId = querySnapshot.docs.first.id;
         return orgId;
-      } else {
-        // No documents found with the provided adminId
-        print('No organization found');
-        return null;
       }
-      // print('${id}');
+      return null;
     } on FirebaseException catch (e) {
-      print('Error:${e.toString()}');
+      MyAlert.showToast(0, 'System or Network error');
+
       return null;
     } catch (e) {
       print('Error');
@@ -57,19 +65,19 @@ class OrgDatabase {
   }
   // Fetch Organization //
 
-  Future<OrgModel?> fetchOrg() async {
+  Future<OrgModel?> fetchOrgById() async {
     try {
       var orgid = await GetOrgId();
-
       DocumentSnapshot doc =
           await firestore.collection('organization').doc(orgid).get();
 
       return OrgModel(
           orgName: doc['name'],
-          description: doc['description'],
-          adminId: doc['adminId']);
-      // print('${id}');
+          address: doc['address'],
+          description: doc['description']);
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Something went wrong!');
+
       print('Error while fetching organization details');
       return null;
     } catch (e) {
@@ -79,18 +87,21 @@ class OrgDatabase {
   }
   // Update Organization //
 
-  Future<void> updateOrg(OrgModel org) async {
+  Future<void> updateOrg(name, address, desc) async {
     try {
       var orgid = await GetOrgId();
 
       await firestore.collection('organization').doc(orgid).update({
-        'name': org.orgName,
-        'description': org.description,
+        'name': name,
+        'address': address,
+        'description': desc,
         // 'adminId': org.adminId
       });
-
+      MyAlert.showToast(1, 'Updated Successfully');
       print('updated Organization');
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Something went wrong!');
+
       print('Error from firebase cannot update');
     }
   }

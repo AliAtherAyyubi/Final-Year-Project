@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Models/election.dart';
+import 'package:e_voting/Providers/userData.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:get/get.dart';
 
 class ElectionDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -17,8 +21,11 @@ class ElectionDatabase {
       });
 
       await docRef.update({'electionId': docRef.id});
+      MyAlert.showToast(1, 'Added Successfully!');
       print('added election');
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Network Error');
+
       print('error :$e');
     }
   }
@@ -38,8 +45,48 @@ class ElectionDatabase {
           endDate: doc['endDate'],
           status: doc['status']);
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System error ');
+    }
+  }
+// Fetch Eelction by Org ID //
+
+  Future<QuerySnapshot?> fetchElectionByOrg() async {
+    try {
+      var orgID = await OrgDatabase().GetOrgId();
+      QuerySnapshot querySnapshot = await firestore
+          .collection('election')
+          .where('orgId', isEqualTo: orgID)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot;
+      }
+      print('Elections not exist');
+      return querySnapshot;
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Something went wrong');
+
       print('Error while fetching Election details');
       return null;
+    }
+  }
+  // Update Organization //
+
+  Future<void> updateElectionByID(ElectionModel election) async {
+    try {
+      var elecId = election.electionId;
+
+      await firestore.collection('election').doc(elecId).update({
+        'name': election.electionName,
+        'description': election.description,
+        'startDate': election.startDate,
+        'endDate': election.endDate,
+        'status': election.status
+        // 'adminId': org.adminId
+      });
+      MyAlert.showToast(1, 'Updated Successfully');
+      print('updated Election');
+    } on FirebaseException catch (e) {
+      print('Error from firebase cannot update');
     }
   }
 }

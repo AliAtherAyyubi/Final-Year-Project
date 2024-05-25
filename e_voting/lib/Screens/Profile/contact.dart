@@ -1,5 +1,6 @@
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
+import 'package:e_voting/Services/textControl.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ContactPage extends StatelessWidget {
+class ContactPage extends StatefulWidget {
+  @override
+  State<ContactPage> createState() => _ContactPageState();
+}
+
+class _ContactPageState extends State<ContactPage> {
+  var text = TextController().cnic;
   // const ContactPage({super.key});
   List<IconData> socialIcons = [
     FontAwesomeIcons.facebookF,
@@ -15,6 +22,7 @@ class ContactPage extends StatelessWidget {
     FontAwesomeIcons.twitter,
     FontAwesomeIcons.linkedinIn
   ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -71,14 +79,16 @@ class ContactPage extends StatelessWidget {
             Form(
               child: Column(
                 children: [
-                  VoteTextField(
-                      keyboardType: TextInputType.name, labelText: 'Name'),
-                  VoteTextField(
+                  FlatTextField(
+                      controller: text,
+                      keyboardType: TextInputType.name,
+                      labelText: 'Name'),
+                  FlatTextField(
                       keyboardType: TextInputType.emailAddress,
                       labelText: 'Email Address'),
-                  VoteTextField(
+                  FlatTextField(
                       keyboardType: TextInputType.text, labelText: 'Subject'),
-                  VoteTextField(
+                  FlatTextField(
                       keyboardType: TextInputType.text,
                       maxline: 4,
                       labelText: 'Message'),

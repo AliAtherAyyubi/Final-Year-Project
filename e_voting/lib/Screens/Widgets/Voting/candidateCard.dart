@@ -1,3 +1,4 @@
+import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
@@ -13,12 +14,14 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateCard extends StatelessWidget {
   // const CandidateCard({super.key});
-
+  candidateData candi_data = Get.put(candidateData());
   final String name;
+  final String? id;
   // final String description;
   List<dynamic>? description;
   List<String>? links;
-  CandidateCard({required this.name, this.description, this.links, super.key});
+  CandidateCard(
+      {required this.name, this.description, this.links, this.id, super.key});
 
   double btnHeight = Applayout.smaller290() ? 45 : 55;
 
@@ -88,12 +91,16 @@ class CandidateCard extends StatelessWidget {
               backClr: Colors.white,
               textClr: AppStyle.textClr,
               onPress: () {
-                Get.to(
-                    () => CandidateProfile(
-                          name: name,
-                          description: description,
-                        ),
-                    transition: Transition.fade);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: CandidateProfile(
+                      name: name,
+                      description: description,
+                    ),
+                    type: PageTransitionType.fade,
+                  ),
+                );
               },
             ),
             SizedBox(
@@ -105,7 +112,15 @@ class CandidateCard extends StatelessWidget {
               text: 'VOTE',
               elevation: 0,
               onPress: () {
-                Get.to(() => idValidationPage(), transition: Transition.fade);
+                candi_data.setCandidateId(id);
+                candi_data.setCandidateName(name);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: idValidationPage(),
+                    type: PageTransitionType.fade,
+                  ),
+                );
               },
             ),
           ],

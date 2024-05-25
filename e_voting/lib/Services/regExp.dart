@@ -22,7 +22,7 @@ extension extString on String {
   }
 
   bool get isValidPhone {
-    final phoneRegExp = RegExp(r"^\+?0[0-9]{10}$");
+    final phoneRegExp = RegExp(r"^03\d{2}-\d{7}$");
     return phoneRegExp.hasMatch(this);
   }
 

@@ -26,13 +26,13 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
+  UserData data = Get.put(UserData());
+
   // Completion screen//
   late TabController? tabController;
-  UserData data = Get.put(UserData());
   Future<void> setUserId() async {
     UserModel user = await UserLocalData().fetchLocalUser();
     data.setUserId(user.userId);
-    print(data.userID);
   }
 
   @override

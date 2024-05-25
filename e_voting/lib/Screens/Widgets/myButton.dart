@@ -12,6 +12,7 @@ class MyButton extends StatelessWidget {
   double? width = 100.w;
   final double? height;
   final double? elevation;
+  final FontWeight fontWeight;
   Color? backClr;
   final Color? textClr;
   final bool? border;
@@ -25,6 +26,7 @@ class MyButton extends StatelessWidget {
       this.width,
       this.height = 55,
       this.elevation = 10,
+      this.fontWeight = FontWeight.bold,
       this.backClr = AppStyle.primaryColor,
       this.textClr = Colors.white,
       this.border = false,
@@ -72,11 +74,52 @@ class MyButton extends StatelessWidget {
                   text,
                   style: GoogleFonts.inter(
                       fontSize: Applayout.greater760() ? 15.sp : 18.sp,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: fontWeight,
                       letterSpacing: 1,
                       color: textClr),
                   textAlign: TextAlign.center,
                 ),
         ));
+  }
+}
+
+class MyTextButton extends StatelessWidget {
+  final String text;
+  final double? elevation;
+  final FontWeight fontWeight;
+  final bool? border;
+  final Color? textClr;
+  Function? onPress;
+
+  MyTextButton(
+      {required this.text,
+      this.elevation = 10,
+      this.fontWeight = FontWeight.bold,
+      this.textClr = AppStyle.textClr,
+      this.border = false,
+      this.onPress});
+
+  void buttonFunction() {
+    onPress!();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: buttonFunction,
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(
+            Colors.transparent), // Remove background color on tap
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.inter(
+            fontSize: Applayout.greater760() ? 15.sp : 18.sp,
+            fontWeight: fontWeight,
+            letterSpacing: 1,
+            color: textClr),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }

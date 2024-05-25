@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Local%20Database/sharedHelp.dart';
 import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Providers/userData.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,29 +11,20 @@ class UserLocalData {
 
   SharedHelper helper = SharedHelper();
 
-  Future<void> setLocalUser(DocumentSnapshot doc) async {
+  Future<void> setLocalUser(UserModel user) async {
     var prefs = await helper.initializer();
 
-    var data = doc.data();
-    if (data != null) {
-      var convertToString =
-          helper.convertJsonToString(data as Map<String, dynamic>);
-      // Store the converted data in SharedPreferences
-      await prefs.setString('userData', convertToString);
-    } else {
-      // Handle the case when data is null
-      print('Error: Document data is null');
-    }
-  }
-
-// update local user //
-  Future<void> updateLocalUser() async {
-    var prefs = await helper.initializer();
-    DocumentSnapshot doc = await userDatabase().getUserJsonData('');
-    var data = doc.data();
-    if (data != null) {
-      var convertToString =
-          helper.convertJsonToString(data as Map<String, dynamic>);
+    Map<String, dynamic> data = {
+      'userId': user.userId,
+      'username': user.userName,
+      'cnic': user.cnic,
+      'email': user.email,
+      'imageUrl': user.imageUrl,
+      'phone': user.phone,
+      'role': user.role
+    };
+    if (data.isNotEmpty) {
+      var convertToString = helper.convertJsonToString(data);
       // Store the converted data in SharedPreferences
       await prefs.setString('userData', convertToString);
     } else {
@@ -75,5 +67,11 @@ class UserLocalData {
     // Check if user data exists in SharedPreferences
     bool isUser = prefs.containsKey('userData');
     return isUser;
+  }
+
+  Future<void> setUserId() async {
+    UserModel user = await fetchLocalUser();
+
+    Get.put(UserData()).setUserId(user.userId);
   }
 }

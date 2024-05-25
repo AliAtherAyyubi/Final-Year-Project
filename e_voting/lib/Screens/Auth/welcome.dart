@@ -1,6 +1,10 @@
+import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +13,34 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
   // const WelcomePage({super.key});
+  String name = "";
+  UserModel user = UserModel();
+  UserController userController = UserController();
+  Future<void> fetchUserInfo() async {
+    user = await UserLocalData().fetchLocalUser();
+
+    setState(() {
+      user = user;
+      name = user.userName!.capitalize!;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
-    UserData user = Get.put(UserData());
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -28,15 +54,14 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              Obx(
-                () => Text(
-                  'Hi ${user.username.toString().capitalize}!\nWelcome to \nWeVote!',
-                  style: GoogleFonts.inter(
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff2AAA8A)),
-                  textAlign: TextAlign.center,
-                ),
+              Text(
+                'Hi ${name}!\nWelcome to \nWeVote!',
+                style: GoogleFonts.inter(
+                    fontSize: 25.sp,
+                    fontWeight: FontWeight.bold,
+                    height: 1.5,
+                    color: Color(0xff2AAA8A)),
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: Applayout.getheight(20),
@@ -73,7 +98,10 @@ class WelcomePage extends StatelessWidget {
                 text: 'CONTINUE',
                 width: 100.w,
                 onPress: () {
-                  Get.off(() => Dashboard(),
+                  Get.off(
+                      () => user.role!.toLowerCase() == 'owner'
+                          ? OwnerMainScreen()
+                          : Dashboard(),
                       // duration: const Duration(seconds: 1),
                       transition: Transition.rightToLeft);
                 },

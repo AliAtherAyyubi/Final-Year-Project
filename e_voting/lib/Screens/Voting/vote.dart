@@ -3,6 +3,7 @@ import 'package:e_voting/Controllers/candidate_control.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/candidateData.dart';
+import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/Voting/candidateCard.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
@@ -15,7 +16,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VotingPage extends StatefulWidget {
-  VotingPage({super.key});
+  String? ElecTitle;
+  VotingPage({super.key, this.ElecTitle});
 
   @override
   State<VotingPage> createState() => _VotingPageState();
@@ -23,10 +25,9 @@ class VotingPage extends StatefulWidget {
 
 class _VotingPageState extends State<VotingPage> {
   candidateData candi_data = Get.put(candidateData());
+  //
   List<Map<String, dynamic>> candidateInfo = [];
 
-  //
-  // String voteName = '';
   // QuerySnapshot? queryCandidate;
   bool data = false;
   //
@@ -46,6 +47,7 @@ class _VotingPageState extends State<VotingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     fetchCandidates();
   }
 
@@ -55,16 +57,7 @@ class _VotingPageState extends State<VotingPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 6.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: VoteLabel(
-              voteName: "Vote for Student Representatives",
-              // alignment: Alignment.center,
-            ),
-          ),
+          VoteLabel(),
           // My Stepper //
           const SizedBox(
             height: 10,
@@ -109,6 +102,7 @@ class _VotingPageState extends State<VotingPage> {
                 itemBuilder: (context, index) {
                   final candidate = candidateInfo[index];
                   return CandidateCard(
+                    id: candidate['id'],
                     name: candidate['name'],
                     description: candidate['description'],
                   );

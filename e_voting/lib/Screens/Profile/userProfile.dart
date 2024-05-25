@@ -7,6 +7,8 @@ import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Profile/Settings/editProfile.dart';
+import 'package:e_voting/Screens/Profile/Settings/resetPassword.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -48,7 +50,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         });
         var res = await ImageController().uploadImage(id, path);
         if (res == null) {
-          fetchUserInfo();
+          await fetchUserInfo();
           MyAlert.Alert("", 'Uploaded Successfully!');
         } else
           MyAlert.Alert("", res.toString());
@@ -62,11 +64,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Future<void> fetchUserInfo() async {
     UserModel getuser = await UserLocalData().fetchLocalUser();
-    print(getuser.userName);
     setState(() {
       user = getuser;
-      imageUrl = user.imageUrl!;
+      imageUrl = user.imageUrl ?? "";
       name = user.userName!.toUpperCase();
+      print(name);
       loading = false;
     });
   }
@@ -83,18 +85,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(30),
+          preferredSize: Size.fromHeight(50),
           child: ScreenTitle(
             title: 'Account',
           )),
       body: ListView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         children: [
-          // const gap(
-          //   Height: 5,
-          // ),
-
           Stack(
             alignment: Alignment.center,
             children: [
@@ -132,7 +132,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   child: IconButton(
                     onPressed: loading ? null : getImage,
                     icon: const Icon(
-                      Icons.add,
+                      Icons.camera_alt,
                     ),
                     // splashRadius: 20,
                     color: Colors.white,
@@ -157,8 +157,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
           ),
           // Setting Section //
           ProfileSetting(title: 'Account Settings'),
-          SettingLabel(label: 'Edit your personal information'),
-          SettingLabel(label: 'Password reset'),
+          GestureDetector(
+              onTap: () {
+                Get.to(() => EditUserProfile(),
+                    transition: Transition.rightToLeft);
+              },
+              child: SettingLabel(label: 'Edit your personal information')),
+          GestureDetector(
+              onTap: () => Get.to(() => PasswordResetPage(),
+                  transition: Transition.rightToLeft),
+              child: SettingLabel(label: 'Password reset')),
           const gap(
             Height: 10,
           ),

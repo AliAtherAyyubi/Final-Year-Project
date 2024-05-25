@@ -50,6 +50,8 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
           .toList();
       data = true;
     });
+    elec_data.setElectionTitle(electionList[0]['name'] ?? "");
+    elec_data.setElectionId(electionList[0]['elecId'] ?? "");
   }
 
   @override
@@ -77,13 +79,20 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                     child: Swiper(
                         itemCount: electionList.length,
                         loop: false,
-                        pagination: SwiperPagination(
+                        pagination: const SwiperPagination(
                             alignment: Alignment.bottomCenter,
                             margin: EdgeInsets.only(top: 20)),
+                        onIndexChanged: (index) {
+                          var elecId = electionList[index]['elecId'] ?? "";
+                          var title = electionList[index]['name'] ?? "";
+                          elec_data.setElectionTitle(title);
+                          elec_data.setElectionId(elecId);
+                        },
                         itemBuilder: (BuildContext context, int index) {
                           final election = electionList[index];
+                          var title = electionList[index]['name'] ?? "";
                           return VoteCard(
-                            title: election['name'] ?? "",
+                            title: title,
                             time: election['date'] ?? "",
                             description:
                                 election['description'] ?? "Network error",
@@ -121,7 +130,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                                         description: candidateInfo[index]
                                             ['description'],
                                       ),
-                                  transition: Transition.fade);
+                                  transition: Transition.fadeIn);
                             },
                             child: CandidateAvatar(
                               name: candidateInfo[index]['name'],

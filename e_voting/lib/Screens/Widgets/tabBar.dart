@@ -31,7 +31,7 @@ class MyTabBar extends StatelessWidget {
         isScrollable: true,
         labelColor: AppStyle.textClr,
         labelStyle: GoogleFonts.inter(
-          fontSize: 17.sp,
+          fontSize: 16,
           fontWeight: FontWeight.w700,
         ),
         unselectedLabelColor: Colors.grey,

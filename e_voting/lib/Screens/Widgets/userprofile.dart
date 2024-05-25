@@ -27,7 +27,7 @@ class ProfileSetting extends StatelessWidget {
               AppStyle.textStyle2.copyWith(color: Colors.black, fontSize: 20),
         ),
         const gap(
-          Height: 15,
+          Height: 5,
         ),
       ],
     );
@@ -42,13 +42,27 @@ class SettingLabel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppStyle.textStyle4
-              .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
-        ),
-        const gap(
-          Height: 10,
+        // Text(
+        //   label,
+        //   style: AppStyle.textStyle4
+        //       .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
+        // ),
+        // const gap(
+        //   Height: 10,
+        // ),
+        Container(
+          height: 40,
+          child: Center(
+            child: ListTile(
+              // leading: Icon(Icons.person),
+              title: Text(
+                '$label',
+                style: AppStyle.textStyle4
+                    .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
+              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+            ),
+          ),
         ),
       ],
     );

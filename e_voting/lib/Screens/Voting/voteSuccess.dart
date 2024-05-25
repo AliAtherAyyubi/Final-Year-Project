@@ -16,70 +16,65 @@ class VoteSuccess extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          body: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Applayout.getWidth(10),
-                  vertical: Applayout.getheight(10)),
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      gap(
-                        Height: Applayout.getheight(70),
-                      ),
-                      Container(
-                        width: 50.w,
-                        child: Text(
-                          'Thank you! Your vote has submitted successfully.',
-                          style: AppStyle.textStyle2.copyWith(fontSize: 30),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      gap(
-                        Height: Applayout.getheight(30),
-                      ),
-                      Image(image: AssetImage("assets/images/tic2.png")),
-                      gap(
-                        Height: Applayout.getheight(36),
-                      ),
-                      Container(
-                        width: 60.w,
-                        child: Text(
-                          "The receipt is send to your email address.",
-                          style: AppStyle.textStyle4
-                              .copyWith(fontWeight: FontWeight.w500),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      gap(
-                        Height: Applayout.getheight(45),
-                      ),
-                      MyButton(
-                        text: "BACK TO HOME SCREEN",
-                        width: 95.w,
-                        onPress: () {
-                          Get.to(() => Dashboard(),
-                              transition: Transition.rightToLeft);
-                        },
-                      ),
-                      gap(
-                        Height: Applayout.getheight(10),
-                      ),
-                      MyButton(
-                        onPress: () {
-                          Get.to(() => ReceiptScreen());
-                        },
-                        text: "RECEIPT",
-                        width: 40.w,
-                        textClr: AppStyle.textClr,
-                        backClr: Colors.transparent,
-                        elevation: 0,
-                        border: false,
-                      ),
-                    ],
-                  ),
+          body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              gap(
+                Height: Applayout.getheight(70),
+              ),
+              Container(
+                width: 60.w,
+                child: Text(
+                  'Thank you! Your vote has submitted successfully.',
+                  style: AppStyle.textStyle2.copyWith(fontSize: 30),
+                  textAlign: TextAlign.center,
                 ),
-              ))),
+              ),
+              gap(
+                Height: Applayout.getheight(30),
+              ),
+              Image(image: AssetImage("assets/images/tic2.png")),
+              gap(
+                Height: Applayout.getheight(36),
+              ),
+              Container(
+                width: 60.w,
+                child: Text(
+                  "The receipt is send to your email address.",
+                  style:
+                      AppStyle.textStyle4.copyWith(fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              gap(
+                Height: Applayout.getheight(45),
+              ),
+              MyButton(
+                text: "BACK TO HOME SCREEN",
+                width: 90.w,
+                onPress: () {
+                  Get.to(() => Dashboard(), transition: Transition.rightToLeft);
+                },
+              ),
+              gap(
+                Height: Applayout.getheight(10),
+              ),
+              MyTextButton(
+                onPress: () {
+                  Get.to(() => ReceiptScreen());
+                },
+                text: "RECEIPT",
+                textClr: AppStyle.textClr,
+                elevation: 0,
+                border: false,
+              ),
+            ],
+          ),
+        ),
+      )),
     );
   }
 }

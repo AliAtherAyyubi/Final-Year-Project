@@ -4,6 +4,8 @@ import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
+import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +48,11 @@ class UserController {
     } on FirebaseAuthException catch (e) {
       // Catch FirebaseAuthException to handle specific errors
       if (e.code == 'email-already-in-use') {
-        // Email is already in use, handle this case
-        // print('Email is not valid');
+        MyAlert.showToast(0, 'Email already existy');
         return 'Email already exist'; // Return error message
       } else {
-        // Handle other FirebaseAuthException errors
-        // print('Email is not valid');
+        MyAlert.showToast(0, 'System or Network Error');
+
         return 'Error: ${e.message}'; // Return error message
       }
     }
@@ -65,15 +66,11 @@ class UserController {
           email: email, password: password);
       // Checking Crdentials //
       if (credential.user != null) {
-        DocumentSnapshot doc =
-            await userDatabase().getUserJsonData(credential.user!.uid);
+        user = await userDatabase().getUserById(credential.user!.uid);
 
-        await UserLocalData().setLocalUser(doc);
+        await UserLocalData().setLocalUser(user);
         // user = await userDatabase().getUserById(credential.user!.uid);
-        // //
 
-        // print(user.userName);
-        // userState.setname(user.userName);
         // // Set User ID //
         userState.setUserId(credential.user!.uid);
         // userState.setUserImage(user.imageUrl ?? "");
@@ -104,15 +101,6 @@ class UserController {
 
   // To update user //
 
-  Future<void> updateUserName(String value) async {
-    await userDatabase().updateUser('username', value);
-    userState.setname(value);
-  }
-
-  Future<void> updateUserCnic(String value) async {
-    await userDatabase().updateUser('cnic', value);
-  }
-
   Future<void> updateUserEmail(String value) async {
     User user = _auth.currentUser!;
     await user.updateEmail(value);
@@ -121,26 +109,61 @@ class UserController {
     // await userDatabase().updateUser('email', value);
   }
 
-  Future<void> updateUserPassword(String value) async {
-    await _auth.currentUser!.updatePassword(value);
+// Function to change the user's password
+  Future<void> updateUserPassword(String newPassword) async {
+    try {
+      // Get the current user
+      User? user = _auth.currentUser;
+      // Change the user's password
+      await user!.updatePassword(newPassword);
+      MyAlert.Alert('Password', "Password Updated");
+      // Password changed successfully
+      print('Password changed successfully');
+    } catch (e) {
+      // Error changing password
+      MyAlert.Alert('error', "system error");
+
+      print('Error changing password: $e');
+    }
   }
 
-  Future<void> updateUserPhone(String value) async {
-    await userDatabase().updateUser('phone', value);
+// Function to send a password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      // Check if the email address is associated with an existing account
+      final isUserExist = await userDatabase().checkUserbyEmail(email);
+
+      if (isUserExist) {
+        // Email address exists, proceed with sending password reset email
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        // Send the password reset email
+        await _auth.sendPasswordResetEmail(email: email);
+
+        // Password reset email sent successfully
+        MyAlert.Alert('Password Reset', "Email sent to your email address");
+        Future.delayed(Duration(seconds: 3), () {
+          Get.to(() => LoginPage());
+        });
+      } else {
+        MyAlert.Alert('Account not found',
+            "This email didn\'t exist. Enter email correctly!");
+      }
+    } catch (e) {
+      // Error sending password reset email
+      MyAlert.Alert('System Error', '$e');
+    }
   }
 
-  // to Delete accounts of all users //
+  //
+  Future<String> getUserID() async {
+    UserLocalData user = UserLocalData();
+    UserModel data = await user.fetchLocalUser();
+    return data.userId.toString();
+  }
 
-// Future<void> deleteAllUserAccounts() async {
-//   try {
-//     // Get a list of all users
-//     await user1.delete();
-
-//     // Delete each user
-
-//     print('user accounts deleted successfully.');
-//   } catch (error) {
-//     print('Failed to delete user accounts: $error');
-//   }
-// }
+  Future<bool> isOwner() async {
+    user = await UserLocalData().fetchLocalUser();
+    if (user.role!.toLowerCase() == 'owner') return true;
+    return false;
+  }
 }

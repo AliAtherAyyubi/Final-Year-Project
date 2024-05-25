@@ -11,6 +11,7 @@ import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:file_picker/file_picker.dart';
@@ -92,21 +93,33 @@ class _SampleState extends State<Sample> {
                 await UserController().Signin('shoaib@gmail.com', '123456');
                 fetchImage();
               }),
-          MyButton(text: 'Upload Image', width: 90.w, onPress: getImage),
+          // MyButton(text: 'Upload Image', width: 90.w, onPress: getImage),
           MyButton(
-              text: 'Create Canddiate',
+              text: 'Alert Dialog',
               width: 90.w,
-              onPress: () async {
-                CandidateModel c = CandidateModel();
-                c.cnic = '35201-45653161-1';
-                c.description = [
-                  'Dynamic leader with vision, integrity, and dedication, transforming organizations positively.',
-                  'I\'m  a student at GC University Lahore leading students to tech environment and in future students will be able to make '
-                ];
-                c.userId = data.userID.toString();
-
-                await CandidateDB().createCandidate(c);
+              onPress: () {
+                MyAlertDialog().showCustomAlertDialog(context);
               }),
+          MyButton(
+              text: 'Toast Alert',
+              width: 90.w,
+              onPress: () {
+                MyAlert.showToast(1, 'Registered Successfully');
+              }),
+          // MyButton(
+          //     text: 'Create Canddiate',
+          //     width: 90.w,
+          //     onPress: () async {
+          //       CandidateModel c = CandidateModel();
+          //       c.cnic = '35201-45653161-1';
+          //       c.description = [
+          //         'Dynamic leader with vision, integrity, and dedication, transforming organizations positively.',
+          //         'I\'m  a student at GC University Lahore leading students to tech environment and in future students will be able to make '
+          //       ];
+          //       c.userId = data.userID.toString();
+
+          //       await CandidateDB().createCandidate(c);
+          //     }),
         ],
       ),
     );

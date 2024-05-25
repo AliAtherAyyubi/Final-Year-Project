@@ -1,4 +1,3 @@
-import 'package:e_voting/Screens/Profile/about.dart';
 import 'package:e_voting/Screens/Profile/contact.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -51,23 +50,20 @@ class _CandidateProfileState extends State<CandidateProfile>
               children: [
                 //      Clipper ///
 
-                ClipPath(
-                  clipBehavior: Clip.antiAlias,
-                  clipper: BottomOvalArcClipper(),
-                  child: Container(
-                    color: AppStyle.cardClr,
-                    height: 320,
-                    width: double.infinity,
+                Container(
+                  height: 300,
+                  child: ClipPath(
+                    clipBehavior: Clip.antiAlias,
+                    clipper: BottomOvalArcClipper(),
+                    child: Container(
+                      color: AppStyle.cardClr,
+                      height: 320,
+                      width: double.infinity,
+                    ),
                   ),
                 ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 20, top: 6.h),
-                  child: VoteLabel(
-                    voteName: 'Vote for Student Representatives',
-                    alignment: Alignment.center,
-                  ),
-                ),
+                VoteLabel(),
                 //// Profile image ///
                 Container(
                   margin: EdgeInsets.only(top: 100),
@@ -85,7 +81,7 @@ class _CandidateProfileState extends State<CandidateProfile>
             Text(
               widget.name.toString().capitalize!,
               style: GoogleFonts.inter(
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -122,8 +118,6 @@ class _CandidateProfileState extends State<CandidateProfile>
               width: 90.w,
               // height: 50,
               onPress: () {
-                print(Applayout.getscreenWidth());
-
                 Get.to(() => VotingPage());
               },
             ),
@@ -166,4 +160,59 @@ class BottomOvalArcClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+}
+
+//
+
+class AboutContent extends StatelessWidget {
+  List<dynamic>? description;
+  AboutContent({super.key, this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'SHORT BIOGRAPHY',
+            style: GoogleFonts.inter(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            description![0] ?? " ",
+            style: GoogleFonts.inter(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            'ELECTION MANIFESTO',
+            style: GoogleFonts.inter(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            description![1] ?? " ",
+            style: GoogleFonts.inter(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

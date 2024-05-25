@@ -21,44 +21,29 @@ class MyAlert {
   }
 
   static Alert(String title, String msg) {
-    Get.snackbar(
-      title,
-      msg,
-      backgroundColor: Colors.black,
-      // colorText: Color.fromARGB(0, 27, 27, 27),
-      duration: const Duration(seconds: 3),
-      isDismissible: false,
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: Color.fromARGB(255, 251, 251, 251),
-      snackStyle: SnackStyle.FLOATING,
-    );
+    Get.snackbar(title, msg,
+        backgroundColor: Colors.black,
+        // colorText: Color.fromARGB(0, 27, 27, 27),
+        duration: const Duration(seconds: 3),
+        isDismissible: true,
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Color.fromARGB(255, 251, 251, 251),
+        snackStyle: SnackStyle.GROUNDED,
+        margin: EdgeInsets.all(0),
+        onTap: (snack) => snack.isDismissible,
+        borderRadius: 0);
   }
 
   // new custom toast //
 
-  static showToast(msg) {
-    Widget toast = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        color: Colors.greenAccent,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.check),
-          SizedBox(
-            width: 12.0,
-          ),
-          Text(msg),
-        ],
-      ),
-    );
-
-    FToast().showToast(
-      child: toast,
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 2),
-    );
+  static showToast(type, msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor:
+            type == 1 ? Colors.green : const Color.fromARGB(255, 249, 146, 139),
+        textColor: Colors.white,
+        fontSize: 18);
   }
 }

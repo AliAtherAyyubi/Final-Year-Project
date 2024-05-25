@@ -1,6 +1,11 @@
+import 'package:e_voting/Controllers/vote_control.dart';
+import 'package:e_voting/Providers/candidateData.dart';
+import 'package:e_voting/Providers/electionData.dart';
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
+import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
@@ -8,16 +13,24 @@ import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:e_voting/utils/Gap.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ConfirmVote extends StatelessWidget {
-  String voteName = 'Vote for Student Representatives';
+class ConfirmVote extends StatefulWidget {
+  @override
+  State<ConfirmVote> createState() => _ConfirmVoteState();
+}
 
+class _ConfirmVoteState extends State<ConfirmVote> {
+  UserData user = Get.put(UserData());
+
+  candidateData candidate = Get.put(candidateData());
+
+  electionData election = Get.put(electionData());
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +38,7 @@ class ConfirmVote extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 6.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: VoteLabel(
-                voteName: voteName,
-              ),
-            ),
+            VoteLabel(),
             const SizedBox(
               height: 10,
             ),
@@ -48,7 +53,7 @@ class ConfirmVote extends StatelessWidget {
               child: Text(
                 'Are you sure you want to vote for this candidate? Once confirmed, this action can\'t be undone.',
                 style: GoogleFonts.inter(
-                    fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    fontSize: 18.sp, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -66,10 +71,10 @@ class ConfirmVote extends StatelessWidget {
                     height: Applayout.getheight(200),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 92, 250, 163),
+                      color: AppStyle.cardClr,
                       boxShadow: const [
                         BoxShadow(
-                            color: Color.fromARGB(255, 39, 171, 79),
+                            color: Color.fromARGB(255, 121, 219, 151),
                             spreadRadius: 0,
                             blurRadius: 5,
                             offset: Offset(0, 5))
@@ -78,36 +83,50 @@ class ConfirmVote extends StatelessWidget {
                           BorderRadius.circular(Applayout.getheight(30)),
                     ),
                   ),
-                  Positioned(
-                      top: 0,
-                      child: CandidateAvatar(
-                        radius: 24.w,
-                        fontsize: 20,
-                        image: 'assets/images/profile.jpg',
-                        name: "Najam-Ud-Din",
-                      )),
+                  Obx(
+                    () => Positioned(
+                        top: 0,
+                        child: CandidateAvatar(
+                          radius: 24.w,
+                          fontsize: 20,
+                          image: 'assets/images/profile.jpg',
+                          name: candidate.candidateName.toString().capitalize,
+                        )),
+                  )
                 ],
               ),
             ),
             MyButton(
               text: 'CONFIRM',
               width: 95.w,
-              onPress: () {
-                Get.to(() => VoteSuccess(), transition: Transition.native);
+              loading: loading,
+              onPress: () async {
+                setState(() {
+                  loading = true;
+                });
+                var userId = user.userID.toString();
+                var cand_id = candidate.candidateId.toString();
+                var elecId = election.electionId.toString();
+                var votedfor = election.electionTitle.toString();
+                var orgId = "3eme9c3NHtINcgybKYxd";
+                await VoteController()
+                    .createVote(userId, elecId, cand_id, orgId, votedfor);
+                setState(() {
+                  loading = false;
+                });
               },
             ),
             SizedBox(
               height: 10,
             ),
-            MyButton(
+            MyTextButton(
               text: 'CANCEL',
-              width: 95.w,
               textClr: AppStyle.textClr,
               elevation: 0,
               border: false,
-              backClr: Colors.transparent,
               onPress: () {
-                Get.to(() => Dashboard(), transition: Transition.fadeIn);
+                MyAlertDialog().showCustomAlertDialog(context);
+                Get.to(() => Dashboard(), transition: Transition.leftToRight);
               },
             ),
           ],
