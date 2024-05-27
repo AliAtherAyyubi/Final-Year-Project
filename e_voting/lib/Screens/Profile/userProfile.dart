@@ -170,11 +170,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
           const gap(
             Height: 10,
           ),
-          ProfileSetting(title: 'App Settings'),
-          SettingLabel(label: 'Notifications'),
-          const gap(
-            Height: 10,
-          ),
+          // ProfileSetting(title: 'App Settings'),
+          // SettingLabel(label: 'Notifications'),
+          // const gap(
+          //   Height: 10,
+          // ),
           ProfileSetting(title: 'Support'),
           SettingLabel(label: 'FAQ'),
           SettingLabel(label: 'Contact us'),
@@ -194,6 +194,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   // duration: const Duration(seconds: 1),
                   transition: Transition.native);
             },
+          ),
+          SizedBox(
+            height: 20,
           )
         ],
       ),

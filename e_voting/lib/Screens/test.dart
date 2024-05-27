@@ -7,6 +7,7 @@ import 'package:e_voting/Controllers/image_control.dart';
 import 'package:e_voting/Controllers/userController.dart';
 import 'package:e_voting/Database/candidate_db.dart';
 import 'package:e_voting/Database/election_db.dart';
+import 'package:e_voting/Local%20Database/electionData.dart';
 import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Providers/userData.dart';
@@ -106,6 +107,22 @@ class _SampleState extends State<Sample> {
               onPress: () {
                 MyAlert.showToast(1, 'Registered Successfully');
               }),
+          MyButton(
+            text: 'create and fetch election',
+            onPress: () async {
+              ElectionModel e = ElectionModel();
+              e.electionName = 'gcU university';
+              e.description = 'student rep';
+              // await ElectionLocalData().addLocalElection(e);
+
+              List<ElectionModel> election =
+                  await ElectionLocalData().fetchLocalElections();
+
+              print(election[0].electionName);
+              print(election[0].description);
+              // await ElectionLocalData().deleteAllElections();
+            },
+          )
           // MyButton(
           //     text: 'Create Canddiate',
           //     width: 90.w,
@@ -127,21 +144,7 @@ class _SampleState extends State<Sample> {
 
   //
 }
-// MyButton(
-//             text: 'Fetch Elections by ID',
-//             onPress: () async {
-//               QuerySnapshot? querySnapshot =
-//                   await ElectionController().fetchElections();
 
-//               ElectionModel? e = ElectionModel();
-//               var size = querySnapshot.docs.length;
-//               for (var i = 0; i < size; i++) {
-//                 e = await ElectionDatabase()
-//                     .fetchElectionById(querySnapshot.docs[i].id);
-//                 print(e!.startDate!.toDate());
-//               }
-//             },
-//           )
   // Future<void> _uploadImage() async {
   //   final result = await FilePicker.platform.pickFiles(
     //   type: FileType.image,

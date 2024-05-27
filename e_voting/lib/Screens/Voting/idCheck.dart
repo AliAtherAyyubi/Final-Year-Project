@@ -23,9 +23,7 @@ class _idValidationPageState extends State<idValidationPage> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController cnic = TextEditingController();
-
-  String voteName = 'Vote for Student Representatives';
-
+  //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

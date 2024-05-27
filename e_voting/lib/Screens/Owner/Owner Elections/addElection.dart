@@ -93,6 +93,7 @@ class _OwnerElectionState extends State<OwnerElection> {
                       controller: startDate,
                       labelText: 'Start date',
                       readOnly: true,
+                      icon: Icons.calendar_month_outlined,
                       onTap: () async {
                         _start = await TimeService().selectDate(context);
                         setState(() {});
@@ -114,6 +115,7 @@ class _OwnerElectionState extends State<OwnerElection> {
                       keyboardType: TextInputType.datetime,
                       readOnly: true,
                       labelText: 'End date',
+                      icon: Icons.calendar_month_outlined,
                       onTap: () async {
                         _end = await TimeService().selectDate(context);
                         setState(() {});
@@ -159,15 +161,6 @@ class _OwnerElectionState extends State<OwnerElection> {
                       width: 100.w,
                       loading: loading,
                     ),
-                    MyButton(
-                      onPress: () async {
-                        Get.to(OwnerElectionList(),
-                            transition: Transition.rightToLeft);
-                      },
-                      text: 'Edit Elections',
-                      width: 100.w,
-                      loading: loading,
-                    )
                   ],
                 )),
           ],

@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       // for invalid users //
       else {
-        MyAlert.Alert("Error", 'Invalid Username and Password');
+        MyAlert.showToast(0, 'Invalid Username and Password');
         setState(() {
           loading = false;
         });
@@ -88,13 +88,16 @@ class _LoginPageState extends State<LoginPage> {
                 //     textAlign: TextAlign.left,
                 //   ),
                 // ),
-                // Container(
-                //   margin: EdgeInsets.only(top: Applayout.getheight(10)),
-                //   width: 20.w,
-                //   child: Image.asset('assets/images/logo.png'),
-                // ),
+                Container(
+                  margin: EdgeInsets.only(top: 5.h),
+                  width: 40.w,
+                  child: Image.asset(
+                    'assets/logo/logo.png',
+                    color: AppStyle.iconClr,
+                  ),
+                ),
                 SizedBox(
-                  height: 15.h,
+                  height: 5.h,
                 ),
                 // User fields //
                 Padding(
@@ -123,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                             icon: Icons.password,
                             maxline: 1,
                             hidebtn: Icons.visibility_off,
+                            suffixicon: Icons.visibility_off,
                             validator: (value) {
                               if (value == null) return 'Enter your password!';
                               return null;

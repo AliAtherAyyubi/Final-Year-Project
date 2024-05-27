@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/candidateData.dart';
@@ -91,6 +92,7 @@ class UserController {
     try {
       await _auth.signOut();
       await UserLocalData().removeUser();
+      await AdminLocalData().removeOrg();
       userState.dispose;
       // Get.find<candidateData>().dispose();
       print('User signed out successfully ');

@@ -1,5 +1,6 @@
 import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Database/org_db.dart';
+import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
@@ -27,7 +28,7 @@ class _OwnerOrganizationState extends State<OwnerOrganization> {
   bool loading = false;
   bool isOrgExist = false;
   void isOrg() async {
-    bool exist = await OrgController().isOrgExist();
+    bool exist = await AdminLocalData().isOrgExist();
 
     setState(() {
       isOrgExist = exist;

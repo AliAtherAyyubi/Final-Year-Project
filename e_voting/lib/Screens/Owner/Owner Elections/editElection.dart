@@ -39,7 +39,7 @@ class _EditElectionsState extends State<EditElections> {
     setState(() {
       name.text = e!.electionName ?? "";
       startDate.text = TimeService().getOnlyDate(e!.startDate!);
-      endDate.text = TimeService().getOnlyDate(e!.startDate!);
+      endDate.text = TimeService().getOnlyDate(e!.endDate!);
       description.text = e!.description ?? "";
       data = true;
     });
@@ -139,7 +139,7 @@ class _EditElectionsState extends State<EditElections> {
                         AuthTextField(
                           controller: description,
                           keyboardType: TextInputType.name,
-                          labelText: 'Description',
+                          labelText: 'Description (Min 50 words)',
                           maxline: 8,
                           maxlength: 250,
                           validator: (value) {

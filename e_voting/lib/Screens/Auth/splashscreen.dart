@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   UserLocalData user = UserLocalData();
-  String? userRole;
+  String userRole = "";
   bool isUser = false;
   ///////
   Future<void> checkUser() async {

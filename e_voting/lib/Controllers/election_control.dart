@@ -35,7 +35,6 @@ class ElectionController {
     } else {
       MyAlert.showToast(0, 'First create organization');
     }
-    // e.status = st;
   }
   // Fetch Elections //
 
@@ -51,7 +50,7 @@ class ElectionController {
           'elecId': doc[i].id,
           'name': doc[i].get('name').toString().capitalize,
           'description': doc[i].get('description'),
-          'date': TimeService().displayDate(i, querySnapshot),
+          'date': TimeService().votingTime(i, querySnapshot),
           // Add more fields as needed
         };
         electionList.add(electionInfo);
@@ -61,7 +60,6 @@ class ElectionController {
       print('Elections are empty');
     }
   }
-
   // // Delete Organization //
 
   Future<void> deleteElection(String id) async {
