@@ -22,19 +22,20 @@ class ElectionController {
     edate,
     detail,
   ) async {
+    String? orgId = await OrgDatabase().GetOrgId();
+    e.electionName = name;
+    e.startDate = TimeService().convertToTimestamp(sdate);
+    e.endDate = TimeService().convertToTimestamp(edate);
+    e.description = detail;
+    e.orgId = orgId;
+    await ElectionDatabase().electionDB(e);
     // bool exist = OrgController().isOrgExist();
     // print(exist);
-    String? orgId = await OrgDatabase().GetOrgId();
-    if (orgId != null) {
-      e.electionName = name;
-      e.startDate = TimeService().convertToTimestamp(sdate);
-      e.endDate = TimeService().convertToTimestamp(edate);
-      e.description = detail;
-      e.orgId = orgId;
-      await ElectionDatabase().electionDB(e);
-    } else {
-      MyAlert.showToast(0, 'First create organization');
-    }
+    // if (orgId != null) {
+
+    // } else {
+    //   MyAlert.showToast(0, 'First create organization');
+    // }
   }
   // Fetch Elections //
 
