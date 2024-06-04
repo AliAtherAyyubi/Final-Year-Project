@@ -38,11 +38,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Main App //
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => MyApp(), // Wrap your app
-  // ));
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(), // Wrap your app
+  ));
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -45,21 +45,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loading = true;
       });
-      String? res = await user.Signin(email.text, password.text);
-
-      if (res != null) {
-        bool isOwner = await user.isOwner();
-        // MyAlert.Alert('Success', 'Signed in successfully!');
-        Get.off(() => isOwner ? OwnerMainScreen() : Dashboard(),
-            transition: Transition.rightToLeft);
-      }
-      // for invalid users //
-      else {
-        MyAlert.showToast(0, 'Invalid Username and Password');
-        setState(() {
-          loading = false;
-        });
-      }
+      await user.Signin(email.text, password.text);
+      setState(() {
+        loading = false;
+      });
     }
   }
 
