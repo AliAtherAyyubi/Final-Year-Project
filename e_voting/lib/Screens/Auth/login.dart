@@ -7,6 +7,7 @@ import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Services/regExp.dart';

@@ -65,7 +65,7 @@ class CustomAlertDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: onConfirm,
           style: ElevatedButton.styleFrom(
-            primary: Colors.green.shade700,
+            backgroundColor: Colors.green.shade700,
           ),
           child: Text(
             confirmButtonText,

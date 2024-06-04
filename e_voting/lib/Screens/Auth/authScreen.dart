@@ -14,86 +14,113 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: AppStyle.primaryColor,
-
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Logo //
-            SizedBox(
-              height: 40,
-            ),
-            Expanded(
-              flex: 6,
-              child: Container(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/logo/logo.png',
-                  color: Colors.white,
-                  height: 150,
-                  width: 150,
+        body: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo //
+                SizedBox(
+                  height: 40,
                 ),
-              ),
-            ),
-
-            Expanded(
-              flex: 3,
-              child: SizedBox(
-                width: 80.w,
-                child: Text(
-                  'Participate in elections easily!',
-                  style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 25),
-                  textAlign: TextAlign.center,
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '€VØŦ€',
+                      style: AppStyle.headstyle
+                          .copyWith(color: Colors.white, letterSpacing: 2),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+                WillPopScope(
+                    onWillPop: () async => false,
+                    child: Scaffold(
+                      backgroundColor: AppStyle.primaryColor,
 
-            Expanded(
-                flex: 6,
-                child: Column(
-                  children: [
-                    MyButton(
-                      elevation: 0,
-                      width: 90.w,
-                      text: 'SIGN UP',
-                      backClr: Colors.white,
-                      textClr: AppStyle.textClr,
-                      onPress: () {
-                        Get.to(() => const RegisterPage(),
-                            transition: Transition.rightToLeft);
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    MyButton(
-                      elevation: 0,
-                      width: 90.w,
-                      text: 'LOG IN',
-                      backClr: AppStyle.primaryColor,
-                      border: true,
-                      textClr: Colors.white,
-                      onPress: () {
-                        Get.to(() => LoginPage(),
-                            transition: Transition.rightToLeft);
-                      },
-                    ),
-                  ],
-                ))
-          ],
-        ),
+                      body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Logo //
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                'assets/logo/logo.png',
+                                color: Colors.white,
+                                height: 150,
+                                width: 150,
+                              ),
+                            ),
+                          ),
 
-        // padding: EdgeInsets.symmetric(
-        //       horizontal: Applayout.getWidth(15),
-        //       vertical: Applayout.getheight(50)),
-      ),
-    );
+                          Expanded(
+                            flex: 3,
+                            child: SizedBox(
+                              width: 80.w,
+                              child: Text(
+                                'Participate in elections easily!',
+                                style: GoogleFonts.inter(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 25),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+
+                          Expanded(
+                              flex: 6,
+                              child: Column(
+                                children: [
+                                  MyButton(
+                                    elevation: 0,
+                                    width: 90.w,
+                                    text: 'SIGN UP',
+                                    backClr: Colors.white,
+                                    textClr: AppStyle.textClr,
+                                    onPress: () {
+                                      Get.to(() => const RegisterPage(),
+                                          transition: Transition.rightToLeft,
+                                          duration: const Duration(
+                                              milliseconds: 600));
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  MyButton(
+                                    elevation: 0,
+                                    width: 90.w,
+                                    text: 'LOG IN',
+                                    backClr: AppStyle.primaryColor,
+                                    border: true,
+                                    textClr: Colors.white,
+                                    onPress: () {
+                                      Get.to(() => LoginPage(),
+                                          transition: Transition.rightToLeft,
+                                          duration: const Duration(
+                                              milliseconds: 600));
+                                    },
+                                  ),
+                                ],
+                              ))
+                        ],
+                      ),
+
+                      // padding: EdgeInsets.symmetric(
+                      //       horizontal: Applayout.getWidth(15),
+                      //       vertical: Applayout.getheight(50)),
+                    ))
+              ]),
+        ));
   }
 }
