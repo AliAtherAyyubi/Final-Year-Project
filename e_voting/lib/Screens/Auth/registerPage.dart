@@ -35,29 +35,16 @@ class _RegisterPageState extends State<RegisterPage> {
   bool loading = false;
   // User Register Method //
   void Register() async {
-    print(role);
-
     if (_formKey.currentState!.validate()) {
       setState(() {
         loading = true;
       });
-      String? res = await user.RegisterUser(
+      await user.RegisterUser(
           username.text, cnic.text, role, email.text, password.text);
 
-      if (res == null) {
-        MyAlert.Alert('Account', 'Your account is created successfully!');
-        Future.delayed(
-            const Duration(
-              seconds: 1,
-            ), () {
-          Get.off(() => WelcomePage(), transition: Transition.rightToLeft);
-        });
-      } else {
-        MyAlert.Alert('Error', res.toString());
-        setState(() {
-          loading = false;
-        });
-      }
+      setState(() {
+        loading = false;
+      });
     }
   }
 

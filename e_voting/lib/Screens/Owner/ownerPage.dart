@@ -24,8 +24,8 @@ class OwnerMainPage extends StatefulWidget {
 
 class _OwnerMainPageState extends State<OwnerMainPage> {
   // const OwnerMainPage({super.key});
-  UserModel? user;
-  OrgModel? org;
+  UserModel user = UserModel();
+  OrgModel org = OrgModel();
   //d
   String? imageUrl;
   String? orgName;
@@ -44,10 +44,11 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
 
   Future<void> fetchUser() async {
     user = await UserLocalData().fetchLocalUser();
-    org = await AdminLocalData().fetchLocalOrg();
+    // org = await AdminLocalData().fetchLocalOrg();
+    print(user.userName);
     setState(() {
-      userName = user!.userName.toString().capitalize!;
-      orgName = org!.orgName.toString().capitalize;
+      userName = user.userName.toString().capitalize!;
+      // orgName = org.orgName.toString().capitalize;
     });
   }
 

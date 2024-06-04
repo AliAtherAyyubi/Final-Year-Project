@@ -6,7 +6,11 @@ import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
+import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:e_voting/Services/Internet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +25,7 @@ class UserController {
   UserData userState = Get.put(UserData());
 
   /// Registration of User into Database //
-  Future<String?> RegisterUser(
+  Future<void> RegisterUser(
     String name,
     String cnic,
     role,
@@ -32,7 +36,6 @@ class UserController {
       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      // checking user is verified or not //
       if (authResult.user != null) {
         user.userId = authResult.user!.uid;
         user.userName = name;
@@ -40,50 +43,62 @@ class UserController {
         user.email = email;
         user.role = role;
         //
-        userDatabase().createUserById(user);
+        await userDatabase().createUserById(user);
         // Meanwhile Sign in //
-        // print('Registered Successfully');
-        await Signin(email, password);
-        return null;
+        // await Signin(email, password);
+        //
+        MyAlert.showToast(1, 'Your account is created successfully!');
+        await sendVerificationEmail(_auth);
+
+        Get.to(() => LoginPage(), transition: Transition.rightToLeft);
       }
     } on FirebaseAuthException catch (e) {
       // Catch FirebaseAuthException to handle specific errors
       if (e.code == 'email-already-in-use') {
-        MyAlert.showToast(0, 'Email already existy');
-        return 'Email already exist'; // Return error message
+        MyAlert.showToast(0, 'Email already exist');
       } else {
         MyAlert.showToast(0, 'System or Network Error');
-
-        return 'Error: ${e.message}'; // Return error message
       }
     }
   }
 
+  Future<void> sendVerificationEmail(FirebaseAuth auth) async {
+    try {
+      await auth.currentUser!.sendEmailVerification();
+      MyAlert.showToast(
+          1, 'An Email is sent to your address! Verify it and then Log in');
+    } on FirebaseAuthException catch (e) {
+      MyAlert.showToast(0, 'System Error');
+    }
+  }
   // Sign in Function //w
 
-  Future<String?> Signin(String email, String password) async {
+  Future<void> Signin(String email, String password) async {
     try {
+      Internet().checkInternetConnection();
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       // Checking Crdentials //
-      if (credential.user != null) {
+      if (credential.user != null && credential.user!.emailVerified) {
         user = await userDatabase().getUserById(credential.user!.uid);
 
         await UserLocalData().setLocalUser(user);
-        // user = await userDatabase().getUserById(credential.user!.uid);
-
         // // Set User ID //
         userState.setUserId(credential.user!.uid);
         // userState.setUserImage(user.imageUrl ?? "");
-        return 'Signed in successfully';
+        bool isAdmin = await isOwner();
+        // MyAlert.Alert('Success', 'Signed in successfully!');
+        Get.off(() => isAdmin ? OwnerMainScreen() : Dashboard(),
+            transition: Transition.rightToLeft);
+
+        // MyAlert.showToast(1, 'Email Verified!');
+      } else {
+        MyAlert.showToast(0, 'Your email is not verified!');
       }
-      return null;
     } on FirebaseAuthException catch (e) {
-      print('System Error: ${e.toString()}');
-      return null;
+      MyAlert.showToast(0, 'Invalid Username and Password!');
     } catch (e) {
-      print('System or Network Error');
-      return null;
+      MyAlert.showToast(0, 'System Error');
     }
   }
   // Log out //
@@ -136,19 +151,17 @@ class UserController {
       final isUserExist = await userDatabase().checkUserbyEmail(email);
 
       if (isUserExist) {
-        // Email address exists, proceed with sending password reset email
-        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
         // Send the password reset email
         await _auth.sendPasswordResetEmail(email: email);
 
         // Password reset email sent successfully
-        MyAlert.Alert('Password Reset', "Email sent to your email address");
+        MyAlert.showToast(1, "Email sent to your email address");
         Future.delayed(Duration(seconds: 3), () {
           Get.to(() => LoginPage());
         });
       } else {
-        MyAlert.Alert('Account not found',
-            "This email didn\'t exist. Enter email correctly!");
+        MyAlert.showToast(
+            0, "This email didn\'t exist. Enter email correctly!");
       }
     } catch (e) {
       // Error sending password reset email
