@@ -76,4 +76,13 @@ class TimeService {
     print(timestamp);
     return timestamp;
   }
+
+  // Get difference //
+
+  int getDifference(DateTime start, DateTime end) {
+    Duration difference = end.difference(start);
+
+    int days = difference.inDays;
+    return days;
+  }
 }

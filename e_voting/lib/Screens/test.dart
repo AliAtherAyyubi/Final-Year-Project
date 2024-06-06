@@ -99,7 +99,7 @@ class _SampleState extends State<Sample> {
               text: 'Alert Dialog',
               width: 90.w,
               onPress: () {
-                MyAlertDialog().showCustomAlertDialog(context);
+                // MyAlertDialog().showCustomAlertDialog(context);
               }),
           MyButton(
               text: 'Toast Alert',

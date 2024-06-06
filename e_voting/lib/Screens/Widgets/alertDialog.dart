@@ -1,53 +1,31 @@
+import 'package:e_voting/Screens/Widgets/loading.dart';
+import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
-class MyAlertDialog {
-  void showCustomAlertDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CustomAlertDialog(
-          title: 'Confirm Action',
-          content: Text('Are you sure you want to proceed?'),
-          confirmButtonText: 'Yes',
-          cancelButtonText: 'No',
-          onConfirm: () {
-            // Handle the confirm action
-            Navigator.of(context).pop();
-          },
-          onCancel: () {
-            // Handle the cancel action
-            Navigator.of(context).pop();
-          },
-        );
-      },
-    );
-  }
-}
+class MyAlertDialog extends StatelessWidget {
+  final String? title;
+  final Widget? content;
+  final String? confirmBtnText;
+  bool loading;
+  // final String? cancelButtonText;
+  final VoidCallback? onConfirm;
+  // final VoidCallback onCancel;
 
-class CustomAlertDialog extends StatelessWidget {
-  final String title;
-  final Widget content;
-  final String confirmButtonText;
-  final String cancelButtonText;
-  final VoidCallback onConfirm;
-  final VoidCallback onCancel;
-
-  const CustomAlertDialog({
-    Key? key,
-    required this.title,
-    required this.content,
-    required this.confirmButtonText,
-    required this.cancelButtonText,
-    required this.onConfirm,
-    required this.onCancel,
-  }) : super(key: key);
+  MyAlertDialog(
+      {Key? key,
+      required this.title,
+      this.content,
+      this.onConfirm,
+      this.loading = false,
+      this.confirmBtnText})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.green.shade50,
       title: Text(
-        title,
+        title!,
         style: TextStyle(
           color: Colors.green.shade900,
           fontWeight: FontWeight.bold,
@@ -55,22 +33,23 @@ class CustomAlertDialog extends StatelessWidget {
       ),
       content: content,
       actions: [
-        TextButton(
-          onPressed: onCancel,
-          child: Text(
-            cancelButtonText,
-            style: TextStyle(color: Colors.green.shade900),
-          ),
+        MyTextButton(
+          onPress: () {
+            Navigator.pop(context);
+          },
+          text: 'Cancel',
+          elevation: 0,
+          textClr: Colors.grey.shade700,
+          fontWeight: FontWeight.w500,
         ),
-        ElevatedButton(
-          onPressed: onConfirm,
-          style: ElevatedButton.styleFrom(
-            primary: Colors.green.shade700,
-          ),
-          child: Text(
-            confirmButtonText,
-            style: TextStyle(color: Colors.white),
-          ),
+        MyButton(
+          onPress: onConfirm,
+          text: confirmBtnText ?? "Add",
+          elevation: 0,
+          height: 45,
+          fontWeight: FontWeight.w400,
+          width: 28.w,
+          loading: loading,
         ),
       ],
     );
@@ -79,3 +58,25 @@ class CustomAlertDialog extends StatelessWidget {
 
 // Usage
 
+// MyAlertDialog().showAlertDialog(
+//               context,
+//               'Enter CNIC of Voter',
+//               Form(
+//                 key: formKey,
+//                 child: FlatTextField(
+//                   controller: cnic,
+//                   keyboardType: TextInputType.number,
+//                   labelText: 'CNIC',
+//                   inputFormatter: Validation().cnicFormatter,
+//                   validator: (value) => Validation().isValidCnic(value),
+//                 ),
+//               ),
+//               'Add', () async {
+//             if (formKey.currentState!.validate()) {
+//               await OwnerDatabase().addVoter(cnic.text);
+//               await fetchVoters();
+//               cnic.text = '';
+//               Navigator.pop(context);
+//             }
+//           });
+//         }

@@ -37,14 +37,13 @@ class _LoginPageState extends State<LoginPage> {
   // Validation class //
   Validation valid = Validation();
   bool loading = false;
-  UserController user = UserController();
   // Sign in function from userController //
   void Signin() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         loading = true;
       });
-      await user.Signin(email.text, password.text);
+      await UserController().Signin(email.text, password.text);
       setState(() {
         loading = false;
       });

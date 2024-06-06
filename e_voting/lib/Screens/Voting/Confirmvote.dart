@@ -125,7 +125,7 @@ class _ConfirmVoteState extends State<ConfirmVote> {
               elevation: 0,
               border: false,
               onPress: () {
-                MyAlertDialog().showCustomAlertDialog(context);
+                // MyAlertDialog().showCustomAlertDialog(context);
                 Get.to(() => Dashboard(), transition: Transition.leftToRight);
               },
             ),

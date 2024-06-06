@@ -7,10 +7,12 @@ import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/displayElection.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/addElection.dart';
+import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
 import 'package:e_voting/Screens/Owner/org.dart';
 import 'package:e_voting/Screens/Widgets/owner/tiles.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -25,30 +27,25 @@ class OwnerMainPage extends StatefulWidget {
 class _OwnerMainPageState extends State<OwnerMainPage> {
   // const OwnerMainPage({super.key});
   UserModel user = UserModel();
-  OrgModel org = OrgModel();
+  // OrgModel? org = OrgModel();
   //d
   String? imageUrl;
-  String? orgName;
+  String? orgName = 'Your Organization';
   String userName = '';
   //
 
   void setOrgId() async {
     UserData user = Get.put(UserData());
-    var id = await OrgDatabase().GetOrgId();
-    print(id);
+    var id = await OrgDatabase().GetOrgId() ?? "";
     user.setOrgId(id);
-    // if (user.orgId.toString() == "") {
-
-    // }
   }
 
   Future<void> fetchUser() async {
     user = await UserLocalData().fetchLocalUser();
-    // org = await AdminLocalData().fetchLocalOrg();
-    print(user.userName);
+    // org = await OrgDatabase().fetchOrgById();
     setState(() {
       userName = user.userName.toString().capitalize!;
-      // orgName = org.orgName.toString().capitalize;
+      // orgName = org!.orgName.toString().capitalize ?? "Your Organization";
     });
   }
 
@@ -63,7 +60,10 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return true;
+      },
       child: RefreshIndicator(
         onRefresh: () => fetchUser(),
         child: Scaffold(
@@ -84,7 +84,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    orgName ?? "Your Organization",
+                    orgName!,
                     style: GoogleFonts.inter(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -166,6 +166,14 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
               ),
               OwnerTiles(
                   fieldName: 'Create/Edit Candidates', icon: Icons.person),
+              SizedBox(
+                height: 5,
+              ),
+              GestureDetector(
+                onTap: () => Get.to(() => OwnerVoters(),
+                    transition: Transition.rightToLeft),
+                child: OwnerTiles(fieldName: 'Voters', icon: Icons.person),
+              ),
             ],
           ),
         ),

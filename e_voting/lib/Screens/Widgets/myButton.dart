@@ -69,7 +69,9 @@ class MyButton extends StatelessWidget {
             // side: BorderSide(color: Colors.white)
           ),
           child: loading!
-              ? Loading()
+              ? Loading(
+                  color: Colors.white,
+                )
               : Text(
                   text,
                   style: GoogleFonts.inter(

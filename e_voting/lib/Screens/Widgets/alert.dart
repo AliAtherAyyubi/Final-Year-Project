@@ -4,21 +4,21 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
 class MyAlert {
-  static toast(BuildContext? context, String msg) {
-    GFToast.showToast(
-      msg, context!,
-      toastPosition: GFToastPosition.BOTTOM,
-      textStyle: TextStyle(fontSize: 18, color: GFColors.WHITE),
-      backgroundColor: GFColors.DARK,
-      toastDuration: 3,
-      toastBorderRadius: 20,
+  // static toast(BuildContext? context, String msg) {
+  //   GFToast.showToast(
+  //     msg, context!,
+  //     toastPosition: GFToastPosition.BOTTOM,
+  //     textStyle: TextStyle(fontSize: 18, color: GFColors.WHITE),
+  //     backgroundColor: GFColors.DARK,
+  //     toastDuration: 3,
+  //     toastBorderRadius: 20,
 
-      // trailing: const Icon(
-      //   Icons.close,
-      //   color: GFColors.SUCCESS,
-      // )
-    );
-  }
+  //     // trailing: const Icon(
+  //     //   Icons.close,
+  //     //   color: GFColors.SUCCESS,
+  //     // )
+  //   );
+  // }
 
   static Alert(String title, String msg) {
     Get.snackbar(title, msg,
@@ -39,10 +39,10 @@ class MyAlert {
   static showToast(type, msg) {
     Fluttertoast.showToast(
         msg: msg,
-        toastLength: Toast.LENGTH_LONG,
+        toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         backgroundColor:
-            type == 1 ? Colors.green : const Color.fromARGB(255, 249, 146, 139),
+            type == 1 ? Colors.green : Color.fromARGB(255, 247, 125, 117),
         textColor: Colors.white,
         fontSize: 18);
   }

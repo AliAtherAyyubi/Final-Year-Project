@@ -130,6 +130,9 @@ class _EditElectionsState extends State<EditElections> {
                             if (value!.isEmpty) {
                               return 'Please select end date';
                             }
+                            if (TimeService().getDifference(_start, _end) > 5) {
+                              return 'Choose a correct ending date!';
+                            }
                             return null;
                           },
                         ),
@@ -145,6 +148,9 @@ class _EditElectionsState extends State<EditElections> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'field can\'t be empty!';
+                            }
+                            if (value.toString().length < 50) {
+                              return 'Description should at least of 50 characters';
                             }
                             return null;
                           },

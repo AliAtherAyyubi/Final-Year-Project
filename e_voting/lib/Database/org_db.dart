@@ -13,6 +13,7 @@ class OrgDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   UserLocalData user = UserLocalData();
   AdminLocalData admin = AdminLocalData();
+  OrgModel orgModel = OrgModel();
   //
   Future<void> createOrgDB(OrgModel org) async {
     try {
@@ -70,21 +71,21 @@ class OrgDatabase {
       var orgid = await GetOrgId();
       DocumentSnapshot doc =
           await firestore.collection('organization').doc(orgid).get();
-
-      return OrgModel(
-          orgName: doc['name'],
-          address: doc['address'],
-          description: doc['description'],
-          adminId: doc['adminId'],
-          orgId: doc['orgId']);
+      if (doc.exists) {
+        return OrgModel(
+            orgName: doc['name'],
+            address: doc['address'],
+            description: doc['description'],
+            adminId: doc['adminId'],
+            orgId: doc['orgId']);
+      }
+      return orgModel;
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
-
       print('Error while fetching organization details');
-      return null;
     } catch (e) {
       print('Error');
-      return null;
+      return orgModel;
     }
   }
   // Update Organization //

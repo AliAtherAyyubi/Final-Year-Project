@@ -6,6 +6,7 @@ import 'package:e_voting/Local%20Database/electionData.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/addElection.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/editElection.dart';
+import 'package:e_voting/Screens/Widgets/empty.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Services/dateTime.dart';
@@ -27,15 +28,12 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
   bool data = false;
   //
   Future<void> fetchElections() async {
-    QuerySnapshot? querySnapshot =
-        await ElectionDatabase().fetchElectionByOrg();
-    // elections = await ElectionLocalData().fetchLocalElections();
+    electionData = await ElectionDatabase().fetchElectionByOrg();
     // print(elections[0].electionName);
     setState(() {
-      electionData = querySnapshot;
+      // electionData = querySnapshot;
       data = true;
     });
-    print(electionData!.docs[0].data());
   }
 
   @override
@@ -80,11 +78,7 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
             //
             data
                 ? electionData!.docs.isEmpty
-                    ? Container(
-                        child: Image.asset('assets/images/empty.png'),
-                        height: 300,
-                        width: 300,
-                      )
+                    ? EmptyImage()
                     : ListView.builder(
                         itemCount: electionData!.docs.length,
                         shrinkWrap: true,

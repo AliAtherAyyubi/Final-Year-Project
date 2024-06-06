@@ -119,11 +119,15 @@ class _OwnerElectionState extends State<OwnerElection> {
                       onTap: () async {
                         _end = await TimeService().selectDate(context);
                         setState(() {});
+
                         endDate.text = DateFormat('dd-MMM-yyyy').format(_end);
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please select end date';
+                        }
+                        if (TimeService().getDifference(_start, _end) > 5) {
+                          return 'Choose a correct ending date!';
                         }
                         return null;
                       },
@@ -140,6 +144,9 @@ class _OwnerElectionState extends State<OwnerElection> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'field can\'t be empty!';
+                        }
+                        if (value.toString().length < 50) {
+                          return 'Description should at least of 50 characters';
                         }
                         return null;
                       },

@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var email = TextController().email;
   var password = TextController().password;
   // var confirmPassword = TextController().confirmPassword;
-  String? role;
+  late String role;
 
   Validation validate = Validation();
   UserController user = UserController();
@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           DropDownItems(
                             onRoleChanged: (value) {
                               setState(() {
-                                role = value;
+                                role = value.toString();
                               });
                             },
                           ),

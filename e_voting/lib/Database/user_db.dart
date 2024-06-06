@@ -32,7 +32,7 @@ class userDatabase {
   Future<void> updateUser(String field, String value) async {
     String uid = data.userID.toString();
     DocumentReference docRef = firestore.collection('users').doc(uid);
-    docRef.update({field: value}).then(
+    await docRef.update({field: value}).then(
       (_) {
         print('Updated Successfully');
       },

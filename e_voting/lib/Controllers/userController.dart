@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Database/owner_db.dart';
 import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/owner.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
@@ -28,7 +30,7 @@ class UserController {
   Future<void> RegisterUser(
     String name,
     String cnic,
-    role,
+    String role,
     String email,
     String password,
   ) async {
@@ -36,22 +38,27 @@ class UserController {
       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      if (authResult.user != null) {
-        user.userId = authResult.user!.uid;
-        user.userName = name;
-        user.cnic = cnic;
-        user.email = email;
-        user.role = role;
-        //
-        await userDatabase().createUserById(user);
-        // Meanwhile Sign in //
-        // await Signin(email, password);
-        //
-        MyAlert.showToast(1, 'Your account is created successfully!');
-        await sendVerificationEmail(_auth);
+      user.userId = authResult.user!.uid;
+      user.userName = name;
+      user.cnic = cnic;
+      user.email = email;
+      user.role = role;
+      //
+      await userDatabase().createUserById(user);
 
-        Get.to(() => LoginPage(), transition: Transition.rightToLeft);
+      // creating Owner if user is Owner///
+      if (role.toLowerCase() == 'owner') {
+        OwnerModel ownerModel = OwnerModel();
+        ownerModel.userID = user.userId;
+        await OwnerDatabase().createOwner(ownerModel);
       }
+      // Meanwhile Sign in //
+      //
+      MyAlert.showToast(1, 'Your account is created successfully!');
+      await sendVerificationEmail(_auth);
+
+      Get.to(() => LoginPage(), transition: Transition.rightToLeft);
+      /////
     } on FirebaseAuthException catch (e) {
       // Catch FirebaseAuthException to handle specific errors
       if (e.code == 'email-already-in-use') {
@@ -75,25 +82,27 @@ class UserController {
 
   Future<void> Signin(String email, String password) async {
     try {
-      Internet().checkInternetConnection();
-      UserCredential credential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      // Checking Crdentials //
-      if (credential.user != null && credential.user!.emailVerified) {
-        user = await userDatabase().getUserById(credential.user!.uid);
+      bool checkInternet = await Internet().checkInternetConnection();
+      if (checkInternet) {
+        UserCredential credential = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        // Checking Crdentials //
+        if (credential.user != null && credential.user!.emailVerified) {
+          user = await userDatabase().getUserById(credential.user!.uid);
 
-        await UserLocalData().setLocalUser(user);
-        // // Set User ID //
-        userState.setUserId(credential.user!.uid);
-        // userState.setUserImage(user.imageUrl ?? "");
-        bool isAdmin = await isOwner();
-        // MyAlert.Alert('Success', 'Signed in successfully!');
-        Get.off(() => isAdmin ? OwnerMainScreen() : Dashboard(),
-            transition: Transition.rightToLeft);
+          await UserLocalData().setLocalUser(user);
+          // // Set User ID //
+          userState.setUserId(credential.user!.uid);
+          // userState.setUserImage(user.imageUrl ?? "");
+          bool isAdmin = await isOwner();
+          // MyAlert.Alert('Success', 'Signed in successfully!');
+          Get.off(() => isAdmin ? OwnerMainScreen() : Dashboard(),
+              transition: Transition.rightToLeft);
 
-        // MyAlert.showToast(1, 'Email Verified!');
-      } else {
-        MyAlert.showToast(0, 'Your email is not verified!');
+          // MyAlert.showToast(1, 'Email Verified!');
+        } else {
+          MyAlert.showToast(0, 'Your email is not verified!');
+        }
       }
     } on FirebaseAuthException catch (e) {
       MyAlert.showToast(0, 'Invalid Username and Password!');
