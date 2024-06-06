@@ -122,9 +122,9 @@ class _RegisterPageState extends State<RegisterPage> {
         loading = true;
       });
       await user.RegisterUser(
-          username.text, cnic.text, role, email.text, password.text);
-      String? res = await user.RegisterUser(
           username.text, cnic.text, role, Email.text, password.text);
+      // String? res = await user.RegisterUser(
+      //     username.text, cnic.text, role, Email.text, password.text);
 
       setState(() {
         loading = false;

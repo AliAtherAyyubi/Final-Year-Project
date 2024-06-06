@@ -24,12 +24,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,12 +39,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Main App //
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ));
-  // runApp(const MyApp());
+
+  runApp(ResponsiveSizer(builder: (context, Orientation, screenType) {
+    return const MyApp();
+  }));
 }
 
 class MyApp extends StatelessWidget {
@@ -51,26 +51,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(builder: (context, orientation, ScreenType) {
-      return GetMaterialApp(
-        title: 'E-voting App',
-        builder: FToastBuilder(),
-        useInheritedMediaQuery: true,
-        // locale: DevicePreview.locale(context),
-        //builder: DevicePreview.appBuilder,
-        // builder: FToastBuilder(),
-
-        debugShowCheckedModeBanner: false,
-        // getPages: [z
-        //   GetPage(
-        //     name: "/loginpage",
-        //     page: () => LoginPage(),
-        //     transition: Transition.rightToLeftWithFade,
-        //     transitionDuration: Duration(microseconds: 1),
-        //   )
-        // ],
-        home: SplashScreen(),
-      );
-    });
+    return const GetMaterialApp(
+      title: 'E-voting App',
+      useInheritedMediaQuery: true,
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    );
   }
 }
