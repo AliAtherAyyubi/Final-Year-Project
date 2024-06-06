@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
@@ -7,6 +10,7 @@ import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Services/textControl.dart';
 import 'package:e_voting/Services/validation.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   // TextController fields = TextController();
   var cnic = TextController().cnic;
   var username = TextController().name;
-  var email = TextController().email;
+  var Email = TextController().email;
   var password = TextController().password;
   // var confirmPassword = TextController().confirmPassword;
   late String role;
@@ -33,6 +37,84 @@ class _RegisterPageState extends State<RegisterPage> {
   Validation validate = Validation();
   UserController user = UserController();
   bool loading = false;
+
+  //________________________________________________
+  //najam code here __________________________
+  // bool _isvalid = false;
+  // String message = "";
+
+  // bool isvalidemail(String email) {
+  //   final emailRegex =
+  //       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+  //   return emailRegex.hasMatch(email);
+  // }
+
+  // Future<bool> checkDomainexists(String email) async {
+  //   final domain = email.split('@').last;
+
+  //   final dns = DnsOverHttps.google();
+
+  //   try {
+  //     final result = await dns.lookup(domain);
+  //     return result.isNotEmpty;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+
+  // Future<bool> validateemail(String email) async {
+  //   final apikey = '46ec30f4b4bb4bc2a73610696adeaa37';
+  //   final url =
+  //       'https://api.zerobounce.net/v2/validate?api_key=$apikey&email=$Email';
+
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       return data['status'] == 'valid';
+  //     } else {
+  //       throw Exception('Failed to validate email');
+  //     }
+  //   } catch (e) {
+  //     print('Error validating email: $e');
+  //     return false;
+  //   }
+  // }
+
+  // Future<void> Validate() async {
+  //   final email = Email.text;
+
+  //   if (!isvalidemail(email)) {
+  //     setState(() {
+  //       _isvalid = false;
+  //       message = 'Invalid email syntax';
+  //     });
+  //     return;
+  //   }
+  //   final domainexists = await checkDomainexists(email);
+  //   if (!domainexists) {
+  //     setState(() {
+  //       _isvalid = false;
+  //       message = 'Email domain does not exist';
+  //     });
+  //     return;
+  //   }
+  //   final emailExists = await validateemail(email);
+
+  //   if (!emailExists) {
+  //     setState(() {
+  //       _isvalid = false;
+  //       message = 'Email does not exist';
+  //     });
+  //     return;
+  //   }
+  //   setState(() {
+  //     _isvalid = true;
+  //     message = 'Email is valid';
+  //   });
+  // }
+
   // User Register Method //
   void Register() async {
     if (_formKey.currentState!.validate()) {
@@ -40,7 +122,9 @@ class _RegisterPageState extends State<RegisterPage> {
         loading = true;
       });
       await user.RegisterUser(
-          username.text, cnic.text, role, email.text, password.text);
+          username.text, cnic.text, role, Email.text, password.text);
+      // String? res = await user.RegisterUser(
+      //     username.text, cnic.text, role, Email.text, password.text);
 
       setState(() {
         loading = false;
@@ -51,12 +135,10 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
+        onWillPop: () async => false,
         child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(50),
+              preferredSize: Size.fromHeight(40),
               child: ScreenTitle(
                 title: 'Create Account',
               )),
@@ -100,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             validator: (value) => validate.isValidCnic(value),
                           ),
                           AuthTextField(
-                            controller: email,
+                            controller: Email,
                             keyboardType: TextInputType.emailAddress,
                             obscureText: false,
                             labelText: 'Email',
@@ -109,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           AuthTextField(
                             controller: password,
-                            keyboardType: TextInputType.visiblePassword,
+                            keyboardType: TextInputType.emailAddress,
                             obscureText: true,
                             labelText: 'Password',
                             icon: Icons.password,
@@ -147,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Align(
                               alignment: Alignment.center,
                               child: MyButton(
-                                text: 'Register',
+                                text: 'Register (Sign Up)',
                                 width: 100.w,
                                 loading: loading,
                                 onPress: Register,
@@ -178,12 +260,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       GestureDetector(
                         onTap: () {
                           Get.off(LoginPage(),
-                              transition: Transition.leftToRight);
+                              transition: Transition.leftToRight,
+                              duration: Duration(milliseconds: 600));
                         },
                         child: Text('Sign in',
                             style: GoogleFonts.poppins(
                                 fontSize: 15,
-                                color: Color(0xff2AAA8A),
+                                color: AppStyle.textClr,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 1)),
                       )
@@ -193,8 +276,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

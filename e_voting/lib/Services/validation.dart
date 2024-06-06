@@ -39,6 +39,12 @@ class Validation {
     return null;
   }
 
+  //-----------------------------------------------------
+  // najamcode here for email validation
+
+  //-------------------------------------------------
+  //---------------------------------------------
+
   String? isValidEmail(String? value) {
     if (value!.isEmpty) {
       return 'Can\'t be empty';

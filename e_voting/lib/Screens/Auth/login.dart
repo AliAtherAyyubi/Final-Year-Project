@@ -7,6 +7,7 @@ import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
+import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Services/regExp.dart';
@@ -224,8 +225,9 @@ class LoginAppBar extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 16.0), // Add padding for spacing
           child: GestureDetector(
-            onTap: () =>
-                Get.to(RegisterPage(), transition: Transition.rightToLeft),
+            onTap: () => Get.to(RegisterPage(),
+                duration: Duration(seconds: 1),
+                transition: Transition.rightToLeft),
             child: Center(
               child: Text(
                 'Sign Up',

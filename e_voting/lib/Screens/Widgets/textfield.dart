@@ -99,35 +99,37 @@ class _AuthTextFieldState extends State<AuthTextField> {
               fontSize: 13,
             ),
             ///////// icons //////////
-            prefixIcon: widget.icon == null
-                ? null
-                : IconButton(
-                    onPressed: () {},
-                    icon: Icon(widget.icon),
-                    iconSize: 20,
-                    splashRadius: 20,
-                    padding: EdgeInsets.only(right: 15, left: 15),
-                    color: AppStyle.primaryColor),
-            suffixIcon: widget.suffixicon == null
-                ? null
-                : IconButton(
-                    onPressed: () {
-                      setState(() {
-                        if (widget.hidebtn == Icons.visibility_off) {
-                          widget.hidebtn = Icons.visibility;
-                          widget.obscureText = false;
-                        } else {
-                          widget.hidebtn = Icons.visibility_off;
-                          widget.obscureText = true;
-                        }
-                      });
-                    },
-                    icon: Icon(widget.hidebtn),
-                    iconSize: 20,
-                    splashRadius: 20,
-                    padding: EdgeInsets.only(right: 10),
-                    color: Colors.grey,
-                  )
+            prefixIcon: IconButton(
+                focusColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {},
+                icon: Icon(widget.icon),
+                iconSize: 20,
+                splashRadius: 20,
+                padding: EdgeInsets.only(right: 15, left: 15),
+                color: AppStyle.primaryColor),
+            suffixIcon: IconButton(
+              focusColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () {
+                setState(() {
+                  if (widget.hidebtn == Icons.visibility_off) {
+                    widget.hidebtn = Icons.visibility;
+                    widget.obscureText = false;
+                  } else {
+                    widget.hidebtn = Icons.visibility_off;
+                    widget.obscureText = true;
+                  }
+                });
+              },
+              icon: Icon(widget.hidebtn),
+              iconSize: 20,
+              splashRadius: 20,
+              padding: EdgeInsets.only(right: 10),
+              color: Colors.grey,
+            )
             // hintStyle: GoogleFonts.poppins(fontSize: 15, letterSpacing: 1),
             ),
       ),

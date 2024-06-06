@@ -6,13 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:e_voting/Screens/Auth/authScreen.dart';
 
 class VoteLabel extends StatelessWidget {
-  electionData elec_data = Get.put(electionData());
-  //
+  String? voteName;
+  double? fontsize;
+  FontWeight? fontWeight;
+
+  Alignment? alignment;
+  VoteLabel(
+      {this.voteName,
+      this.fontsize = 18,
+      this.fontWeight = FontWeight.w500,
+      this.alignment});
 
   @override
   Widget build(BuildContext context) {
+    electionData elec_data = Get.put(electionData());
     return Padding(
       padding: EdgeInsets.only(left: 5, top: 3.h),
       child: Row(
@@ -48,7 +58,8 @@ class VoteLabel extends StatelessWidget {
 
 class ScreenTitle extends StatelessWidget {
   String? title;
-  ScreenTitle({super.key, this.title});
+  Widget? widget;
+  ScreenTitle({super.key, this.title, this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +70,16 @@ class ScreenTitle extends StatelessWidget {
         },
         child: Icon(
           Icons.arrow_back_ios,
-          color: AppStyle.textClr,
-          size: 25,
+          // color: AppStyle.textClr,
+          color: Colors.white,
+          size: 3.h,
         ),
       ),
       title: Text(
         title!,
         style: GoogleFonts.inter(
-            color: AppStyle.textClr,
+            // color: AppStyle.textClr,
+            color: Colors.white,
             fontSize: 19.sp,
             fontWeight: FontWeight.w600),
       ),

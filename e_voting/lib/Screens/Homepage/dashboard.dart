@@ -80,7 +80,7 @@ class _DashboardState extends State<Dashboard>
               )
             ],
             title: Text(
-              'WeVote',
+              '€VØŦ€',
               style: GoogleFonts.poppins(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,

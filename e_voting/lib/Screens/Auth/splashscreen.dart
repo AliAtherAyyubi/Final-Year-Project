@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     ////
-    checkUser();
+
     Future.delayed(const Duration(seconds: 2), () {
       Get.off(
           () => isUser
@@ -52,11 +52,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppStyle.primaryColor,
       body: Center(
-        child: Image.asset(
-          'assets/logo/logo.png',
-          color: Colors.white,
-          height: 150,
-          width: 150,
+        child: Text(
+          'eVote',
+          style: AppStyle.headstyle.copyWith(
+            color: Colors.white,
+          ),
         ),
       ),
     );
