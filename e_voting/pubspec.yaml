@@ -64,6 +64,8 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   connectivity_plus: ^5.0.2
   google_mlkit_face_detection: ^0.11.0
+  smooth_page_indicator: ^1.1.0
+
 intl: ^0.17.0
 dev_dependencies:
   flutter_test:
