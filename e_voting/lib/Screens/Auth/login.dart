@@ -226,8 +226,9 @@ class LoginAppBar extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 16.0), // Add padding for spacing
           child: GestureDetector(
-            onTap: () =>
-                Get.to(RegisterPage(), transition: Transition.rightToLeft),
+            onTap: () => Get.to(RegisterPage(),
+                duration: Duration(seconds: 1),
+                transition: Transition.rightToLeft),
             child: Center(
               child: Text(
                 'Sign Up',
