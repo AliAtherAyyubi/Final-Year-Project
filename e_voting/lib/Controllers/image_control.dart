@@ -5,9 +5,7 @@ import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
+import 'package:image_picker/image_picker.dart';
 
 class ImageController {
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -45,21 +43,38 @@ class ImageController {
     return user.imageUrl!;
   }
 
-  // Storing Image Locally //
-  Future<void> downloadAndSaveImage(String imageUrl) async {
-    // final response = await storage.refFromURL(imageUrl).getDownloadURL();
-    final imageResponse = await HttpClient().getUrl(Uri.parse(imageUrl));
-    final imageFile = File(
-        '${(await getTemporaryDirectory()).path}/${path.basename(imageUrl)}');
-    final downloadedImage = await imageResponse.close();
-    await imageFile.writeAsBytes(downloadedImage as List<int>);
+  Future<XFile?> pickCameraImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      return image;
+    }
+    return null;
   }
 
-  Future<File> getLocalImageFile(String imageUrl) async {
-    final imageName = path.basename(imageUrl);
-    final localImagePath = '${(await getTemporaryDirectory()).path}/$imageName';
-    final localImageFile = File(localImagePath);
-    print(localImageFile.path);
-    return localImageFile;
+  Future<XFile?> pickGalleryImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      return image;
+    }
+    return null;
   }
+  // // Storing Image Locally //
+  // Future<void> downloadAndSaveImage(String imageUrl) async {
+  //   // final response = await storage.refFromURL(imageUrl).getDownloadURL();
+  //   final imageResponse = await HttpClient().getUrl(Uri.parse(imageUrl));
+  //   final imageFile = File(
+  //       '${(await getTemporaryDirectory()).path}/${path.basename(imageUrl)}');
+  //   final downloadedImage = await imageResponse.close();
+  //   await imageFile.writeAsBytes(downloadedImage as List<int>);
+  // }
+
+  // Future<File> getLocalImageFile(String imageUrl) async {
+  //   final imageName = path.basename(imageUrl);
+  //   final localImagePath = '${(await getTemporaryDirectory()).path}/$imageName';
+  //   final localImageFile = File(localImagePath);
+  //   print(localImageFile.path);
+  //   return localImageFile;
+  // }
 }

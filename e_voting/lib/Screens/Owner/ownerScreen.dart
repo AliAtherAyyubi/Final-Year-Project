@@ -1,11 +1,8 @@
-import 'package:e_voting/Database/org_db.dart';
-import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
 import 'package:e_voting/Screens/Profile/userProfile.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class OwnerMainScreen extends StatefulWidget {

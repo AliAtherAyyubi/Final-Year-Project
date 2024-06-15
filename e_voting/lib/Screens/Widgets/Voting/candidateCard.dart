@@ -1,3 +1,4 @@
+import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
 import 'package:e_voting/Screens/Voting/idCheck.dart';
@@ -15,13 +16,10 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class CandidateCard extends StatelessWidget {
   // const CandidateCard({super.key});
   candidateData candi_data = Get.put(candidateData());
-  final String name;
-  final String? id;
-  // final String description;
-  List<dynamic>? description;
-  List<String>? links;
-  CandidateCard(
-      {required this.name, this.description, this.links, this.id, super.key});
+  ////
+  CandidateModel? candidate = CandidateModel();
+
+  CandidateCard({this.candidate, super.key});
 
   double btnHeight = Applayout.smaller290() ? 45 : 55;
 
@@ -63,7 +61,7 @@ class CandidateCard extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: Text(
-              name,
+              candidate!.name ?? "",
               style: GoogleFonts.inter(
                   color: Colors.black,
                   fontSize: 19.sp,
@@ -72,7 +70,7 @@ class CandidateCard extends StatelessWidget {
             ),
           ),
           subTitle: Text(
-            description![0],
+            candidate!.publicDescription ?? "",
             style: GoogleFonts.inter(fontSize: 15.sp, color: Colors.black),
             textAlign: TextAlign.left,
           ),
@@ -95,8 +93,7 @@ class CandidateCard extends StatelessWidget {
                   context,
                   PageTransition(
                     child: CandidateProfile(
-                      name: name,
-                      description: description,
+                      candidate: candidate,
                     ),
                     type: PageTransitionType.fade,
                   ),
@@ -112,8 +109,8 @@ class CandidateCard extends StatelessWidget {
               text: 'VOTE',
               elevation: 0,
               onPress: () {
-                candi_data.setCandidateId(id);
-                candi_data.setCandidateName(name);
+                candi_data.setCandidateId(candidate!.candidateId ?? "");
+                candi_data.setCandidateName(candidate!.name ?? "");
                 Navigator.push(
                   context,
                   PageTransition(

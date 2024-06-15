@@ -4,6 +4,7 @@ import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Services/validation.dart';
 import 'package:e_voting/utils/Applayout.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,14 +28,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: ScreenTitle(title: 'Forgot Password'),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: ScreenTitle(title: ''),
         ),
         backgroundColor: Colors.white,
         body: Padding(
@@ -47,10 +43,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(height: 20),
                 Text(
                   'Forgot Password?',
-                  style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
+                  style: AppStyle()
+                      .h3
+                      .copyWith(letterSpacing: 1, color: Colors.black),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20),

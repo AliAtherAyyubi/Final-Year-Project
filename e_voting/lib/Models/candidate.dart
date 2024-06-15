@@ -1,19 +1,21 @@
 class CandidateModel {
   String? candidateId;
-  String? userId;
-  // String? electionId;
+  String? name;
+  String? imageUrl;
   String? orgId;
-  String? cnic;
-  List<String>? description;
+  String? publicDescription;
+  String? biography;
+  List<dynamic>? description;
   int? voteCount;
-  List<String>? links;
+  List<dynamic>? links;
 
   CandidateModel({
     this.candidateId,
-    this.userId,
     this.orgId,
-    this.cnic,
-    // this.electionId,
+    this.name,
+    this.imageUrl,
+    this.publicDescription,
+    this.biography,
     this.description,
     this.voteCount,
     this.links,

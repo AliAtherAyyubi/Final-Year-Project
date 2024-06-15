@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/owner.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
@@ -14,11 +15,25 @@ class OwnerDatabase {
       await firestore.collection('owner').add({
         'userID': owner.userID,
         'orgID': owner.orgID,
-        'candidates': owner.candidates,
+        // 'candidates': owner.candidates,
         'voters': owner.voters,
       });
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Error while creating Owner!');
+    }
+  }
+
+//
+//
+  Future<void> setOwnerOrgID(String userID, String OrgID) async {
+    try {
+      //
+      String? ownerID = await getOwnerID();
+      await firestore.collection('owner').doc(ownerID).update({'orgID': OrgID});
+      /////
+      //
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System Error');
     }
   }
 
@@ -87,19 +102,45 @@ class OwnerDatabase {
   }
 
   ///
+  ///   Search Voters ///
+  Future<bool> searchVoterByID(
+    String voterID,
+  ) async {
+    try {
+      var orgID = await UserLocalData().getUserOrgID();
+      //
+      QuerySnapshot ownerDoc = await firestore
+          .collection('owner')
+          .where('orgID', isEqualTo: orgID)
+          .get();
+      ///////////
+      if (ownerDoc.docs.isNotEmpty) {
+        List<dynamic> voters = ownerDoc.docs.first.get('voters');
+        bool found = voters.contains(voterID);
+        return found;
+      }
+
+      return false;
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Error searching voter!');
+      return false;
+    }
+  }
+
+  ///
   Future<String?> getOwnerID() async {
     try {
-      var id = user.userID.toString();
+      var id = await UserLocalData().getUserId();
 
       QuerySnapshot querySnapshot = await firestore
           .collection('owner')
           .where('userID', isEqualTo: id)
           .get();
 
-      String ownerID = querySnapshot.docs[0].id;
+      String ownerID = querySnapshot.docs.first.id;
       return ownerID;
     } on FirebaseException catch (e) {
-      print('Error while fetching OwnerID');
+      print('Error while fetching OwnerID:$e');
     }
   }
 }

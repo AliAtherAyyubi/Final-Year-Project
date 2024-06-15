@@ -68,7 +68,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       user = getuser;
       imageUrl = user.imageUrl ?? "";
       name = user.userName!.toUpperCase();
-      print(name);
       loading = false;
     });
   }

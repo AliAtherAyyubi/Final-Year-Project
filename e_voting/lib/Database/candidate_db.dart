@@ -1,42 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 
 class CandidateDB {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> createCandidate(CandidateModel c) async {
     try {
-      DocumentReference docRef = await firestore.collection('candidate').add({
+      DocumentReference docRef = await firestore.collection('Candidates').add({
         'candidateId': c.candidateId,
-        'userId': c.userId,
-        // 'electionId': c.electionId,
+        'name': c.name,
+        'imageUrl': c.imageUrl,
+        'biography': c.biography,
+        'publicDesc': c.publicDescription,
         'orgId': c.orgId,
-        'cnic': c.cnic,
         'description': c.description,
         'voteCount': null,
         'links': c.links
       });
 
       await docRef.update({'candidateId': docRef.id});
-
-      print('added Candidate');
+      MyAlert.showToast(1, 'Added Successfully!');
     } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'Error adding candidate');
+
       print('error :$e');
     }
   }
 
   Future<void> updateCandidateById(CandidateModel c) async {
     try {
-      await firestore.collection('candidate').doc(c.candidateId).update({
-        'cnic': c.cnic,
+      await firestore.collection('Candidates').doc(c.candidateId).update({
+        'name': c.name,
+        'imageUrl': c.imageUrl,
+        'biography': c.biography,
+        'publicDesc': c.publicDescription,
         'description': c.description,
+        'links': c.links,
         'voteCount': c.voteCount,
-        'links': c.links
       });
-
-      print('Update Candidate');
+      MyAlert.showToast(1, 'Updated Successfully!');
     } on FirebaseException catch (e) {
-      print('error :$e');
+      MyAlert.showToast(0, 'Error updating candidate');
     }
   }
   // Fetch Eelction by ID //
@@ -44,44 +50,129 @@ class CandidateDB {
   Future<CandidateModel?> fetchCandidateById(String id) async {
     try {
       DocumentSnapshot doc =
-          await firestore.collection('candidate').doc(id).get();
+          await firestore.collection('Candidates').doc(id).get();
 
       return CandidateModel(
-        candidateId: doc['candidateId'],
-        userId: doc['userId'],
-        orgId: doc['orgId'],
-        // electionId: doc['electionId'],
-        description: doc['description'],
-        voteCount: doc['voteCount'],
-        links: doc['links'],
-      );
+          candidateId: doc['candidateId'],
+          orgId: doc['orgId'],
+          name: doc['name'],
+          imageUrl: doc['imageUrl'],
+          biography: doc['biography'],
+          publicDescription: doc['publicDesc'],
+          description: doc['description'],
+          links: doc['links'],
+          voteCount: doc['voteCount']);
     } on FirebaseException catch (e) {
       print('Error while fetching Election details');
       return null;
     }
   }
 
-  // set User id when Candidate create his account //
-
-  Future<void> setUserId(String cnic, String uid) async {
+  ///
+  ///  Fetch Candiates by Org of Owner //
+  Future<List<CandidateModel>> fetchCandidatesByOrg() async {
+    List<CandidateModel> candidatesList = [];
     try {
+      var orgID = OrgDatabase().GetOrgId();
+
+      ///
       QuerySnapshot querySnapshot = await firestore
-          .collection('candidate')
-          .where('cnic', isEqualTo: cnic)
+          .collection('Candidates')
+          .where('orgId', isEqualTo: orgID)
           .get();
 
-      if (querySnapshot.docs.isNotEmpty) {
-        String candidateId = querySnapshot.docs.first.id;
-        await firestore
-            .collection('candidate')
-            .doc(candidateId)
-            .update({'userId': uid});
-        print('Set UserId into Candidate Table');
-      } else {
-        print('Your are not a Candidate, you are voter');
+      var docs = querySnapshot.docs;
+      //
+      for (var i = 0; i < docs.length; i++) {
+        candidatesList.add(CandidateModel(
+          candidateId: docs[i].id,
+          orgId: docs[i].get('orgId'),
+          name: docs[i].get('name'),
+          imageUrl: docs[i].get('imageUrl'),
+          biography: docs[i].get('biography'),
+          publicDescription: docs[i].get('publicDesc'),
+          description: docs[i].get('description'),
+          voteCount: docs[i].get('voteCount'),
+          links: docs[i].get('links'),
+        ));
       }
+      //
+      return candidatesList;
     } on FirebaseException catch (e) {
-      print('error :$e');
+      MyAlert.showToast(0, 'Network Error');
+
+      print('Error while fetching Election details $e');
+    } catch (e) {
+      print('error: $e');
     }
+    return candidatesList;
   }
+
+  //////
+  ////
+  Future<List<CandidateModel>> fetchAllCandidates() async {
+    List<CandidateModel> candidatesList = [];
+
+    try {
+      ///
+      QuerySnapshot querySnapshot =
+          await firestore.collection('Candidates').get();
+
+      var docs = querySnapshot.docs;
+      //
+      for (var i = 0; i < docs.length; i++) {
+        candidatesList.add(CandidateModel(
+          candidateId: docs[i].get('candidateId'),
+          orgId: docs[i].get('orgId'),
+          name: docs[i].get('name'),
+          imageUrl: docs[i].get('imageUrl'),
+          biography: docs[i].get('biography'),
+          publicDescription: docs[i].get('publicDesc'),
+          description: docs[i].get('description'),
+          voteCount: docs[i].get('voteCount'),
+          links: docs[i].get('links'),
+        ));
+      }
+      //
+      return candidatesList;
+    } on FirebaseException catch (e) {
+      print('Error while fetching Election details $e');
+    } catch (e) {
+      print('error: $e');
+    }
+    return candidatesList;
+  }
+
+  List<CandidateModel> filterCandidatesByOrg(
+      List<CandidateModel> candidatesList, String OrgId) {
+    List<CandidateModel> filterCandidatesList = [];
+
+    filterCandidatesList =
+        candidatesList.where((element) => element.orgId == OrgId).toList();
+
+    return filterCandidatesList;
+  }
+  // set User id when Candidate create his account //
+
+  // Future<void> setUserId(String cnic, String uid) async {
+  //   try {
+  //     QuerySnapshot querySnapshot = await firestore
+  //         .collection('Candidates')
+  //         .where('cnic', isEqualTo: cnic)
+  //         .get();
+
+  //     if (querySnapshot.docs.isNotEmpty) {
+  //       String candidateId = querySnapshot.docs.first.id;
+  //       await firestore
+  //           .collection('candidate')
+  //           .doc(candidateId)
+  //           .update({'userId': uid});
+  //       print('Set UserId into Candidate Table');
+  //     } else {
+  //       print('Your are not a Candidate, you are voter');
+  //     }
+  //   } on FirebaseException catch (e) {
+  //     print('error :$e');
+  //   }
+  // }
 }

@@ -66,56 +66,6 @@ class _ContactPageState extends State<ContactPage> {
             SizedBox(
               height: 30,
             ),
-            Text(
-              'CONTACT ME!',
-              style: AppStyle.textStyle2.copyWith(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Form(
-              child: Column(
-                children: [
-                  FlatTextField(
-                      controller: text,
-                      keyboardType: TextInputType.name,
-                      labelText: 'Name'),
-                  FlatTextField(
-                      keyboardType: TextInputType.emailAddress,
-                      labelText: 'Email Address'),
-                  FlatTextField(
-                      keyboardType: TextInputType.text, labelText: 'Subject'),
-                  FlatTextField(
-                      keyboardType: TextInputType.text,
-                      maxline: 4,
-                      labelText: 'Message'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: MyButton(
-                      text: 'Send',
-                      width: 30.w,
-                      elevation: 0,
-                      height: 40,
-                      textClr: AppStyle.textClr,
-                      backClr: Color.fromARGB(255, 191, 246, 191),
-                      onPress: () {
-                        Get.snackbar(
-                          'Sent',
-                          'Your message sent successfully',
-                          backgroundColor: Colors.grey.shade300,
-                        );
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
           ],
         ),
       ),

@@ -79,12 +79,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
             labelText: widget.labelText,
             hintText: widget.hintText,
             hoverColor: Colors.grey[200],
-            border: OutlineInputBorder(
-              borderSide: widget.border!
-                  ? BorderSide(color: Colors.black, style: BorderStyle.solid)
-                  : BorderSide.none,
-              borderRadius: BorderRadius.circular(10),
-            ),
             filled: true,
             fillColor: widget.fillColor ?? Colors.grey.shade200,
             counterText: '',
@@ -98,17 +92,31 @@ class _AuthTextFieldState extends State<AuthTextField> {
               color: Colors.red,
               fontSize: 13,
             ),
+            border: OutlineInputBorder(
+              borderSide: widget.border!
+                  ? BorderSide(color: Colors.black, style: BorderStyle.solid)
+                  : BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Color.fromARGB(255, 58, 135, 45), width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+
             ///////// icons //////////
-            prefixIcon: IconButton(
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () {},
-                icon: Icon(widget.icon),
-                iconSize: 20,
-                splashRadius: 20,
-                padding: EdgeInsets.only(right: 15, left: 15),
-                color: AppStyle.primaryColor),
+            prefixIcon: widget.icon != null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Icon(
+                      widget.icon,
+                      color: AppStyle.iconClr,
+                      size: 25,
+                    ),
+                  )
+                : null,
+
+            /// Suffic Icon /
             suffixIcon: IconButton(
               focusColor: Colors.transparent,
               splashColor: Colors.transparent,
@@ -193,10 +201,6 @@ class _DropDownItemsState extends State<DropDownItems> {
           DropdownMenuItem(
             child: Text('Owner'),
             value: 'Owner',
-          ),
-          DropdownMenuItem(
-            child: Text('Candidate'),
-            value: 'Candidate',
           ),
           DropdownMenuItem(
             child: Text('Voter'),

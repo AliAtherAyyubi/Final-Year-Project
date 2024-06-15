@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:e_voting/Screens/Voting/Confirmvote.dart';
+import 'package:e_voting/Screens/Voting/faceDetect.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -21,6 +22,24 @@ class FaceRecognition1 extends StatefulWidget {
 
 class FaceRecognition1State extends State<FaceRecognition1> {
   bool verification = false;
+  bool isDetected = false;
+
+  void handleDetectingChange(bool value) {
+    setState(() {
+      isDetected = value;
+    });
+    if (value) {
+      Future.delayed(Duration(seconds: 2), () {
+        setState(() {
+          verification = true;
+        });
+      });
+    } else {
+      setState(() {
+        verification = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,22 +67,24 @@ class FaceRecognition1State extends State<FaceRecognition1> {
                 textAlign: TextAlign.left,
               ),
             ),
-            // gap(
-            //   Height: Applayout.getheight(30),
-            // ),
-            Center(
-              child: Image(
-                  image: AssetImage(
-                    "assets/icons/${verification ? 'verified' : 'face-scan'}.gif",
-                  ),
-                  height: 250),
+            gap(
+              Height: Applayout.getheight(30),
             ),
+            verification
+                ? const Center(
+                    child: Image(
+                        image: AssetImage(
+                          "assets/icons/verified.gif",
+                        ),
+                        height: 250),
+                  )
+                : FaceDetectionScreen(onDetectingChange: handleDetectingChange),
             gap(Height: Applayout.getheight(30)),
             Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  verification
+                  isDetected
                       ? 'Your face verified successfully!'
                       : 'To ensure that it  is you who is making this request,we will register your face ',
                   style: AppStyle.textstyle2B,
@@ -72,25 +93,28 @@ class FaceRecognition1State extends State<FaceRecognition1> {
               ),
             ),
             SizedBox(
-              height: 7.h,
+              height: 5.h,
             ),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: MyButton(
                   text: "Continue",
                   width: 100.w,
-                  onPress: () {
-                    Timer(const Duration(microseconds: 500), () {
-                      setState(() {
-                        verification = true;
-                      });
-                    });
-                    if (verification == true) {
-                      Get.to(() => ConfirmVote(),
-                          transition: Transition.fadeIn);
-                    }
-                  },
+                  onPress: isDetected
+                      ? () {
+                          Timer(const Duration(seconds: 2), () {
+                            setState(() {
+                              verification = true;
+                            });
+                          });
+                          Get.to(() => ConfirmVote(),
+                              transition: Transition.fadeIn);
+                        }
+                      : () {},
                 )),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

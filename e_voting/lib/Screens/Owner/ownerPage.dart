@@ -27,7 +27,7 @@ class OwnerMainPage extends StatefulWidget {
 class _OwnerMainPageState extends State<OwnerMainPage> {
   // const OwnerMainPage({super.key});
   UserModel user = UserModel();
-  // OrgModel? org = OrgModel();
+  OrgModel org = OrgModel();
   //d
   String? imageUrl;
   String? orgName = 'Your Organization';
@@ -40,12 +40,12 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
     user.setOrgId(id);
   }
 
-  Future<void> fetchUser() async {
+  Future<void> fetchUserAndOrg() async {
     user = await UserLocalData().fetchLocalUser();
-    // org = await OrgDatabase().fetchOrgById();
+    org = await AdminLocalData().fetchLocalOrg();
     setState(() {
       userName = user.userName.toString().capitalize!;
-      // orgName = org!.orgName.toString().capitalize ?? "Your Organization";
+      orgName = org.orgName ?? "Your Organization";
     });
   }
 
@@ -54,7 +54,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
     // TODO: implement initState
     super.initState();
     setOrgId();
-    fetchUser();
+    fetchUserAndOrg();
   }
 
   @override
@@ -65,10 +65,10 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
         return true;
       },
       child: RefreshIndicator(
-        onRefresh: () => fetchUser(),
+        onRefresh: () => fetchUserAndOrg(),
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(200),
+            preferredSize: Size.fromHeight(180),
             child: Container(
               height: 250,
               padding: EdgeInsets.all(20),
@@ -107,7 +107,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             children: [
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Row(
                 children: [
@@ -127,19 +127,19 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Divider(
                 color: Colors.black,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(
                 "Now voting become easier",
-                style: AppStyle()
-                    .h3
-                    .copyWith(color: AppStyle.textClr, fontSize: 25),
+                style: AppStyle().h3.copyWith(
+                      color: AppStyle.textClr,
+                    ),
               ),
               SizedBox(
                 height: 10,
@@ -148,8 +148,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
                 onTap: () => Get.to(() => OwnerOrganization(),
                     transition: Transition.rightToLeft),
                 child: OwnerTiles(
-                    fieldName: 'Create/Edit Organization',
-                    icon: Icons.business_outlined),
+                    fieldName: 'Organization', icon: Icons.business_outlined),
               ),
               SizedBox(
                 height: 5,
@@ -157,15 +156,13 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
               GestureDetector(
                 onTap: () => Get.to(() => OwnerElectionList(),
                     transition: Transition.rightToLeft),
-                child: OwnerTiles(
-                    fieldName: 'Create/Edit Elections',
-                    icon: Icons.how_to_vote),
+                child:
+                    OwnerTiles(fieldName: 'Elections', icon: Icons.how_to_vote),
               ),
               SizedBox(
                 height: 5,
               ),
-              OwnerTiles(
-                  fieldName: 'Create/Edit Candidates', icon: Icons.person),
+              OwnerTiles(fieldName: 'Candidates', icon: Icons.person_4),
               SizedBox(
                 height: 5,
               ),

@@ -4,6 +4,7 @@ import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Widgets/logo.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,10 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
   ///////
   Future<void> checkUser() async {
     UserModel currentUser = await user.fetchLocalUser();
-    isUser = await user.checkUserLoggedIn();
+    bool isLogIn = await user.checkUserLoggedIn();
+
     await user.setUserId();
     setState(() {
       userRole = currentUser.role!.toLowerCase();
+      isUser = isLogIn;
     });
   }
 
@@ -34,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     ////
-
+    checkUser();
     Future.delayed(const Duration(seconds: 2), () {
       Get.off(
           () => isUser
@@ -52,12 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppStyle.primaryColor,
       body: Center(
-        child: Text(
-          'eVote',
-          style: AppStyle.headstyle.copyWith(
-            color: Colors.white,
-          ),
-        ),
+        child: MyLogo(),
       ),
     );
   }

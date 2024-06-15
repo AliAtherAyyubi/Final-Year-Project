@@ -98,7 +98,6 @@ class ElectionDatabase {
     try {
       await firestore.collection('election').doc(id).delete();
       MyAlert.showToast(1, 'Deleted Successfully');
-      print('updated Election');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'System or Network Erro');
     }

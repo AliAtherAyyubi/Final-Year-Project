@@ -3,41 +3,45 @@ import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class MyAlertDialog extends StatelessWidget {
+class MyAlertDialogWidget extends StatelessWidget {
   final String? title;
   final Widget? content;
   final String? confirmBtnText;
+  final String? cancelBtnText;
   bool loading;
   // final String? cancelButtonText;
   final VoidCallback? onConfirm;
-  // final VoidCallback onCancel;
+  final VoidCallback? onCancel;
 
-  MyAlertDialog(
-      {Key? key,
-      required this.title,
-      this.content,
-      this.onConfirm,
-      this.loading = false,
-      this.confirmBtnText})
-      : super(key: key);
+  MyAlertDialogWidget({
+    Key? key,
+    required this.title,
+    this.content,
+    this.onConfirm,
+    this.loading = false,
+    this.confirmBtnText,
+    this.cancelBtnText,
+    this.onCancel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
         title!,
-        style: TextStyle(
-          color: Colors.green.shade900,
+        style: const TextStyle(
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
       ),
       content: content,
       actions: [
         MyTextButton(
-          onPress: () {
-            Navigator.pop(context);
-          },
-          text: 'Cancel',
+          onPress: onCancel ??
+              () {
+                Navigator.pop(context);
+              },
+          text: cancelBtnText ?? 'Cancel',
           elevation: 0,
           textClr: Colors.grey.shade700,
           fontWeight: FontWeight.w500,
@@ -52,6 +56,38 @@ class MyAlertDialog extends StatelessWidget {
           loading: loading,
         ),
       ],
+    );
+  }
+}
+
+class DialogMsg {
+  void showMsg(BuildContext context, msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Ok'))
+          ],
+        );
+      },
+    );
+  }
+
+  void showAlertDialog(BuildContext context, msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MyAlertDialogWidget(
+          title: msg,
+          confirmBtnText: 'No',
+        );
+      },
     );
   }
 }

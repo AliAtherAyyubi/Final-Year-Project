@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Database/owner_db.dart';
 import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/organization.dart';
@@ -28,9 +29,12 @@ class OrgDatabase {
           'adminId': org.adminId
         });
         docRef.update({'orgId': docRef.id});
+
+        ///
+        await OwnerDatabase().setOwnerOrgID(org.adminId.toString(), docRef.id);
+        //
         await admin.setLocalOrg(org);
         MyAlert.showToast(1, 'Saved Successfully');
-        print('Added Organization');
       } else {
         // No documents found with the provided adminId
         MyAlert.showToast(0, 'Your Organization is already registered!');
@@ -42,7 +46,7 @@ class OrgDatabase {
 
   Future<String?> GetOrgId() async {
     try {
-      var adminid = await UserController().getUserID();
+      var adminid = await UserLocalData().getUserId();
 
       QuerySnapshot querySnapshot = await firestore
           .collection('organization')
@@ -66,7 +70,7 @@ class OrgDatabase {
   }
   // Fetch Organization //
 
-  Future<OrgModel?> fetchOrgById() async {
+  Future<OrgModel> fetchOrgById() async {
     try {
       var orgid = await GetOrgId();
       DocumentSnapshot doc =
@@ -82,9 +86,6 @@ class OrgDatabase {
       return orgModel;
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
-      print('Error while fetching organization details');
-    } catch (e) {
-      print('Error');
       return orgModel;
     }
   }
@@ -106,7 +107,6 @@ class OrgDatabase {
       org.description = desc;
       await admin.setLocalOrg(org);
       MyAlert.showToast(1, 'Updated Successfully');
-      print('updated Organization');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
 

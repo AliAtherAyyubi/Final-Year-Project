@@ -1,4 +1,7 @@
+import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Screens/Profile/contact.dart';
+import 'package:e_voting/Screens/Voting/idCheck.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
@@ -7,22 +10,21 @@ import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateProfile extends StatefulWidget {
-  String? name;
-  List<dynamic>? description;
-  List<String>? links;
-  CandidateProfile({this.name, this.description, this.links});
+  CandidateModel? candidate;
+  CandidateProfile({this.candidate});
   @override
   State<CandidateProfile> createState() => _CandidateProfileState();
 }
 
 class _CandidateProfileState extends State<CandidateProfile>
     with SingleTickerProviderStateMixin {
+  candidateData candi_data = Get.put(candidateData());
+
   // CandidateProfile({super.key});
 
   late TabController _tabController;
@@ -79,7 +81,7 @@ class _CandidateProfileState extends State<CandidateProfile>
             //   height: 10,
             // ),
             Text(
-              widget.name.toString().capitalize!,
+              widget.candidate!.name.toString().capitalize!,
               style: GoogleFonts.inter(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -104,7 +106,7 @@ class _CandidateProfileState extends State<CandidateProfile>
               child: TabBarView(controller: _tabController, children: [
                 // !sst Page //
                 AboutContent(
-                  description: widget.description,
+                  description: widget.candidate!.description ?? [],
                 ),
                 // 2nd page //
                 ContactPage()
@@ -114,11 +116,11 @@ class _CandidateProfileState extends State<CandidateProfile>
               height: Applayout.getheight(10),
             ),
             MyButton(
-              text: 'VOTE',
+              text: 'GO BACK TO VOTE',
               width: 90.w,
               // height: 50,
               onPress: () {
-                Get.to(() => VotingPage());
+                Get.back();
               },
             ),
           ],

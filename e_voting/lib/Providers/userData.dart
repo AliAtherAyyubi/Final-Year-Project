@@ -5,7 +5,7 @@ class UserData extends GetxController {
   var userID = "".obs;
   var userImage = "".obs;
 
-  var orgId = ''.obs;
+  var orgId = "".obs;
 
   void setOrgId(id) {
     print(id);

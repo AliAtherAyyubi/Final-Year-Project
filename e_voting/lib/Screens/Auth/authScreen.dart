@@ -1,5 +1,6 @@
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
+import 'package:e_voting/Screens/Widgets/logo.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -24,24 +25,16 @@ class AuthScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '€VØŦ€',
-                    style: AppStyle.headstyle
-                        .copyWith(color: Colors.white, letterSpacing: 2),
-                  ),
-                ),
-                const SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/logo/logo.png',
-                    color: Colors.white,
-                    height: 150,
-                    width: 150,
-                  ),
-                ),
+                // Container(
+                //   alignment: Alignment.center,
+                //   child: Text(
+                //     '€VØŦ€',
+                //     style: AppStyle.headstyle
+                //         .copyWith(color: Colors.white, letterSpacing: 2),
+                //   ),
+                // ),
+                // const SizedBox(height: 40),
+                MyLogo(),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 80.w,

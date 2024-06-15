@@ -42,12 +42,15 @@ class VoteLabel extends StatelessWidget {
           //   Width: Applayout.getWidth(3),
           // ),
           Obx(
-            () => Text(
-              elec_data.electionTitle.toString(),
-              style: GoogleFonts.inter(
-                  color: AppStyle.textClr,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
+            () => SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Text(
+                elec_data.electionTitle.toString(),
+                style: GoogleFonts.inter(
+                    color: AppStyle.textClr,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              ),
             ),
           )
         ],
@@ -71,7 +74,7 @@ class ScreenTitle extends StatelessWidget {
         child: Icon(
           Icons.arrow_back_ios,
           // color: AppStyle.textClr,
-          color: Colors.white,
+          color: AppStyle.iconClr,
           size: 3.h,
         ),
       ),
@@ -79,7 +82,7 @@ class ScreenTitle extends StatelessWidget {
         title!,
         style: GoogleFonts.inter(
             // color: AppStyle.textClr,
-            color: Colors.white,
+            color: AppStyle.textClr,
             fontSize: 19.sp,
             fontWeight: FontWeight.w600),
       ),

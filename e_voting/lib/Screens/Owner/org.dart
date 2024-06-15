@@ -2,6 +2,7 @@ import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Models/organization.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -10,6 +11,7 @@ import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class OwnerOrganization extends StatefulWidget {
@@ -102,9 +104,13 @@ class _OwnerOrganizationState extends State<OwnerOrganization> {
                                 });
                                 await OrgController().createOrg(
                                     name.text, address.text, description.text);
+
+                                clearText();
                                 setState(() {
                                   loading = false;
                                 });
+                                Get.off(() => OwnerMainScreen(),
+                                    transition: Transition.fade);
                               }
                             },
                             text: 'Create Organization',
@@ -117,6 +123,12 @@ class _OwnerOrganizationState extends State<OwnerOrganization> {
               ),
       ),
     );
+  }
+
+  void clearText() {
+    name.text = "";
+    address.text = '';
+    description.text = '';
   }
 }
 
@@ -145,7 +157,7 @@ class _EditOrgState extends State<EditOrg> {
     setState(() {
       data = false;
     });
-    org = await OrgDatabase().fetchOrgById();
+    org = await AdminLocalData().fetchLocalOrg();
     setState(() {
       name.text = org!.orgName ?? '';
       address.text = org!.address ?? '';

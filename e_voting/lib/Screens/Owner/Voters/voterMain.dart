@@ -2,15 +2,11 @@ import 'package:e_voting/Database/owner_db.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/empty.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
-import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Services/validation.dart';
 import 'package:e_voting/utils/Appstyles.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class OwnerVoters extends StatefulWidget {
   const OwnerVoters({super.key});
@@ -87,7 +83,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return MyAlertDialog(
+                  return MyAlertDialogWidget(
                     title: 'Enter CNIC of Voter',
                     content: Form(
                       key: formKey,
@@ -117,7 +113,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
               // scrollDirection: Axis.vertical,
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Text(
                   'Add Voters By CNIC',
@@ -147,7 +143,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
                         : Expanded(
                             child: ListView.builder(
                                 itemCount: filteredVoters!.length,
-                                // shrinkWrap: true,
+                                shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (BuildContext context, int index) {
                                   //      ////            ///
@@ -167,7 +163,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                       alignment: Alignment.centerRight,
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 20),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.delete,
                                         color: Colors.white,
                                         size: 40,
@@ -175,13 +171,14 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                     ),
                                     child: Container(
                                       width: double.infinity,
-                                      margin: EdgeInsets.only(bottom: 10),
+                                      margin: EdgeInsets.only(bottom: 5),
                                       child: ListTile(
                                         titleAlignment:
                                             ListTileTitleAlignment.center,
-                                        contentPadding: EdgeInsets.all(15),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 15),
                                         leading: const Icon(
-                                          Icons.person_4,
+                                          Icons.person,
                                           size: 50,
                                         ),
                                         title: Text(
@@ -201,7 +198,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
-                                                  return MyAlertDialog(
+                                                  return MyAlertDialogWidget(
                                                     title: 'Update CNIC',
                                                     content: Form(
                                                       key: formKey,

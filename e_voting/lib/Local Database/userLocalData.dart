@@ -23,14 +23,11 @@ class UserLocalData {
       'phone': user.phone,
       'role': user.role
     };
-    if (data.isNotEmpty) {
-      var convertToString = helper.convertJsonToString(data);
-      // Store the converted data in SharedPreferences
-      await prefs.setString('userData', convertToString);
-    } else {
-      // Handle the case when data is null
-      print('Error: Document data is null');
-    }
+
+    //
+    var userData = helper.convertJsonToString(data);
+    // Store the converted data in SharedPreferences
+    await prefs.setString('userData', userData);
   }
 
   // fetch user local data //
@@ -69,9 +66,38 @@ class UserLocalData {
     return isUser;
   }
 
+  Future<bool> isOwner() async {
+    UserModel user = UserModel();
+    user = await UserLocalData().fetchLocalUser();
+    if (user.role!.toLowerCase() == 'owner') return true;
+    return false;
+  }
+
   Future<void> setUserId() async {
     UserModel user = await fetchLocalUser();
+    String id = user.userId.toString();
+    //
+    Get.put(UserData()).setUserId(id);
+  }
 
-    Get.put(UserData()).setUserId(user.userId);
+  Future<String> getUserId() async {
+    UserModel user = await fetchLocalUser();
+    String id = user.userId.toString();
+    //
+    return id;
+  }
+
+  Future<void> setUserOrgID(String orgID) async {
+    SharedPreferences prefs = await helper.initializer();
+
+    await prefs.setString('UserOrgID', orgID);
+  }
+
+  Future<String> getUserOrgID() async {
+    SharedPreferences prefs = await helper.initializer();
+
+    String OrgID = prefs.getString('UserOrgID') ?? "";
+    print('User ORG ID: $OrgID');
+    return OrgID;
   }
 }

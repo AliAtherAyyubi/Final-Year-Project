@@ -15,7 +15,6 @@ import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Appstyles.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/toast/gf_toast.dart';
@@ -91,7 +90,7 @@ class _SampleState extends State<Sample> {
               text: 'Sign in',
               width: 90.w,
               onPress: () async {
-                await UserController().Signin('shoaib@gmail.com', '123456');
+                await UserController().Signin('mayoayyubi@gmail.com', '123456');
                 fetchImage();
               }),
           // MyButton(text: 'Upload Image', width: 90.w, onPress: getImage),
@@ -107,36 +106,37 @@ class _SampleState extends State<Sample> {
               onPress: () {
                 MyAlert.showToast(1, 'Registered Successfully');
               }),
-          MyButton(
-            text: 'create and fetch election',
-            onPress: () async {
-              ElectionModel e = ElectionModel();
-              e.electionName = 'gcU university';
-              e.description = 'student rep';
-              // await ElectionLocalData().addLocalElection(e);
-
-              List<ElectionModel> election =
-                  await ElectionLocalData().fetchLocalElections();
-
-              print(election[0].electionName);
-              print(election[0].description);
-              // await ElectionLocalData().deleteAllElections();
-            },
-          )
           // MyButton(
-          //     text: 'Create Canddiate',
-          //     width: 90.w,
-          //     onPress: () async {
-          //       CandidateModel c = CandidateModel();
-          //       c.cnic = '35201-45653161-1';
-          //       c.description = [
-          //         'Dynamic leader with vision, integrity, and dedication, transforming organizations positively.',
-          //         'I\'m  a student at GC University Lahore leading students to tech environment and in future students will be able to make '
-          //       ];
-          //       c.userId = data.userID.toString();
+          //   text: 'create and fetch election',
+          //   onPress: () async {
+          //     ElectionModel e = ElectionModel();
+          //     e.electionName = 'gcU university';
+          //     e.description = 'student rep';
+          //     // await ElectionLocalData().addLocalElection(e);
 
-          //       await CandidateDB().createCandidate(c);
-          //     }),
+          //     List<ElectionModel> election =
+          //         await ElectionLocalData().fetchLocalElections();
+
+          //     print(election[0].electionName);
+          //     print(election[0].description);
+          //     // await ElectionLocalData().deleteAllElections();
+          //   },
+          // ),
+          MyButton(
+              text: 'Create Canddiate',
+              width: 90.w,
+              onPress: () async {
+                CandidateModel c5 = CandidateModel();
+                c5.name = 'Mushtaq Ahmed';
+                c5.orgId = 'ZzYyXx789';
+                c5.publicDescription =
+                    'I\'m a part of Islamic party and will help you to grow economics challenges to be solved.';
+                c5.description = [
+                  'Innovator and entrepreneur.',
+                  'Mushtaq founded multiple successful startups and is known for her innovative approach to business.'
+                ];
+                await CandidateDB().createCandidate(c5);
+              }),
         ],
       ),
     );

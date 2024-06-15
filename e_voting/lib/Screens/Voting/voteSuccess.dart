@@ -16,65 +16,66 @@ class VoteSuccess extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              gap(
-                Height: Applayout.getheight(70),
-              ),
-              Container(
-                width: 60.w,
-                child: Text(
-                  'Thank you! Your vote has submitted successfully.',
-                  style: AppStyle.textStyle2.copyWith(fontSize: 30),
-                  textAlign: TextAlign.center,
+          backgroundColor: Colors.white,
+          body: Center(
+            child: Column(
+              children: [
+                gap(
+                  Height: Applayout.getheight(70),
                 ),
-              ),
-              gap(
-                Height: Applayout.getheight(30),
-              ),
-              Image(image: AssetImage("assets/images/tic2.png")),
-              gap(
-                Height: Applayout.getheight(36),
-              ),
-              Container(
-                width: 60.w,
-                child: Text(
-                  "The receipt is send to your email address.",
-                  style:
-                      AppStyle.textStyle4.copyWith(fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: Image.asset(
+                //     "assets/images/paper.jpg",
+                //   ),
+                // ),
+                SizedBox(
+                  width: 60.w,
+                  child: Text(
+                    'Thank you!\n Your vote has submitted successfully.',
+                    style: AppStyle.textStyle2.copyWith(fontSize: 30),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              gap(
-                Height: Applayout.getheight(45),
-              ),
-              MyButton(
-                text: "BACK TO HOME SCREEN",
-                width: 90.w,
-                onPress: () {
-                  Get.to(() => Dashboard(), transition: Transition.rightToLeft);
-                },
-              ),
-              gap(
-                Height: Applayout.getheight(10),
-              ),
-              MyTextButton(
-                onPress: () {
-                  Get.to(() => ReceiptScreen());
-                },
-                text: "RECEIPT",
-                textClr: AppStyle.textClr,
-                elevation: 0,
-                border: false,
-              ),
-            ],
-          ),
-        ),
-      )),
+                Expanded(
+                    child: Image.asset(
+                  "assets/images/tic2.png",
+                )),
+                // SizedBox(
+                //   width: 60.w,
+                //   child: Text(
+                //     "The receipt is send to your email address.",
+                //     style: AppStyle.textStyle4
+                //         .copyWith(fontWeight: FontWeight.w500),
+                //     textAlign: TextAlign.center,
+                //   ),
+                // ),
+                gap(
+                  Height: Applayout.getheight(45),
+                ),
+                MyButton(
+                  text: "BACK TO HOME SCREEN",
+                  width: 90.w,
+                  onPress: () {
+                    Get.to(() => Dashboard(),
+                        transition: Transition.rightToLeft);
+                  },
+                ),
+                gap(
+                  Height: Applayout.getheight(10),
+                ),
+                MyTextButton(
+                  onPress: () {
+                    Get.to(() => ReceiptScreen());
+                  },
+                  text: "RECEIPT",
+                  textClr: AppStyle.textClr,
+                  elevation: 0,
+                  border: false,
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

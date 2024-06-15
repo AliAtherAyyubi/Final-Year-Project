@@ -1,8 +1,11 @@
 import 'package:e_voting/Controllers/vote_control.dart';
+import 'package:e_voting/Local%20Database/adminData.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
@@ -108,9 +111,8 @@ class _ConfirmVoteState extends State<ConfirmVote> {
                 var cand_id = candidate.candidateId.toString();
                 var elecId = election.electionId.toString();
                 var votedfor = election.electionTitle.toString();
-                var orgId = "3eme9c3NHtINcgybKYxd";
                 await VoteController()
-                    .createVote(userId, elecId, cand_id, orgId, votedfor);
+                    .createVote(userId, elecId, cand_id, votedfor);
                 setState(() {
                   loading = false;
                 });
@@ -125,8 +127,22 @@ class _ConfirmVoteState extends State<ConfirmVote> {
               elevation: 0,
               border: false,
               onPress: () {
-                // MyAlertDialog().showCustomAlertDialog(context);
-                Get.to(() => Dashboard(), transition: Transition.leftToRight);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return MyAlertDialogWidget(
+                      title: 'Are you sure you want to cancel?',
+                      confirmBtnText: 'No',
+                      onConfirm: () => Navigator.pop(context),
+                      onCancel: () async {
+                        bool isOwner = await UserLocalData().isOwner();
+                        Get.to(() => isOwner ? OwnerMainScreen() : Dashboard(),
+                            transition: Transition.leftToRight);
+                      },
+                      cancelBtnText: 'Yes',
+                    );
+                  },
+                );
               },
             ),
           ],

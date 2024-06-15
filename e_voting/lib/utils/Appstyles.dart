@@ -5,7 +5,7 @@ const Color primary = Color(0xFF36bb75);
 
 class AppStyle {
   static const Color primaryColor = primary;
-  static const Color textClr = Color(0xff228B22);
+  static const Color textClr = Color(0xff00A36C);
   static const Color cardClr = Color(0xffA4FBBE);
   static const Color darkGreen = Color(0xff488f3c);
   static const Color iconClr = textClr;

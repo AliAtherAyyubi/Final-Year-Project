@@ -1,4 +1,5 @@
 import 'package:e_voting/Database/org_db.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class OrgController {
   UserData userData = Get.put(UserData());
   // creating organization //
   Future<void> createOrg(name, address, description) async {
-    var id = Get.put(UserData()).userID.toString();
+    var id = await UserLocalData().getUserId();
 
     org.orgName = name;
     org.address = address;

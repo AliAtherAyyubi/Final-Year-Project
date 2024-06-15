@@ -1,27 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Database/owner_db.dart';
 import 'package:e_voting/Local%20Database/adminData.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Models/owner.dart';
 import 'package:e_voting/Models/user.dart';
-import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
-import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Services/Internet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserController {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   UserModel user = UserModel();
+  OrgModel orgModel = OrgModel();
 
   // Getx States Manager //
   UserData userState = Get.put(UserData());
@@ -93,8 +92,15 @@ class UserController {
           await UserLocalData().setLocalUser(user);
           // // Set User ID //
           userState.setUserId(credential.user!.uid);
-          // userState.setUserImage(user.imageUrl ?? "");
-          bool isAdmin = await isOwner();
+
+          //
+          bool isAdmin = await UserLocalData().isOwner();
+          if (isAdmin) {
+            orgModel = await OrgDatabase().fetchOrgById();
+            if (orgModel.orgId != null) {
+              await AdminLocalData().setLocalOrg(orgModel);
+            }
+          }
           // MyAlert.Alert('Success', 'Signed in successfully!');
           Get.off(() => isAdmin ? OwnerMainScreen() : Dashboard(),
               transition: Transition.rightToLeft);
@@ -106,8 +112,10 @@ class UserController {
       }
     } on FirebaseAuthException catch (e) {
       MyAlert.showToast(0, 'Invalid Username and Password!');
+      print('Error signing in firebase: $e');
     } catch (e) {
       MyAlert.showToast(0, 'System Error');
+      print('Error signing in: $e');
     }
   }
   // Log out //
@@ -125,16 +133,6 @@ class UserController {
     }
   }
 
-  // To update user //
-
-  Future<void> updateUserEmail(String value) async {
-    User user = _auth.currentUser!;
-    await user.updateEmail(value);
-
-    await user.sendEmailVerification();
-    // await userDatabase().updateUser('email', value);
-  }
-
 // Function to change the user's password
   Future<void> updateUserPassword(String newPassword) async {
     try {
@@ -142,14 +140,12 @@ class UserController {
       User? user = _auth.currentUser;
       // Change the user's password
       await user!.updatePassword(newPassword);
-      MyAlert.Alert('Password', "Password Updated");
+      MyAlert.showToast(1, 'Updated Successfully!');
+
       // Password changed successfully
-      print('Password changed successfully');
     } catch (e) {
       // Error changing password
-      MyAlert.Alert('error', "system error");
-
-      print('Error changing password: $e');
+      MyAlert.showToast(0, 'System or Network error');
     }
   }
 
@@ -172,22 +168,20 @@ class UserController {
         MyAlert.showToast(
             0, "This email didn\'t exist. Enter email correctly!");
       }
-    } catch (e) {
+    } on FirebaseException catch (e) {
       // Error sending password reset email
-      MyAlert.Alert('System Error', '$e');
+      MyAlert.showToast(0, 'System or Network Error');
     }
   }
 
   //
-  Future<String> getUserID() async {
-    UserLocalData user = UserLocalData();
-    UserModel data = await user.fetchLocalUser();
-    return data.userId.toString();
-  }
+  // To update user //
 
-  Future<bool> isOwner() async {
-    user = await UserLocalData().fetchLocalUser();
-    if (user.role!.toLowerCase() == 'owner') return true;
-    return false;
+  Future<void> updateUserEmail(String value) async {
+    User user = _auth.currentUser!;
+    await user.updateEmail(value);
+
+    await user.sendEmailVerification();
+    // await userDatabase().updateUser('email', value);
   }
 }

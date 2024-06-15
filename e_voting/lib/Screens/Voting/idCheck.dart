@@ -1,5 +1,8 @@
+import 'package:e_voting/Database/owner_db.dart';
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
+import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
@@ -23,6 +26,8 @@ class _idValidationPageState extends State<idValidationPage> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController cnic = TextEditingController();
+  UserData userData = Get.put(UserData());
+  bool loading = false;
   //
   @override
   Widget build(BuildContext context) {
@@ -91,15 +96,29 @@ class _idValidationPageState extends State<idValidationPage> {
                 text: 'CONTINUE',
                 backClr: AppStyle.primaryColor,
                 width: 95.w,
-                onPress: () {
+                loading: loading,
+                onPress: () async {
                   if (formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: FaceRecognition1(),
-                        type: PageTransitionType.fade,
-                      ),
-                    );
+                    setState(() {
+                      loading = true;
+                    });
+                    bool found =
+                        await OwnerDatabase().searchVoterByID(cnic.text);
+                    if (found) {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: FaceRecognition1(),
+                          type: PageTransitionType.fade,
+                        ),
+                      );
+                    } else {
+                      DialogMsg().showMsg(context,
+                          'Sorry but you are not registered with this Organization');
+                    }
+                    setState(() {
+                      loading = false;
+                    });
                   }
                 },
               )

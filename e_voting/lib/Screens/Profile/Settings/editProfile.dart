@@ -24,6 +24,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
 
   // Controllers for editing
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _cnicController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _roleController = TextEditingController();
@@ -35,7 +36,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
     user = await UserLocalData().fetchLocalUser();
     setState(() {
       user = user;
-      _nameController.text = user.userName.toString().capitalize ?? 'Error';
+      _nameController.text = user.userName.toString().capitalize ?? '';
+      _emailController.text = user.email ?? "";
       _cnicController.text = user.cnic ?? "";
       _phoneController.text = user.phone ?? "";
       _roleController.text = user.role ?? "";
@@ -62,6 +64,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProfileField("Name", 'username', _nameController, null),
+                ProfileField("Email", 'email', _emailController, null),
                 ProfileField("CNIC", 'cnic', _cnicController,
                     Validation().cnicFormatter),
                 ProfileField("Phone", 'phone', _phoneController,
@@ -110,7 +113,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
 
             // filled: true,
             // fillColor: Colors.grey[200],
-            suffixIcon: field == 'role'
+            suffixIcon: field == 'role' || field == 'email'
                 ? null
                 : IconButton(
                     icon: Icon(

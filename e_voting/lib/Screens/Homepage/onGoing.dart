@@ -1,10 +1,11 @@
-import 'package:e_voting/Controllers/candidate_control.dart';
 import 'package:e_voting/Controllers/election_control.dart';
-import 'package:e_voting/Providers/candidateData.dart';
-import 'package:e_voting/Models/user.dart';
+import 'package:e_voting/Database/candidate_db.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Providers/electionData.dart';
-import 'package:e_voting/Screens/Profile/candi_Profile.dart';
+import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
+import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
@@ -14,7 +15,6 @@ import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -28,30 +28,34 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   late final PageController pageController;
   late int activeIndex;
 
-  final candidateData candi_data = Get.put(candidateData());
+  // final candidateData candi_data = Get.put(candidateData());
   final electionData elec_data = Get.put(electionData());
-
-  List<Map<String, dynamic>> candidateInfo = [];
+  UserData userData = Get.put(UserData());
+  //
+  List<CandidateModel> candidatesList = [];
+  List<CandidateModel> filterCandidatesList = [];
   List<Map<String, dynamic>> electionList = [];
   bool data = false;
 
   Future<void> fetchInfo() async {
     if (elec_data.electionList.isEmpty) {
       await ElectionController().fetchElections();
-      await CandidateController().fetchCandidates();
+      candidatesList = await CandidateDB().fetchAllCandidates();
     }
-
     setState(() {
       electionList = elec_data.electionList
           .map((element) => element as Map<String, dynamic>)
           .toList();
-      candidateInfo = candi_data.candidatesList
-          .map((item) => item as Map<String, dynamic>)
-          .toList();
       data = true;
     });
-    elec_data.setElectionTitle(electionList[0]['name'] ?? "");
-    elec_data.setElectionId(electionList[0]['elecId'] ?? "");
+    elec_data.setElectionTitle(electionList[1]['name'] ?? "");
+    elec_data.setElectionId(electionList[1]['elecId'] ?? "");
+    var orgID = electionList[1]['orgId'];
+    await UserLocalData().setUserOrgID(orgID);
+    setState(() {
+      filterCandidatesList =
+          CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
+    });
   }
 
   @override
@@ -102,42 +106,64 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                   height: Applayout.getheight(10),
                 ),
                 Text(
-                  '${candidateInfo.length} Candidate',
+                  '${filterCandidatesList.length} Candidates',
                   style: GoogleFonts.inter(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
+
+                //// Candidates Section Avatars //
                 Container(
                   margin: EdgeInsets.only(top: Applayout.getheight(25)),
                   width: double.infinity,
-                  height: Applayout.getheight(200),
-                  child: ListView.builder(
-                    itemCount: candidateInfo.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => CandidateProfile(
-                              name: candidateInfo[index]['name'],
-                              description: candidateInfo[index]['description'],
-                            ),
-                            transition: Transition.fadeIn,
-                          );
-                        },
-                        child: CandidateAvatar(
-                          name: candidateInfo[index]['name'],
-                          image: 'assets/images/profile.jpg',
+                  height: Applayout.getheight(180),
+                  child: filterCandidatesList.isEmpty
+                      ? Center(
+                          child: Text('No Candidates found'),
+                        )
+                      : ListView.builder(
+                          itemCount: filterCandidatesList.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final candidate = filterCandidatesList[index];
+                            return CandidateAvatar(
+                              name: candidate.name,
+                              image: 'assets/images/profile.jpg',
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
                 MyButton(
                   text: 'VOTE NOW',
                   width: 95.w,
                   onPress: () {
-                    Get.to(() => VotingPage(), transition: Transition.fade);
+                    var title = elec_data.electionTitle;
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return MyAlertDialogWidget(
+                            title:
+                                'Are you sure you want to vote for following election?',
+                            content: Text(
+                              '$title',
+                              style: AppStyle().h3.copyWith(
+                                    color: AppStyle.textClr,
+                                  ),
+                            ),
+                            cancelBtnText: 'No',
+                            confirmBtnText: 'Yes',
+                            onConfirm: () {
+                              Navigator.pop(context);
+
+                              Get.to(
+                                  () => VotingPage(
+                                        candidatesList: filterCandidatesList,
+                                      ),
+                                  duration: const Duration(milliseconds: 500),
+                                  transition: Transition.fadeIn);
+                            },
+                          );
+                        });
                   },
                 ),
                 SizedBox(
@@ -147,27 +173,30 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
             )
           : Padding(
               padding: EdgeInsets.only(top: 50),
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: AppStyle.textClr,
-                ),
-              ),
+              child: Loading(),
             ),
     );
   }
 
   Widget _buildCardsPageView(BuildContext context) {
     return SizedBox(
-      height: 40.h,
+      height: 32.h,
       child: PageView.builder(
         controller: pageController,
         itemCount: electionList.length,
-        onPageChanged: (index) {
+        onPageChanged: (index) async {
           setState(() => activeIndex = index);
           var elecId = electionList[index]['elecId'] ?? "";
           var title = electionList[index]['name'] ?? "";
+          var orgID = electionList[index]['orgId'];
+          //
           elec_data.setElectionTitle(title);
           elec_data.setElectionId(elecId);
+          await UserLocalData().setUserOrgID(orgID);
+          setState(() {
+            filterCandidatesList =
+                CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
+          });
         },
         itemBuilder: (context, index) {
           final election = electionList[index];
@@ -177,13 +206,10 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
             scale: index == activeIndex ? 1 : 0.95,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            child: Hero(
-              tag: 'card_${electionList[index]['elecid']}',
-              child: VoteCard(
-                title: title,
-                time: election['date'] ?? "",
-                description: election['description'] ?? "Network error",
-              ),
+            child: VoteCard(
+              title: title,
+              time: election['date'] ?? "",
+              description: election['description'] ?? "Network error",
             ),
           );
         },
@@ -235,7 +261,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 //   candidateData candi_data = Get.put(candidateData());
 //   electionData elec_data = Get.put(electionData());
 //   // //
-//   List<Map<String, dynamic>> candidateInfo = [];
+//   List<Map<String, dynamic>> candidatesList = [];
 //   List<Map<String, dynamic>> electionList = [];
 // //
 //   bool data = false;
@@ -250,7 +276,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 //       electionList = elec_data.electionList
 //           .map((element) => element as Map<String, dynamic>)
 //           .toList();
-//       candidateInfo = candi_data.candidatesList
+//       candidatesList = candi_data.candidatesList
 //           .map((item) => item as Map<String, dynamic>)
 //           .toList();
 //       data = true;
@@ -355,7 +381,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 //                 /// Candidates Section //
 
 //                 Text(
-//                   '${candidateInfo.length} Candidate',
+//                   '${candidatesList.length} Candidate',
 //                   style: GoogleFonts.inter(
 //                       fontSize: 16, fontWeight: FontWeight.bold),
 //                 ),
@@ -367,7 +393,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 //                     width: double.infinity,
 //                     height: Applayout.getheight(200),
 //                     child: ListView.builder(
-//                         itemCount: candidateInfo.length,
+//                         itemCount: candidatesList.length,
 //                         shrinkWrap: true,
 //                         scrollDirection: Axis.horizontal,
 //                         itemBuilder: (context, index) {
@@ -375,14 +401,14 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 //                             onTap: () {
 //                               Get.to(
 //                                   () => CandidateProfile(
-//                                         name: candidateInfo[index]['name'],
-//                                         description: candidateInfo[index]
+//                                         name: candidatesList[index]['name'],
+//                                         description: candidatesList[index]
 //                                             ['description'],
 //                                       ),
 //                                   transition: Transition.fadeIn);
 //                             },
 //                             child: CandidateAvatar(
-//                               name: candidateInfo[index]['name'],
+//                               name: candidatesList[index]['name'],
 //                               image: 'assets/images/profile.jpg',
 //                             ),
 //                           );

@@ -2,6 +2,7 @@ import 'package:e_voting/Controllers/election_control.dart';
 import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/displayElection.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
@@ -81,7 +82,7 @@ class _OwnerElectionState extends State<OwnerElection> {
                       controller: name,
                       keyboardType: TextInputType.name,
                       labelText: 'Election Title',
-                      maxlength: 50,
+                      maxlength: 40,
                       validator: (value) {
                         if (value.isEmpty) return 'field can\'t be empty';
                       },
@@ -162,6 +163,9 @@ class _OwnerElectionState extends State<OwnerElection> {
                           setState(() {
                             loading = false;
                           });
+                          clearText();
+                          Get.off(OwnerMainScreen(),
+                              transition: Transition.fade);
                         }
                       },
                       text: 'Create an Election',
@@ -174,5 +178,12 @@ class _OwnerElectionState extends State<OwnerElection> {
         ),
       ),
     );
+  }
+
+  void clearText() {
+    name.text = "";
+    startDate.text = "";
+    endDate.text = "";
+    description.text = "";
   }
 }

@@ -5,7 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminLocalData {
   SharedHelper prefs = SharedHelper();
+  OrgModel orgModel = OrgModel();
 
+  /////
   Future<void> setLocalOrg(OrgModel org) async {
     SharedPreferences sp = await prefs.initializer();
     //
@@ -27,17 +29,20 @@ class AdminLocalData {
   Future<OrgModel> fetchLocalOrg() async {
     SharedPreferences sp = await prefs.initializer();
     //
-
-    String? stringData = sp.getString('OrgData');
-    Map<String, dynamic> OrgData = prefs.convertStringToJson(stringData!);
-    //
-    return OrgModel(
-      orgName: OrgData['name'],
-      address: OrgData['address'],
-      description: OrgData['description'],
-      adminId: OrgData['adminId'],
-      orgId: OrgData['orgId'],
-    );
+    bool checkOrg = await isOrgExist();
+    if (checkOrg) {
+      String stringData = sp.getString('OrgData') ?? "";
+      Map<String, dynamic> OrgData = prefs.convertStringToJson(stringData);
+      //
+      return OrgModel(
+        orgName: OrgData['name'],
+        address: OrgData['address'],
+        description: OrgData['description'],
+        adminId: OrgData['adminId'],
+        orgId: OrgData['orgId'],
+      );
+    }
+    return orgModel;
   }
 
   Future<void> removeOrg() async {
@@ -48,7 +53,6 @@ class AdminLocalData {
   Future<bool> isOrgExist() async {
     SharedPreferences sp = await prefs.initializer();
     bool isExist = sp.containsKey('OrgData');
-    print("org Exist:$isExist");
     return isExist;
   }
 }
