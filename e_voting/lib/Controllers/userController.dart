@@ -10,9 +10,9 @@ import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
-import 'package:e_voting/Services/Internet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +28,6 @@ class UserController {
   /// Registration of User into Database //
   Future<void> RegisterUser(
     String name,
-    String cnic,
     String role,
     String email,
     String password,
@@ -39,7 +38,6 @@ class UserController {
 
       user.userId = authResult.user!.uid;
       user.userName = name;
-      user.cnic = cnic;
       user.email = email;
       user.role = role;
       //
@@ -51,7 +49,6 @@ class UserController {
         ownerModel.userID = user.userId;
         await OwnerDatabase().createOwner(ownerModel);
       }
-      // Meanwhile Sign in //
       //
       MyAlert.showToast(1, 'Your account is created successfully!');
       await sendVerificationEmail(_auth);
@@ -81,34 +78,33 @@ class UserController {
 
   Future<void> Signin(String email, String password) async {
     try {
-      bool checkInternet = await Internet().checkInternetConnection();
-      if (checkInternet) {
-        UserCredential credential = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        // Checking Crdentials //
-        if (credential.user != null && credential.user!.emailVerified) {
-          user = await userDatabase().getUserById(credential.user!.uid);
+      // bool checkInternet = await Internet().checkInternetConnection();
 
-          await UserLocalData().setLocalUser(user);
-          // // Set User ID //
-          userState.setUserId(credential.user!.uid);
+      UserCredential credential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      // Checking Crdentials //
+      if (credential.user != null && credential.user!.emailVerified) {
+        user = await userDatabase().getUserById(credential.user!.uid);
 
-          //
-          bool isAdmin = await UserLocalData().isOwner();
-          if (isAdmin) {
-            orgModel = await OrgDatabase().fetchOrgById();
-            if (orgModel.orgId != null) {
-              await AdminLocalData().setLocalOrg(orgModel);
-            }
+        await UserLocalData().setLocalUser(user);
+        // // Set User ID //
+        userState.setUserId(credential.user!.uid);
+
+        //
+        bool isAdmin = await UserLocalData().isOwner();
+        if (isAdmin) {
+          orgModel = await OrgDatabase().fetchOrgById();
+          if (orgModel.orgId != null) {
+            await AdminLocalData().setLocalOrg(orgModel);
           }
-          // MyAlert.Alert('Success', 'Signed in successfully!');
-          Get.off(() => isAdmin ? OwnerMainScreen() : Dashboard(),
-              transition: Transition.rightToLeft);
-
-          // MyAlert.showToast(1, 'Email Verified!');
-        } else {
-          MyAlert.showToast(0, 'Your email is not verified!');
         }
+        // MyAlert.Alert('Success', 'Signed in successfully!');
+        Get.off(() => isAdmin ? OwnerMainScreen() : DashboardScreen(),
+            transition: Transition.rightToLeft);
+
+        // MyAlert.showToast(1, 'Email Verified!');
+      } else {
+        MyAlert.showToast(0, 'Your email is not verified!');
       }
     } on FirebaseAuthException catch (e) {
       MyAlert.showToast(0, 'Invalid Username and Password!');
@@ -127,7 +123,6 @@ class UserController {
       await AdminLocalData().removeOrg();
       userState.dispose;
       // Get.find<candidateData>().dispose();
-      print('User signed out successfully ');
     } catch (e) {
       print('Error signing out: $e');
     }

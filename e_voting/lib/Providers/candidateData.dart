@@ -15,6 +15,10 @@ class candidateData extends GetxController {
     candidateName.value = name;
   }
 
+  void setCandidateImage(imageUrl) {
+    candidateImage.value = imageUrl;
+  }
+
   void setCandidates(List<Map<String, dynamic>> candidates) {
     candidatesList.value = candidates;
   }

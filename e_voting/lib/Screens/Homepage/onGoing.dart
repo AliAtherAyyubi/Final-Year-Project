@@ -1,7 +1,9 @@
 import 'package:e_voting/Controllers/election_control.dart';
 import 'package:e_voting/Database/candidate_db.dart';
+import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
@@ -10,6 +12,7 @@ import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/Voting/voteCard.dart';
+import 'package:e_voting/Services/dateTime.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -32,25 +35,27 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   final electionData elec_data = Get.put(electionData());
   UserData userData = Get.put(UserData());
   //
+
   List<CandidateModel> candidatesList = [];
   List<CandidateModel> filterCandidatesList = [];
-  List<Map<String, dynamic>> electionList = [];
+  List<ElectionModel> electionList = [];
   bool data = false;
 
   Future<void> fetchInfo() async {
     if (elec_data.electionList.isEmpty) {
-      await ElectionController().fetchElections();
+      electionList = await ElectionDatabase().fetchAllElections();
       candidatesList = await CandidateDB().fetchAllCandidates();
     }
     setState(() {
-      electionList = elec_data.electionList
-          .map((element) => element as Map<String, dynamic>)
-          .toList();
       data = true;
     });
-    elec_data.setElectionTitle(electionList[1]['name'] ?? "");
-    elec_data.setElectionId(electionList[1]['elecId'] ?? "");
-    var orgID = electionList[1]['orgId'];
+    setElection(1);
+  }
+
+  void setElection(int index) async {
+    elec_data.setElectionTitle(electionList[index].electionName ?? "");
+    elec_data.setElectionId(electionList[index].electionId ?? "");
+    var orgID = electionList[index].orgId ?? "";
     await UserLocalData().setUserOrgID(orgID);
     setState(() {
       filterCandidatesList =
@@ -71,7 +76,8 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return RefreshIndicator(
+      onRefresh: () async => await fetchInfo(),
       child: data
           ? Column(
               children: [
@@ -108,12 +114,12 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                 Text(
                   '${filterCandidatesList.length} Candidates',
                   style: GoogleFonts.inter(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 17, fontWeight: FontWeight.bold),
                 ),
 
                 //// Candidates Section Avatars //
                 Container(
-                  margin: EdgeInsets.only(top: Applayout.getheight(25)),
+                  margin: EdgeInsets.only(top: Applayout.getheight(10)),
                   width: double.infinity,
                   height: Applayout.getheight(180),
                   child: filterCandidatesList.isEmpty
@@ -128,7 +134,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                             final candidate = filterCandidatesList[index];
                             return CandidateAvatar(
                               name: candidate.name,
-                              image: 'assets/images/profile.jpg',
+                              imageUrl: candidate.imageUrl,
                             );
                           },
                         ),
@@ -181,35 +187,27 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   Widget _buildCardsPageView(BuildContext context) {
     return SizedBox(
       height: 32.h,
+      width: 100.w,
       child: PageView.builder(
         controller: pageController,
         itemCount: electionList.length,
         onPageChanged: (index) async {
           setState(() => activeIndex = index);
-          var elecId = electionList[index]['elecId'] ?? "";
-          var title = electionList[index]['name'] ?? "";
-          var orgID = electionList[index]['orgId'];
-          //
-          elec_data.setElectionTitle(title);
-          elec_data.setElectionId(elecId);
-          await UserLocalData().setUserOrgID(orgID);
-          setState(() {
-            filterCandidatesList =
-                CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
-          });
+          setElection(activeIndex);
         },
         itemBuilder: (context, index) {
           final election = electionList[index];
-          var title = electionList[index]['name'] ?? "";
 
           return AnimatedScale(
-            scale: index == activeIndex ? 1 : 0.95,
+            scale: index == activeIndex ? 1.05 : 0.95,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             child: VoteCard(
-              title: title,
-              time: election['date'] ?? "",
-              description: election['description'] ?? "Network error",
+              title: election.electionName ?? "Election Title",
+              time: TimeService().votingTime(
+                  election.startDate!.toDate(), election.endDate!.toDate()),
+              description: election.description ??
+                  "This election is essential for shaping the future direction and policies of our organization, ensuring that it continues to serve and meet the needs of our members effectively.",
             ),
           );
         },

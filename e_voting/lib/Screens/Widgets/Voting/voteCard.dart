@@ -16,10 +16,10 @@ class VoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.symmetric(
-            horizontal: Applayout.getWidth(15),
+            horizontal: Applayout.getWidth(10),
             vertical: Applayout.getheight(20)),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        width: 75.w,
+        width: 95.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
@@ -35,7 +35,10 @@ class VoteCard extends StatelessWidget {
             gradient: const LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xff96F3CF), Color(0xffA3F8C6)])),
+                colors: [
+                  Color(0xff96F3CF),
+                  Color.fromARGB(255, 139, 240, 181)
+                ])),
         child: Column(
           children: [
             Text(
@@ -48,7 +51,7 @@ class VoteCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             Text(
               time,
@@ -58,7 +61,7 @@ class VoteCard extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 2.h),
+            SizedBox(height: 8),
             Text(
               description,
               style: GoogleFonts.inter(

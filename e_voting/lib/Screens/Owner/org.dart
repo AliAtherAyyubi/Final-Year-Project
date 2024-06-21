@@ -227,6 +227,7 @@ class _EditOrgState extends State<EditOrg> {
                     AuthTextField(
                       controller: name,
                       keyboardType: TextInputType.name,
+                      obscureText: false,
                       labelText: 'Title',
                       maxlength: 30,
                       readOnly: readOnly,
@@ -250,6 +251,7 @@ class _EditOrgState extends State<EditOrg> {
                       keyboardType: TextInputType.name,
                       labelText: 'Organization Address',
                       maxlength: 50,
+                      obscureText: false,
                       readOnly: readOnly,
                       border: border,
                       fillColor: fillColor,
@@ -269,6 +271,7 @@ class _EditOrgState extends State<EditOrg> {
                       labelText: 'Description',
                       maxline: 8,
                       maxlength: 200,
+                      obscureText: false,
                       readOnly: readOnly,
                       border: border,
                       fillColor: fillColor,

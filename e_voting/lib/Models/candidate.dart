@@ -5,7 +5,7 @@ class CandidateModel {
   String? orgId;
   String? publicDescription;
   String? biography;
-  List<dynamic>? description;
+  String? description;
   int? voteCount;
   List<dynamic>? links;
 

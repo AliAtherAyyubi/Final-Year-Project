@@ -7,12 +7,10 @@ import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/Services/validation.dart';
-import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class idValidationPage extends StatefulWidget {
@@ -105,13 +103,8 @@ class _idValidationPageState extends State<idValidationPage> {
                     bool found =
                         await OwnerDatabase().searchVoterByID(cnic.text);
                     if (found) {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          child: FaceRecognition1(),
-                          type: PageTransitionType.fade,
-                        ),
-                      );
+                      Get.to(() => FaceRecognition1(),
+                          transition: Transition.fadeIn);
                     } else {
                       DialogMsg().showMsg(context,
                           'Sorry but you are not registered with this Organization');

@@ -22,12 +22,11 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard>
-    with SingleTickerProviderStateMixin {
+class _DashboardState extends State<Dashboard> {
   UserData data = Get.put(UserData());
 
   // Completion screen//
-  late TabController? tabController;
+  // late TabController? tabController;
   Future<void> setUserId() async {
     UserModel user = await UserLocalData().fetchLocalUser();
     data.setUserId(user.userId);
@@ -36,47 +35,19 @@ class _DashboardState extends State<Dashboard>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(vsync: this, length: 2);
-    setUserId();
+    // tabController = TabController(vsync: this, length: 2);
+    // setUserId();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             // toolbarHeight: 50,
             automaticallyImplyLeading: false,
-            actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                height: Applayout.getheight(42),
-                width: Applayout.getWidth(42),
-                decoration: BoxDecoration(
-                    color: AppStyle.primaryColor,
-                    // borderRadius: BorderRadius.circular(50),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.green.shade500,
-                          blurRadius: 5,
-                          spreadRadius: 2)
-                    ]),
-                child: IconButton(
-                  onPressed: () {
-                    Get.to(() => UserProfilePage(),
-                        transition: Transition.rightToLeft);
-                  },
-                  icon: Icon(FontAwesomeIcons.user),
-                  iconSize: 22,
-                  alignment: Alignment.center,
-                  splashRadius: 20,
-                  color: Colors.white,
-                ),
-              )
-            ],
             title: Text(
               '€VØŦ€',
               style: GoogleFonts.poppins(
@@ -91,46 +62,26 @@ class _DashboardState extends State<Dashboard>
           ),
 
           ///////////////////////
-          body: Column(
-            children: [
-              SizedBox(
-                height: 2.h,
-              ),
-
-              //    Tab s//
-              Expanded(
-                flex: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: Applayout.getheight(45),
-                  // padding: EdgeInsets.symmetric(horizontal: 1),
-                  margin: EdgeInsets.only(bottom: 12),
-                  child: MyTabBar(
-                    text1: 'ONGOING ELECTIONS',
-                    text2: 'UPCOMING ELECTIONS',
-                    tabBarIndicatorSize: TabBarIndicatorSize.label,
-                    controller: tabController,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 1.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Elections',
+                    style: AppStyle().h2,
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 10,
-                child: TabBarView(
-                  controller: tabController,
-                  children: [
-                    /// Tab 1 //
-                    widget.voted
-                        ? VoteCompletePage(
-                            tabController: tabController,
-                          )
-                        : OnGoingElectionPage(),
-
-                    //    Tab No.2 ///
-                    UpcomingElection(),
-                  ],
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-            ],
+                OnGoingElectionPage()
+              ],
+            ),
           )),
     );
   }

@@ -8,14 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 class CandidateAvatar extends StatelessWidget {
   // const MyProfileAvatar({super.key});
 
-  final String image;
+  final String? imageUrl;
   final double fontsize;
   final String? name;
   double radius;
 
   CandidateAvatar(
       {this.name,
-      this.image = '',
+      this.imageUrl,
       this.radius = 50,
       super.key,
       this.fontsize = 15});
@@ -28,7 +28,10 @@ class CandidateAvatar extends StatelessWidget {
       // color: Colors.amber,
       child: Column(
         children: [
-          MyAvatar(radius: radius, image: image),
+          MyAvatar(
+            imageUrl: imageUrl,
+            radius: radius,
+          ),
           gap(
             Height: Applayout.getheight(10),
           ),

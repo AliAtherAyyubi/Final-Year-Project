@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
   // TextController fields = TextController();
-  var cnic = TextController().cnic;
+  // var cnic = TextController().cnic;
   var username = TextController().name;
   var Email = TextController().email;
   var password = TextController().password;
@@ -45,8 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         loading = true;
       });
-      await user.RegisterUser(
-          username.text, cnic.text, role, Email.text, password.text);
+      await user.RegisterUser(username.text, role, Email.text, password.text);
       // String? res = await user.RegisterUser(
       //     username.text, cnic.text, role, Email.text, password.text);
 
@@ -94,17 +93,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             icon: Icons.alternate_email,
                             validator: (value) => validate.isValidName(value),
                           ),
-                          AuthTextField(
-                            controller: cnic,
-                            keyboardType: TextInputType.number,
-                            obscureText: false,
-                            labelText: 'CNIC',
-                            hintText: '35201-4565326-2',
-                            maxlength: 15,
-                            icon: Icons.badge,
-                            inputFormat: validate.cnicFormatter,
-                            validator: (value) => validate.isValidCnic(value),
-                          ),
+                          // AuthTextField(
+                          //   controller: cnic,
+                          //   keyboardType: TextInputType.number,
+                          //   obscureText: false,
+                          //   labelText: 'CNIC',
+                          //   hintText: '35201-4565326-2',
+                          //   maxlength: 15,
+                          //   icon: Icons.badge,
+                          //   inputFormat: validate.cnicFormatter,
+                          //   validator: (value) => validate.isValidCnic(value),
+                          // ),
                           AuthTextField(
                             controller: Email,
                             keyboardType: TextInputType.emailAddress,
@@ -123,12 +122,22 @@ class _RegisterPageState extends State<RegisterPage> {
                             validator: (value) =>
                                 validate.isValidPassword(value),
                           ),
-                          DropDownItems(
+                          DropDown(
                             onRoleChanged: (value) {
                               setState(() {
                                 role = value.toString();
                               });
                             },
+                            DropDownItems: const [
+                              DropdownMenuItem(
+                                child: Text('Owner'),
+                                value: 'Owner',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Voter'),
+                                value: 'Voter',
+                              ),
+                            ],
                           ),
 
                           // AuthTextField(

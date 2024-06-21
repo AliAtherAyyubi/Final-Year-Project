@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,12 +16,11 @@ class ImageController {
     await userDatabase().updateUser('imageUrl', value);
   }
 
-  //    Uploading User/Admin/Candidate image//
-  Future<String?> uploadImage(filename, image) async {
+  //    Uploading User/Admin/Candidate image to Firebase Storage>//
+  Future<String?> uploadUserImage(filename, image) async {
     try {
       final ref = storage.ref('profile_images/$filename');
       await ref.putFile(image);
-      // print(image.lengthSync());
       // Get download URL
       final String downloadURL = await ref.getDownloadURL();
       // Store download URL in Firestore
@@ -32,6 +32,28 @@ class ImageController {
       // Handle error
       print('Error uploading image: $error');
       return 'System Error';
+    }
+  }
+
+//    Uploading User/Admin/Candidate image to Firebase Storage>//
+  Future<String?> uploadCandidateImage(XFile image) async {
+    try {
+      final imagePath = File(image.path);
+      //
+      final ref = storage.ref('profile_images/${image.name}');
+      await ref.putFile(imagePath);
+      // Get download URL
+      final String downloadURL = await ref.getDownloadURL();
+      // Show success message or navigate to next screen
+      return downloadURL;
+    } on FirebaseException catch (error) {
+      // Handle error
+      MyAlert.showToast(0, 'System error');
+      print('Error uploading image: $error');
+      return null;
+    } catch (e) {
+      MyAlert.showToast(0, 'System error');
+      return null;
     }
   }
 
@@ -49,6 +71,7 @@ class ImageController {
     if (image != null) {
       return image;
     }
+    MyAlert.showToast(0, 'No Image selected');
     return null;
   }
 
@@ -58,6 +81,8 @@ class ImageController {
     if (image != null) {
       return image;
     }
+    MyAlert.showToast(0, 'No Image selected');
+
     return null;
   }
   // // Storing Image Locally //

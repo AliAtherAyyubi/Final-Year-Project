@@ -117,27 +117,29 @@ class _AuthTextFieldState extends State<AuthTextField> {
                 : null,
 
             /// Suffic Icon /
-            suffixIcon: IconButton(
-              focusColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                setState(() {
-                  if (widget.hidebtn == Icons.visibility_off) {
-                    widget.hidebtn = Icons.visibility;
-                    widget.obscureText = false;
-                  } else {
-                    widget.hidebtn = Icons.visibility_off;
-                    widget.obscureText = true;
-                  }
-                });
-              },
-              icon: Icon(widget.hidebtn),
-              iconSize: 20,
-              splashRadius: 20,
-              padding: EdgeInsets.only(right: 10),
-              color: Colors.grey,
-            )
+            suffixIcon: widget.suffixicon == null
+                ? null
+                : IconButton(
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {
+                      setState(() {
+                        if (widget.hidebtn == Icons.visibility_off) {
+                          widget.hidebtn = Icons.visibility;
+                          widget.obscureText = false;
+                        } else {
+                          widget.hidebtn = Icons.visibility_off;
+                          widget.obscureText = true;
+                        }
+                      });
+                    },
+                    icon: Icon(widget.hidebtn),
+                    iconSize: 20,
+                    splashRadius: 20,
+                    padding: EdgeInsets.only(right: 10),
+                    color: Colors.grey,
+                  )
             // hintStyle: GoogleFonts.poppins(fontSize: 15, letterSpacing: 1),
             ),
       ),
@@ -147,17 +149,18 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
 // DropDown button //
 
-class DropDownItems extends StatefulWidget {
+class DropDown extends StatefulWidget {
   String? selectedValue;
 
   final ValueChanged<String?>? onRoleChanged;
-
-  DropDownItems({super.key, this.onRoleChanged});
+  List<DropdownMenuItem>? DropDownItems = [];
+  //
+  DropDown({super.key, this.onRoleChanged, this.DropDownItems});
   @override
-  State<DropDownItems> createState() => _DropDownItemsState();
+  State<DropDown> createState() => _DropDownState();
 }
 
-class _DropDownItemsState extends State<DropDownItems> {
+class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
@@ -197,16 +200,7 @@ class _DropDownItemsState extends State<DropDownItems> {
           });
           widget.onRoleChanged?.call(newValue);
         },
-        items: const [
-          DropdownMenuItem(
-            child: Text('Owner'),
-            value: 'Owner',
-          ),
-          DropdownMenuItem(
-            child: Text('Voter'),
-            value: 'Voter',
-          ),
-        ]);
+        items: widget.DropDownItems);
   }
 }
 

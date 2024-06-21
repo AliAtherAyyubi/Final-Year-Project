@@ -5,6 +5,8 @@ import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Models/vote.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -181,9 +183,12 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       text: 'BACK TO HOME SCREEN',
                       width: 90.w,
                       elevation: 10,
-                      onPress: () {
-                        Get.to(() => Dashboard(),
-                            transition: Transition.leftToRightWithFade);
+                      onPress: () async {
+                        bool isOwner = await UserLocalData().isOwner();
+                        Get.to(
+                            () =>
+                                isOwner ? OwnerMainScreen() : DashboardScreen(),
+                            transition: Transition.rightToLeft);
                       },
                     ),
                   ),

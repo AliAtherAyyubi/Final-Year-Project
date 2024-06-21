@@ -1,3 +1,4 @@
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Screens/Profile/candi_Profile.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CandidateCard extends StatelessWidget {
@@ -54,7 +54,7 @@ class CandidateCard extends StatelessWidget {
           avatar: Padding(
             padding: const EdgeInsets.only(right: 15),
             child: MyAvatar(
-              image: 'assets/images/profile.jpg',
+              imageUrl: candidate!.imageUrl,
               radius: 15.w,
             ),
           ),
@@ -89,15 +89,11 @@ class CandidateCard extends StatelessWidget {
               backClr: Colors.white,
               textClr: AppStyle.textClr,
               onPress: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    child: CandidateProfile(
-                      candidate: candidate,
-                    ),
-                    type: PageTransitionType.fade,
-                  ),
-                );
+                Get.to(
+                    () => CandidateProfile(
+                          candidate: candidate,
+                        ),
+                    transition: Transition.fadeIn);
               },
             ),
             SizedBox(
@@ -111,13 +107,10 @@ class CandidateCard extends StatelessWidget {
               onPress: () {
                 candi_data.setCandidateId(candidate!.candidateId ?? "");
                 candi_data.setCandidateName(candidate!.name ?? "");
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    child: idValidationPage(),
-                    type: PageTransitionType.fade,
-                  ),
-                );
+                candi_data.setCandidateImage(candidate!.imageUrl ?? "");
+
+                ///
+                Get.to(() => idValidationPage(), transition: Transition.fadeIn);
               },
             ),
           ],

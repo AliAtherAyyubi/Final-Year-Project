@@ -143,8 +143,8 @@ class _EditElectionsState extends State<EditElections> {
                           controller: description,
                           keyboardType: TextInputType.name,
                           labelText: 'Description (Min 50 words)',
-                          maxline: 8,
-                          maxlength: 250,
+                          maxline: 5,
+                          maxlength: 210,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'field can\'t be empty!';

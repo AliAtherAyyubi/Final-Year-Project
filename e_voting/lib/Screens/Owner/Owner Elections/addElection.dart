@@ -140,8 +140,8 @@ class _OwnerElectionState extends State<OwnerElection> {
                       controller: description,
                       keyboardType: TextInputType.name,
                       labelText: 'Description',
-                      maxline: 8,
-                      maxlength: 250,
+                      maxline: 5,
+                      maxlength: 210,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'field can\'t be empty!';

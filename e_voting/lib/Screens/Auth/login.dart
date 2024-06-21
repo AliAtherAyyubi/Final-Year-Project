@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:page_transition/page_transition.dart';
 
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

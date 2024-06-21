@@ -22,18 +22,19 @@ class TimeService {
         monthNumber - 1]; // Adjust index since month numbers start from 1
   }
 
-  String votingTime(int index, QuerySnapshot querySnapshot) {
-    var doc = querySnapshot.docs;
-    DateTime startDay = doc[index].get('startDate').toDate();
-    DateTime endDay = doc[index].get('endDate').toDate();
-    String starMonth = getMonthName(startDay.month);
-    String endMonth = getMonthName(endDay.month);
+  String votingTime(DateTime start, DateTime end) {
+    DateTime startDate = start;
+    DateTime endDate = end;
 
-    String date =
-        '$starMonth ${startDay.day} - ${endDay.day} ${starMonth == endMonth ? "" : endMonth} ';
+    ///
+    String starMonth = getMonthName(startDate.month);
+    String endMonth = getMonthName(endDate.month);
+
+    String date = '${startDate.day} $starMonth  - ${endDate.day} $endMonth';
     return date;
   }
 
+  //////
   String getFormatedDate(Timestamp timestamp) {
     // Convert timestamp to DateTime
 

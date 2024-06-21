@@ -93,6 +93,27 @@ class ScreenTitle extends StatelessWidget {
   }
 }
 
+class MyBackButton extends StatelessWidget {
+  const MyBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: GestureDetector(
+        onTap: () {
+          Get.back();
+        },
+        child: Icon(
+          Icons.arrow_back_ios,
+          size: 25,
+          color: AppStyle.iconClr,
+        ),
+      ),
+    );
+  }
+}
+
 class TextLabel extends StatelessWidget {
   String field;
   TextLabel({required this.field});

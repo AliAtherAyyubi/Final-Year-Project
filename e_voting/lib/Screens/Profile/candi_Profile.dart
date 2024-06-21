@@ -72,7 +72,7 @@ class _CandidateProfileState extends State<CandidateProfile>
                   alignment: Alignment.center,
                   child: MyAvatar(
                     radius: 90,
-                    image: 'assets/images/profile.jpg',
+                    imageUrl: widget.candidate!.imageUrl,
                   ),
                 )
               ],
@@ -106,7 +106,7 @@ class _CandidateProfileState extends State<CandidateProfile>
               child: TabBarView(controller: _tabController, children: [
                 // !sst Page //
                 AboutContent(
-                  description: widget.candidate!.description ?? [],
+                  candidate: widget.candidate,
                 ),
                 // 2nd page //
                 ContactPage()
@@ -167,8 +167,8 @@ class BottomOvalArcClipper extends CustomClipper<Path> {
 //
 
 class AboutContent extends StatelessWidget {
-  List<dynamic>? description;
-  AboutContent({super.key, this.description});
+  CandidateModel? candidate;
+  AboutContent({super.key, this.candidate});
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +187,7 @@ class AboutContent extends StatelessWidget {
             height: 10,
           ),
           Text(
-            description![0] ?? " ",
+            candidate!.biography ?? " ",
             style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -207,7 +207,7 @@ class AboutContent extends StatelessWidget {
             height: 10,
           ),
           Text(
-            description![1] ?? " ",
+            candidate!.description ?? " ",
             style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w500,

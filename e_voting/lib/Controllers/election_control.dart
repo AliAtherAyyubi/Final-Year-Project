@@ -37,31 +37,7 @@ class ElectionController {
       MyAlert.showToast(0, 'First create organization');
     }
   }
-  // Fetch Elections //
 
-  Future<void> fetchElections() async {
-    List<Map<String, dynamic>> electionList = [];
-
-    QuerySnapshot querySnapshot = await firestore.collection('election').get();
-    if (querySnapshot.docs.isNotEmpty) {
-      var doc = querySnapshot.docs;
-      // for looop
-      for (var i = 0; i < doc.length; i++) {
-        Map<String, dynamic> electionInfo = {
-          'elecId': doc[i].id,
-          'orgId': doc[i].get('orgId'),
-          'name': doc[i].get('name').toString().capitalize,
-          'description': doc[i].get('description'),
-          'date': TimeService().votingTime(i, querySnapshot),
-          // Add more fields as needed
-        };
-        electionList.add(electionInfo);
-      }
-      elec_data.setElections(electionList);
-    } else {
-      print('Elections are empty');
-    }
-  }
   // // Delete Organization //
 
   Future<void> deleteElection(String id) async {

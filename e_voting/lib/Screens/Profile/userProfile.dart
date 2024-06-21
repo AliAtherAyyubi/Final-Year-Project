@@ -48,7 +48,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           imageUrl = "";
           loading = true;
         });
-        var res = await ImageController().uploadImage(id, path);
+        var res = await ImageController().uploadUserImage(id, path);
         if (res == null) {
           await fetchUserInfo();
           MyAlert.Alert("", 'Uploaded Successfully!');
@@ -85,8 +85,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
-          child: ScreenTitle(
-            title: 'Account',
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Account',
+              style: AppStyle().h3,
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
           )),
       body: ListView(
         scrollDirection: Axis.vertical,
@@ -131,7 +137,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   child: IconButton(
                     onPressed: loading ? null : getImage,
                     icon: const Icon(
-                      Icons.camera_alt,
+                      Icons.add,
                     ),
                     // splashRadius: 20,
                     color: Colors.white,

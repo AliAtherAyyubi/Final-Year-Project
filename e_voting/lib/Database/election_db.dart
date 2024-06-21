@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Local%20Database/electionData.dart';
@@ -17,7 +19,7 @@ class ElectionDatabase {
         'startDate': e.startDate,
         'endDate': e.endDate,
         'description': e.description,
-        'status': e.status,
+        // 'status': e.status,
         'orgId': e.orgId,
       });
 
@@ -69,6 +71,35 @@ class ElectionDatabase {
       return null;
     }
   }
+
+  //
+
+  Future<List<ElectionModel>> fetchAllElections() async {
+    List<ElectionModel> electionList = [];
+    try {
+      QuerySnapshot querySnapshot =
+          await firestore.collection('election').get();
+
+      var docs = querySnapshot.docs;
+
+      if (docs.isNotEmpty) {
+        for (int i = 0; i < docs.length; i++) {
+          electionList.add(ElectionModel(
+            electionId: docs[i].id,
+            orgId: docs[i].get('orgId'),
+            electionName: docs[i].get('name'),
+            description: docs[i].get('description'),
+            startDate: docs[i].get('startDate'),
+            endDate: docs[i].get('endDate'),
+          ));
+        }
+      }
+      return electionList;
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System error ');
+    }
+    return electionList;
+  }
   // Update Elections //
 
   Future<void> updateElectionByID(ElectionModel election) async {
@@ -84,7 +115,6 @@ class ElectionDatabase {
         // 'adminId': org.adminId
       });
       //
-      await ElectionLocalData().updateLocalElection(election);
       MyAlert.showToast(1, 'Updated Successfully');
       print('updated Election');
     } on FirebaseException catch (e) {

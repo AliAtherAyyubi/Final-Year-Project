@@ -2,6 +2,7 @@ import 'package:e_voting/Screens/Auth/splashscreen.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
+import 'package:e_voting/Screens/Voting/Reports.dart';
 import 'package:e_voting/Screens/test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +26,18 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.bottom]);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  //     overlays: [SystemUiOverlay.bottom]);
 
   //
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MyApp(), // Wrap your app
-    ),
-  );
+  // runApp(
+  //   DevicePreview(
+  //     enabled: !kReleaseMode,
+  //     builder: (context) => MyApp(), // Wrap your app
+  //   ),
+  // );
   // ignore: non_constant_identifier_names
-  // runApp(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -46,11 +47,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, Orientation, screenType) {
-      return GetMaterialApp(
+      return const GetMaterialApp(
         title: 'E-Voting App',
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
-        home: Dashboard(),
+        home: SplashScreen(),
       );
     });
   }

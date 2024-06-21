@@ -5,6 +5,7 @@ import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
+import 'package:e_voting/Screens/Owner/Candidates/display_cand.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/displayElection.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/addElection.dart';
 import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
@@ -162,7 +163,11 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
               SizedBox(
                 height: 5,
               ),
-              OwnerTiles(fieldName: 'Candidates', icon: Icons.person_4),
+              GestureDetector(
+                  onTap: () => Get.to(() => CandidateScreen(),
+                      transition: Transition.rightToLeft),
+                  child: OwnerTiles(
+                      fieldName: 'Candidates', icon: Icons.person_4)),
               SizedBox(
                 height: 5,
               ),

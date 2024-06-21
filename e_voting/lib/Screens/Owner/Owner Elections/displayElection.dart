@@ -88,8 +88,9 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
                           final election = electionData!.docs[index];
                           return ElectionTile(
                             title: election.get('name'),
-                            date:
-                                TimeService().votingTime(index, electionData!),
+                            date: TimeService().votingTime(
+                                election.get('startDate').toDate(),
+                                election.get('endDate').toDate()),
                             onPress: () => Get.to(
                                 () => EditElections(electionId: election.id),
                                 transition: Transition.rightToLeft),

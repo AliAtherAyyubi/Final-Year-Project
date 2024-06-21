@@ -8,6 +8,7 @@ class CandidateDB {
 
   Future<void> createCandidate(CandidateModel c) async {
     try {
+      c.orgId = await OrgDatabase().GetOrgId();
       DocumentReference docRef = await firestore.collection('Candidates').add({
         'candidateId': c.candidateId,
         'name': c.name,
@@ -16,7 +17,7 @@ class CandidateDB {
         'publicDesc': c.publicDescription,
         'orgId': c.orgId,
         'description': c.description,
-        'voteCount': null,
+        'voteCount': 0,
         'links': c.links
       });
 
@@ -68,12 +69,22 @@ class CandidateDB {
     }
   }
 
+  //
+  Future<void> deleteCandidateByID(String id) async {
+    try {
+      await firestore.collection('Candidates').doc(id).delete();
+      MyAlert.showToast(1, 'Deleted Successfully!');
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System Error');
+    }
+  }
+
   ///
   ///  Fetch Candiates by Org of Owner //
   Future<List<CandidateModel>> fetchCandidatesByOrg() async {
     List<CandidateModel> candidatesList = [];
     try {
-      var orgID = OrgDatabase().GetOrgId();
+      var orgID = await OrgDatabase().GetOrgId();
 
       ///
       QuerySnapshot querySnapshot = await firestore
@@ -83,18 +94,21 @@ class CandidateDB {
 
       var docs = querySnapshot.docs;
       //
-      for (var i = 0; i < docs.length; i++) {
-        candidatesList.add(CandidateModel(
-          candidateId: docs[i].id,
-          orgId: docs[i].get('orgId'),
-          name: docs[i].get('name'),
-          imageUrl: docs[i].get('imageUrl'),
-          biography: docs[i].get('biography'),
-          publicDescription: docs[i].get('publicDesc'),
-          description: docs[i].get('description'),
-          voteCount: docs[i].get('voteCount'),
-          links: docs[i].get('links'),
-        ));
+      if (docs.isNotEmpty) {
+        for (int i = 0; i < docs.length; i++) {
+          candidatesList.add(CandidateModel(
+            candidateId: docs[i].id,
+            orgId: docs[i].get('orgId'),
+            name: docs[i].get('name'),
+            imageUrl: docs[i].get('imageUrl'),
+            biography: docs[i].get('biography'),
+            publicDescription: docs[i].get('publicDesc'),
+            description: docs[i].get('description'),
+            voteCount: docs[i].get('voteCount'),
+            links: docs[i].get('links'),
+          ));
+        }
+        return candidatesList;
       }
       //
       return candidatesList;
@@ -122,7 +136,7 @@ class CandidateDB {
       //
       for (var i = 0; i < docs.length; i++) {
         candidatesList.add(CandidateModel(
-          candidateId: docs[i].get('candidateId'),
+          candidateId: docs[i].id,
           orgId: docs[i].get('orgId'),
           name: docs[i].get('name'),
           imageUrl: docs[i].get('imageUrl'),

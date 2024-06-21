@@ -131,10 +131,7 @@ class _SampleState extends State<Sample> {
                 c5.orgId = 'ZzYyXx789';
                 c5.publicDescription =
                     'I\'m a part of Islamic party and will help you to grow economics challenges to be solved.';
-                c5.description = [
-                  'Innovator and entrepreneur.',
-                  'Mushtaq founded multiple successful startups and is known for her innovative approach to business.'
-                ];
+
                 await CandidateDB().createCandidate(c5);
               }),
         ],

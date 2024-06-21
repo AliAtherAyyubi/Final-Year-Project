@@ -1,4 +1,7 @@
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
+import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
@@ -56,8 +59,10 @@ class VoteSuccess extends StatelessWidget {
                 MyButton(
                   text: "BACK TO HOME SCREEN",
                   width: 90.w,
-                  onPress: () {
-                    Get.to(() => Dashboard(),
+                  onPress: () async {
+                    bool isOwner = await UserLocalData().isOwner();
+                    Get.to(
+                        () => isOwner ? OwnerMainScreen() : DashboardScreen(),
                         transition: Transition.rightToLeft);
                   },
                 ),
@@ -76,22 +81,6 @@ class VoteSuccess extends StatelessWidget {
               ],
             ),
           )),
-    );
-  }
-}
-
-class Textwidget extends StatelessWidget {
-  final String text;
-  const Textwidget({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: AppStyle.textStyle2,
     );
   }
 }

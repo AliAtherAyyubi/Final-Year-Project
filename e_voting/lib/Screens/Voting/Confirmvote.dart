@@ -5,6 +5,7 @@ import 'package:e_voting/Providers/candidateData.dart';
 import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
+import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Voting/voteSuccess.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
@@ -92,7 +93,7 @@ class _ConfirmVoteState extends State<ConfirmVote> {
                         child: CandidateAvatar(
                           radius: 24.w,
                           fontsize: 20,
-                          image: 'assets/images/profile.jpg',
+                          imageUrl: candidate.candidateImage.toString(),
                           name: candidate.candidateName.toString().capitalize,
                         )),
                   )
@@ -136,7 +137,9 @@ class _ConfirmVoteState extends State<ConfirmVote> {
                       onConfirm: () => Navigator.pop(context),
                       onCancel: () async {
                         bool isOwner = await UserLocalData().isOwner();
-                        Get.to(() => isOwner ? OwnerMainScreen() : Dashboard(),
+                        Get.to(
+                            () =>
+                                isOwner ? OwnerMainScreen() : DashboardScreen(),
                             transition: Transition.leftToRight);
                       },
                       cancelBtnText: 'Yes',

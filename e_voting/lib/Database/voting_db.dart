@@ -50,6 +50,34 @@ class VoteDatabase {
     );
   }
 
+  // Fetching All votes of Elections //
+  Future<List<VoteModel>?> fetchAllVotes() async {
+    List<VoteModel> votingList = [];
+    try {
+      QuerySnapshot querySnapshot = await firestore.collection('vote').get();
+      //
+      final docs = querySnapshot.docs;
+      //
+      if (docs.isNotEmpty) {
+        for (var doc in docs) {
+          votingList.add(VoteModel(
+            userId: doc.get('userId'),
+            electionId: doc.get('electionId'),
+            candidateId: doc.get('candidateId'),
+            orgId: doc.get('orgId'),
+            votedFor: doc.get('votedFor'),
+            time: doc.get('createdOn'),
+          ));
+        }
+        return votingList;
+      }
+      return null;
+    } catch (e) {
+      MyAlert.showToast(0, 'System Error');
+    }
+    return null;
+  }
+
   Future<bool> isVoteExist(String uid) async {
     try {
       QuerySnapshot querySnapshot = await firestore

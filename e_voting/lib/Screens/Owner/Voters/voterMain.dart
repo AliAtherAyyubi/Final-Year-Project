@@ -26,6 +26,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
   //
   Future<void> fetchVoters() async {
     voters = await OwnerDatabase().fetchVoters();
+
     // print(elections[0].electionName);
     setState(() {
       // electionData = querySnapshot;
@@ -64,6 +65,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
     // TODO: implement initState
     super.initState();
     fetchVoters();
+
     searchControl.addListener(searchVoter);
   }
 
