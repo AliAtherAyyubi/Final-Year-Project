@@ -42,10 +42,10 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   bool data = false;
 
   Future<void> fetchInfo() async {
-    if (elec_data.electionList.isEmpty) {
-      electionList = await ElectionDatabase().fetchAllElections();
-      candidatesList = await CandidateDB().fetchAllCandidates();
-    }
+    electionList = await ElectionDatabase().fetchAllElections();
+    candidatesList = await CandidateDB().fetchAllCandidates();
+
+    ///
     setState(() {
       data = true;
     });

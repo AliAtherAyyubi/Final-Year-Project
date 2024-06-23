@@ -260,7 +260,7 @@ class VoteData extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  'No of Vote: $NoOfVote',
+                  'Vote: $NoOfVote',
                   style: AppStyle.textStyle1.copyWith(color: Colors.black),
                 ),
               ],

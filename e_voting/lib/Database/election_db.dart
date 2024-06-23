@@ -94,6 +94,9 @@ class ElectionDatabase {
           ));
         }
       }
+      //
+      await LocalElectionData().setElections(electionList);
+      //
       return electionList;
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'System error ');

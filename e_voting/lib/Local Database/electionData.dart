@@ -21,7 +21,7 @@ class LocalElectionData {
     String electionsString = sp.getString('ElectionDataList') ?? "";
 
     List<ElectionModel> electionList = electionsString as List<ElectionModel>;
-
+    print('Election List: ${electionList.length}');
     return electionList;
   }
   //
@@ -29,5 +29,13 @@ class LocalElectionData {
   Future<void> RemoveAllElections() async {
     SharedPreferences sp = await prefs.initializer();
     await sp.remove('ElectionDataList');
+  }
+
+  //
+  Future<bool> isExist() async {
+    SharedPreferences sp = await prefs.initializer();
+
+    bool isExist = sp.containsKey('ElectionDataList');
+    return isExist;
   }
 }

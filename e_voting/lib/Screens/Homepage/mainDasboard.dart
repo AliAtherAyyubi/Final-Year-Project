@@ -19,14 +19,18 @@ class DashboardScreen extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [UserProfilePage(), Dashboard(), ElectionResultPage()];
+    return [
+      Dashboard(),
+      ElectionResultPage(),
+      UserProfilePage(),
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
-      MyNavBarItem(iconData: Icons.person, title: 'Profile'),
       MyNavBarItem(iconData: Icons.how_to_vote_sharp, title: 'Dashboard'),
       MyNavBarItem(iconData: Icons.bar_chart, title: 'Reports'),
+      MyNavBarItem(iconData: Icons.person, title: 'Profile'),
     ];
   }
 }
