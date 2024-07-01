@@ -1,12 +1,14 @@
 import 'package:e_voting/Controllers/election_control.dart';
 import 'package:e_voting/Database/candidate_db.dart';
 import 'package:e_voting/Database/election_db.dart';
+import 'package:e_voting/Local%20Database/electionData.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Voting/vote.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -41,7 +43,15 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   List<ElectionModel> electionList = [];
   bool data = false;
 
-  Future<void> fetchInfo() async {
+  Future<void> fetchData() async {
+    // bool isElectionExist = await LocalElectionData().isExist();
+    // if (!isElectionExist) {
+    //   MyAlert.showToast(1, 'election exist');
+
+    // }
+    setState(() {
+      data = false;
+    });
     electionList = await ElectionDatabase().fetchAllElections();
     candidatesList = await CandidateDB().fetchAllCandidates();
 
@@ -66,7 +76,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   @override
   void initState() {
     super.initState();
-    fetchInfo();
+    fetchData();
     pageController = PageController(
       initialPage: 1,
       viewportFraction: 0.84,
@@ -76,112 +86,115 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async => await fetchInfo(),
-      child: data
-          ? Column(
-              children: [
-                SizedBox(
-                  height: Applayout.getheight(5),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    ),
+    return data
+        ? Column(
+            children: [
+              SizedBox(
+                height: Applayout.getheight(5),
+              ),
+              Container(
+                padding: const EdgeInsets.only(bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
                   ),
-                  clipBehavior: Clip.hardEdge,
-                  child: Column(
-                    children: [
-                      _buildCardsPageView(context),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: activeIndex,
-                          count: electionList.length,
-                          effect: ExpandingDotsEffect(),
-                        ),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: Column(
+                  children: [
+                    _buildCardsPageView(context),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: AnimatedSmoothIndicator(
+                        activeIndex: activeIndex,
+                        count: electionList.length,
+                        effect: ExpandingDotsEffect(),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: Applayout.getheight(10),
-                ),
-                Text(
-                  '${filterCandidatesList.length} Candidates',
-                  style: GoogleFonts.inter(
-                      fontSize: 17, fontWeight: FontWeight.bold),
-                ),
+              ),
+              SizedBox(
+                height: Applayout.getheight(10),
+              ),
+              Text(
+                '${filterCandidatesList.length} Candidates',
+                style: GoogleFonts.inter(
+                    fontSize: 17, fontWeight: FontWeight.bold),
+              ),
 
-                //// Candidates Section Avatars //
-                Container(
-                  margin: EdgeInsets.only(top: Applayout.getheight(10)),
-                  width: double.infinity,
-                  height: Applayout.getheight(180),
-                  child: filterCandidatesList.isEmpty
-                      ? Center(
-                          child: Text('No Candidates found'),
-                        )
-                      : ListView.builder(
-                          itemCount: filterCandidatesList.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final candidate = filterCandidatesList[index];
-                            return CandidateAvatar(
-                              name: candidate.name,
-                              imageUrl: candidate.imageUrl,
-                            );
-                          },
-                        ),
-                ),
-                MyButton(
-                  text: 'VOTE NOW',
-                  width: 95.w,
-                  onPress: () {
-                    var title = elec_data.electionTitle;
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return MyAlertDialogWidget(
-                            title:
-                                'Are you sure you want to vote for following election?',
-                            content: Text(
-                              '$title',
-                              style: AppStyle().h3.copyWith(
-                                    color: AppStyle.textClr,
-                                  ),
-                            ),
-                            cancelBtnText: 'No',
-                            confirmBtnText: 'Yes',
-                            onConfirm: () {
-                              Navigator.pop(context);
-
-                              Get.to(
-                                  () => VotingPage(
-                                        candidatesList: filterCandidatesList,
-                                      ),
-                                  duration: const Duration(milliseconds: 500),
-                                  transition: Transition.fadeIn);
-                            },
+              //// Candidates Section Avatars //
+              Container(
+                margin: EdgeInsets.only(top: Applayout.getheight(10)),
+                width: double.infinity,
+                height: Applayout.getheight(180),
+                child: filterCandidatesList.isEmpty
+                    ? Center(
+                        child: Text('No Candidates found'),
+                      )
+                    : ListView.builder(
+                        itemCount: filterCandidatesList.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final candidate = filterCandidatesList[index];
+                          return CandidateAvatar(
+                            name: candidate.name,
+                            imageUrl: candidate.imageUrl,
                           );
-                        });
-                  },
-                ),
-                SizedBox(
-                  height: Applayout.getheight(15),
-                ),
-              ],
-            )
-          : Padding(
-              padding: EdgeInsets.only(top: 50),
-              child: Loading(),
-            ),
-    );
+                        },
+                      ),
+              ),
+              MyButton(
+                text: 'VOTE NOW',
+                width: 95.w,
+                onPress: electionList.isEmpty
+                    ? () {
+                        MyAlert.showToast(0, 'No Election found');
+                      }
+                    : () {
+                        var title = elec_data.electionTitle;
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return MyAlertDialogWidget(
+                                title:
+                                    'Are you sure you want to vote for following election?',
+                                content: Text(
+                                  '$title',
+                                  style: AppStyle().h3.copyWith(
+                                        color: AppStyle.textClr,
+                                      ),
+                                ),
+                                cancelBtnText: 'No',
+                                confirmBtnText: 'Yes',
+                                onConfirm: () {
+                                  Navigator.pop(context);
+
+                                  Get.to(
+                                      () => VotingPage(
+                                            candidatesList:
+                                                filterCandidatesList,
+                                          ),
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      transition: Transition.fadeIn);
+                                },
+                              );
+                            });
+                      },
+              ),
+              SizedBox(
+                height: Applayout.getheight(15),
+              ),
+            ],
+          )
+        : Padding(
+            padding: EdgeInsets.only(top: 50),
+            child: Loading(),
+          );
   }
 
   Widget _buildCardsPageView(BuildContext context) {

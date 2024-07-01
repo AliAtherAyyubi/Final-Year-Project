@@ -109,7 +109,9 @@ class _CandidateProfileState extends State<CandidateProfile>
                   candidate: widget.candidate,
                 ),
                 // 2nd page //
-                ContactPage()
+                ContactPage(
+                  links: widget.candidate!.links ?? [],
+                )
               ]),
             ),
             SizedBox(

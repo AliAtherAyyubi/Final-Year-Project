@@ -32,6 +32,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
   TextEditingController description = TextEditingController();
   TextEditingController facebook = TextEditingController();
   TextEditingController twitter = TextEditingController();
+  TextEditingController linkedIn = TextEditingController();
   TextEditingController imageName = TextEditingController();
 
   bool loading = false;
@@ -44,8 +45,9 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
     bio.text = c.biography ?? "";
     publicDesc.text = c.publicDescription ?? "";
     description.text = c.description ?? "";
-    facebook.text = c.links![1];
-    twitter.text = c.links![0];
+    facebook.text = c.links![0] ?? "";
+    twitter.text = c.links![1] ?? "";
+    linkedIn.text = c.links![2] ?? "";
 
     ////
     setState(() {});
@@ -123,6 +125,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                         maxlength: 40,
                         validator: (value) {
                           if (value.isEmpty) return 'Can\'t be empty';
+                          return null;
                         },
                       ),
                       TextLabel(
@@ -132,7 +135,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                         controller: bio,
                         labelText: 'Biography',
                         keyboardType: TextInputType.text,
-                        maxline: 5,
+                        maxline: 4,
                       ),
                       TextLabel(
                         field: 'Public Description',
@@ -140,7 +143,8 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                       AuthTextField(
                         controller: publicDesc,
                         keyboardType: TextInputType.text,
-                        maxline: 4,
+                        maxline: 3,
+                        maxlength: 80,
                         labelText: 'Public Description',
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -156,8 +160,8 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                         controller: description,
                         keyboardType: TextInputType.text,
                         labelText: 'Description',
-                        maxline: 6,
-                        maxlength: 250,
+                        maxline: 5,
+                        // maxlength: 250,
                       ),
                       TextLabel(
                         field: 'Social Links',
@@ -174,6 +178,12 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                         icon: FontAwesomeIcons.facebook,
                         labelText: 'Facebook link',
                       ),
+                      AuthTextField(
+                        controller: linkedIn,
+                        keyboardType: TextInputType.text,
+                        icon: FontAwesomeIcons.linkedinIn,
+                        labelText: 'LinkedIn (Optional)',
+                      ),
                       MyButton(
                         onPress: () async {
                           if (formKey.currentState!.validate()) {
@@ -183,12 +193,16 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                             String? imageUrl = image != null
                                 ? await ImageController()
                                     .uploadCandidateImage(image!)
-                                : null;
+                                : c.imageUrl;
                             c.name = name.text;
                             c.biography = bio.text;
                             c.publicDescription = publicDesc.text;
                             c.description = description.text;
-                            c.links = [facebook.text, twitter.text];
+                            c.links = [
+                              facebook.text,
+                              twitter.text,
+                              linkedIn.text
+                            ];
                             c.imageUrl = imageUrl;
                             await CandidateDB().updateCandidateById(c);
                             setState(() {

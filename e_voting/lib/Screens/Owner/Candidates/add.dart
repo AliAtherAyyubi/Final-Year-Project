@@ -31,6 +31,7 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
   TextEditingController description = TextEditingController();
   TextEditingController facebook = TextEditingController();
   TextEditingController twitter = TextEditingController();
+  TextEditingController linkedIn = TextEditingController();
   TextEditingController imageName = TextEditingController();
 
   bool loading = false;
@@ -53,7 +54,7 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
       c.biography = bio.text;
       c.publicDescription = publicDesc.text;
       c.description = description.text;
-      c.links = [facebook.text, twitter.text];
+      c.links = [facebook.text, twitter.text, linkedIn.text];
       c.imageUrl = imageUrl;
 
       ///
@@ -133,7 +134,8 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
                         controller: publicDesc,
                         keyboardType: TextInputType.text,
                         labelText: 'Public Description',
-                        maxline: 4,
+                        maxline: 3,
+                        maxlength: 80,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Can\'t be empty!';
@@ -158,7 +160,7 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
                         keyboardType: TextInputType.text,
                         labelText: 'Candidate Description',
                         maxline: 6,
-                        maxlength: 250,
+                        // maxlength: 250,
                       ),
                       TextLabel(
                         field: 'Social Links',
@@ -167,13 +169,19 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
                         controller: twitter,
                         keyboardType: TextInputType.text,
                         icon: FontAwesomeIcons.twitter,
-                        labelText: 'Twitter link (Optional)',
+                        labelText: 'Twitter (Optional)',
                       ),
                       AuthTextField(
                         controller: facebook,
                         keyboardType: TextInputType.text,
                         icon: FontAwesomeIcons.facebook,
-                        labelText: 'Facebook link (Optional)',
+                        labelText: 'Facebook (Optional)',
+                      ),
+                      AuthTextField(
+                        controller: linkedIn,
+                        keyboardType: TextInputType.text,
+                        icon: FontAwesomeIcons.linkedinIn,
+                        labelText: 'LinkedIn (Optional)',
                       ),
                       MyButton(
                         onPress: addCandidate,

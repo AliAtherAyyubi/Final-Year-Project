@@ -13,8 +13,9 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:intl/intl.dart';
 
 class EditElections extends StatefulWidget {
-  String electionId;
-  EditElections({super.key, required this.electionId});
+  ElectionModel electionModel = ElectionModel();
+  //
+  EditElections({super.key, required this.electionModel});
 
   @override
   State<EditElections> createState() => _EditElectionsState();
@@ -29,13 +30,13 @@ class _EditElectionsState extends State<EditElections> {
   TextEditingController endDate = TextEditingController();
   TextEditingController description = TextEditingController();
 
-  late DateTime _start;
-  late DateTime _end;
+  DateTime _start = DateTime.now();
+  DateTime _end = DateTime.now();
   bool data = false;
   bool loading = false;
 
   Future<void> fetchElections() async {
-    e = await ElectionDatabase().fetchElectionById(widget.electionId);
+    e = widget.electionModel;
     setState(() {
       name.text = e!.electionName ?? "";
       startDate.text = TimeService().getOnlyDate(e!.startDate!);
@@ -161,7 +162,6 @@ class _EditElectionsState extends State<EditElections> {
                               setState(() {
                                 loading = true;
                               });
-                              e!.electionId = widget.electionId;
                               e!.electionName = name.text;
                               e!.startDate =
                                   TimeService().convertToTimestamp(_start);

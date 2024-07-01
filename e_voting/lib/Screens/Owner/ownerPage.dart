@@ -10,6 +10,7 @@ import 'package:e_voting/Screens/Owner/Owner%20Elections/displayElection.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/addElection.dart';
 import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
 import 'package:e_voting/Screens/Owner/org.dart';
+import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/Screens/Widgets/owner/tiles.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -60,11 +61,8 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return true;
-      },
+    return PopScope(
+      onPopInvoked: (didPop) => SystemNavigator.pop(),
       child: RefreshIndicator(
         onRefresh: () => fetchUserAndOrg(),
         child: Scaffold(
@@ -111,25 +109,26 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
                 height: 15,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const GFAvatar(
-                    backgroundImage: AssetImage('assets/icons/profile.png'),
-                    radius: 15,
-                    backgroundColor: Colors.white,
+                  CircularProfileAvatar(
+                    user.imageUrl ??
+                        "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+                    radius: 16,
+                    elevation: 1,
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 15,
                   ),
                   Text(
                     'Welcome, $userName',
-                    style:
-                        AppStyle().txt1.copyWith(color: Colors.grey.shade600),
+                    style: AppStyle().txt1.copyWith(color: Colors.black54),
                   )
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               Divider(
                 color: Colors.black,
               ),

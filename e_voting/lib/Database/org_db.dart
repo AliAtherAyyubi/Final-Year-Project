@@ -109,8 +109,9 @@ class OrgDatabase {
       MyAlert.showToast(1, 'Updated Successfully');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
+    }catch(e){
+      MyAlert.showToast(0, 'Something went wrong!');
 
-      print('Error from firebase cannot update');
     }
   }
 

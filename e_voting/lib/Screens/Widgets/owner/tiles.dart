@@ -28,7 +28,7 @@ class OwnerTiles extends StatelessWidget {
         color: AppStyle.iconClr,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      tileColor: Color.fromARGB(255, 168, 243, 206),
+      tileColor: Color.fromARGB(255, 158, 238, 198),
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colors.transparent)),

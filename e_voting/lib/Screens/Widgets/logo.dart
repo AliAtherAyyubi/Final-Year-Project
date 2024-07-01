@@ -14,7 +14,7 @@ class MyLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         height: height,
         width: width,
         child: Image.asset(

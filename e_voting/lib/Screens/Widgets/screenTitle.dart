@@ -23,33 +23,36 @@ class VoteLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     electionData elec_data = Get.put(electionData());
-    return Padding(
-      padding: EdgeInsets.only(left: 5, top: 3.h),
+    return Container(
+      padding: EdgeInsets.only(left: 12, top: 4.h),
       child: Row(
         children: [
-          IconButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Get.back();
             },
-            icon: const Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
+              size: 25,
+              color: AppStyle.iconClr,
             ),
-            color: AppStyle.textClr,
-            iconSize: 25,
-            splashRadius: 20,
+            // color: AppStyle.textClr,
+            // iconSize: 25,
+            // splashRadius: 20,
           ),
           // gap(
           //   Width: Applayout.getWidth(3),
           // ),
-          Obx(
-            () => SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
+          Expanded(
+            child: Obx(
+              () => Text(
                 elec_data.electionTitle.toString(),
                 style: GoogleFonts.inter(
                     color: AppStyle.textClr,
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           )

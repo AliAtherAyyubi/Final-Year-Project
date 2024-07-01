@@ -47,10 +47,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, Orientation, screenType) {
-      return const GetMaterialApp(
+      return GetMaterialApp(
         title: 'E-Voting App',
-        useInheritedMediaQuery: true,
+        // useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white, // Set a fixed color
+          ),
+        ),
         home: SplashScreen(),
       );
     });

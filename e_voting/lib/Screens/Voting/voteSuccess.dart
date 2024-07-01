@@ -57,23 +57,23 @@ class VoteSuccess extends StatelessWidget {
                   Height: Applayout.getheight(45),
                 ),
                 MyButton(
-                  text: "BACK TO HOME SCREEN",
+                  text: "RECEIPT",
                   width: 90.w,
-                  onPress: () async {
-                    bool isOwner = await UserLocalData().isOwner();
-                    Get.to(
-                        () => isOwner ? OwnerMainScreen() : DashboardScreen(),
-                        transition: Transition.rightToLeft);
+                  onPress: () {
+                    Get.to(() => ReceiptScreen());
                   },
                 ),
                 gap(
                   Height: Applayout.getheight(10),
                 ),
                 MyTextButton(
-                  onPress: () {
-                    Get.to(() => ReceiptScreen());
+                  onPress: () async {
+                    bool isOwner = await UserLocalData().isOwner();
+                    Get.to(
+                        () => isOwner ? OwnerMainScreen() : DashboardScreen(),
+                        transition: Transition.rightToLeft);
                   },
-                  text: "RECEIPT",
+                  text: "BACK TO HOME SCREEN",
                   textClr: AppStyle.textClr,
                   elevation: 0,
                   border: false,

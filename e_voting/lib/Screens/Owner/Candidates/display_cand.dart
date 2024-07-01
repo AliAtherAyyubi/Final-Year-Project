@@ -59,7 +59,9 @@ class _CandidateScreenState extends State<CandidateScreen> {
       body: RefreshIndicator(
         onRefresh: () => fetchCandidates(),
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
           children: [
             SizedBox(
               height: 10,
@@ -86,23 +88,28 @@ class _CandidateScreenState extends State<CandidateScreen> {
                               final candidate = candidateList[index];
                               return Dismissible(
                                 key: Key(candidate.candidateId!),
+                                confirmDismiss: (direction) async {
+                                  final confirm = await showDialog<bool>(
+                                    context: context,
+                                    builder: (context) {
+                                      return MyAlertDialogWidget(
+                                        title:
+                                            'Are you sure you want to delete this candidate?',
+                                        cancelBtnText: 'No',
+                                        confirmBtnText: 'Yes',
+                                        onConfirm: () =>
+                                            Navigator.of(context).pop(true),
+                                        onCancel: () =>
+                                            Navigator.of(context).pop(false),
+                                      );
+                                    },
+                                  );
+                                  return confirm ?? false;
+                                },
                                 onDismissed: (direction) async {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return MyAlertDialogWidget(
-                                          title:
-                                              'Are you sure you want to delete this candidate?',
-                                          cancelBtnText: 'No',
-                                          confirmBtnText: 'Yes',
-                                          onConfirm: () async {
-                                            await CandidateDB()
-                                                .deleteCandidateByID(
-                                                    candidate.candidateId!);
-                                            await fetchCandidates();
-                                          },
-                                        );
-                                      });
+                                  await CandidateDB().deleteCandidateByID(
+                                      candidate.candidateId!);
+                                  await fetchCandidates();
                                 },
                                 direction: DismissDirection.endToStart,
                                 background: Container(

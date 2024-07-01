@@ -6,6 +6,7 @@ import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Widgets/Components/authAppBar.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
@@ -17,6 +18,7 @@ import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -40,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   // Sign in function from userController //
   void Signin() async {
     if (_formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
       setState(() {
         loading = true;
       });
@@ -52,15 +55,20 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(50), // Set the desired height here
-              child: LoginAppBar()),
+              child: AuthAppBar(
+                title: 'Log In',
+                actionTxt: 'Sign Up',
+                actionBtn: () =>
+                    Get.to(RegisterPage(), transition: Transition.rightToLeft),
+              )),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -192,53 +200,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class LoginAppBar extends StatelessWidget {
-  const LoginAppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: GestureDetector(
-        onTap: () {
-          Get.back();
-        },
-        child: const Icon(
-          Icons.arrow_back_ios,
-          color: AppStyle.textClr,
-          size: 25,
-        ),
-      ),
-      title: Text(
-        'Log In',
-        style: GoogleFonts.inter(
-            fontSize: 30, fontWeight: FontWeight.w700, color: AppStyle.textClr),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: 16.0), // Add padding for spacing
-          child: GestureDetector(
-            onTap: () => Get.to(RegisterPage(),
-                duration: Duration(seconds: 1),
-                transition: Transition.rightToLeft),
-            child: Center(
-              child: Text(
-                'Sign Up',
-                style: GoogleFonts.inter(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w600,
-                    color: AppStyle.textClr),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

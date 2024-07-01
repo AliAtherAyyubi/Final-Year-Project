@@ -13,12 +13,13 @@ class ReportsDatabase {
           .count();
 
       AggregateQuerySnapshot snapshot = await TotalVotes.get();
+
       int? count = snapshot.count == 0 ? 1 : snapshot.count;
-      // MyAlert.showToast(1, 'Count: ${count}');
+      // MyAlert.showToast(1, 'Total Count: ${count}');
       return count ?? 1;
       //
     } catch (e) {
-      MyAlert.showToast(0, 'Error while fetching');
+      MyAlert.showToast(0, 'System Error');
     }
     return 1;
   }
@@ -32,11 +33,12 @@ class ReportsDatabase {
           .count();
 
       AggregateQuerySnapshot snapshot = await TotalVotes.get();
+      int? count = snapshot.count ?? 0;
 
-      return snapshot.count ?? 0;
+      return count;
       //
     } catch (e) {
-      MyAlert.showToast(0, 'Error while fetching');
+      MyAlert.showToast(0, 'System Error');
     }
     return 0;
   }

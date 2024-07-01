@@ -9,6 +9,7 @@ import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
@@ -41,19 +42,27 @@ class UserController {
       user.email = email;
       user.role = role;
       //
-      await userDatabase().createUserById(user);
 
-      // creating Owner if user is Owner///
-      if (role.toLowerCase() == 'owner') {
-        OwnerModel ownerModel = OwnerModel();
-        ownerModel.userID = user.userId;
-        await OwnerDatabase().createOwner(ownerModel);
+      bool isEmailSent = await sendVerificationEmail(_auth);
+      if (isEmailSent) {
+        //
+        await userDatabase().createUserById(user);
+
+        // creating Owner if user is Owner///
+        if (role.toLowerCase() == 'owner') {
+          OwnerModel ownerModel = OwnerModel();
+          ownerModel.userID = user.userId;
+          await OwnerDatabase().createOwner(ownerModel);
+        }
+        //
+
+        Get.to(
+            () => WelcomePage(
+                  userName: name,
+                ),
+            transition: Transition.rightToLeft);
       }
-      //
-      MyAlert.showToast(1, 'Your account is created successfully!');
-      await sendVerificationEmail(_auth);
 
-      Get.to(() => LoginPage(), transition: Transition.rightToLeft);
       /////
     } on FirebaseAuthException catch (e) {
       // Catch FirebaseAuthException to handle specific errors
@@ -65,14 +74,15 @@ class UserController {
     }
   }
 
-  Future<void> sendVerificationEmail(FirebaseAuth auth) async {
+  Future<bool> sendVerificationEmail(FirebaseAuth auth) async {
     try {
       await auth.currentUser!.sendEmailVerification();
-      MyAlert.showToast(
-          1, 'An Email is sent to your address! Verify it and then Log in');
+      return true;
     } on FirebaseAuthException catch (e) {
-      MyAlert.showToast(0, 'System Error');
+      MyAlert.showToast(
+          0, 'There might be a system error. Try again to signUp!');
     }
+    return false;
   }
   // Sign in Function //w
 
@@ -108,10 +118,8 @@ class UserController {
       }
     } on FirebaseAuthException catch (e) {
       MyAlert.showToast(0, 'Invalid Username and Password!');
-      print('Error signing in firebase: $e');
     } catch (e) {
       MyAlert.showToast(0, 'System Error');
-      print('Error signing in: $e');
     }
   }
   // Log out //

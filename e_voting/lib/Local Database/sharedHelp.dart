@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedHelper {
@@ -15,4 +16,13 @@ class SharedHelper {
   Map<String, dynamic> convertStringToJson(String jsonString) {
     return json.decode(jsonString);
   }
+
+  //
+
+  // Convert QuerySnapshot to String
+  String convertQuerySnapshotToString(QuerySnapshot querySnapshot) {
+    return json.encode(querySnapshot.docs.map((doc) => doc.data()).toList());
+  }
+
+// Convert String back to QuerySnapshot
 }

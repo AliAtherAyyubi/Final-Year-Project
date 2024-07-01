@@ -55,7 +55,9 @@ class ElectionDatabase {
   }
 // Fetch Eelction by Org ID //
 
-  Future<QuerySnapshot?> fetchElectionByOrg() async {
+  Future<List<ElectionModel>> fetchElectionByOrg() async {
+    List<ElectionModel> electionList = [];
+
     try {
       var orgID = await OrgDatabase().GetOrgId();
       QuerySnapshot querySnapshot = await firestore
@@ -63,13 +65,26 @@ class ElectionDatabase {
           .where('orgId', isEqualTo: orgID)
           .get();
 
-      return querySnapshot;
+      var docs = querySnapshot.docs;
+
+      if (docs.isNotEmpty) {
+        for (var doc in docs) {
+          electionList.add(ElectionModel(
+            electionId: doc.id,
+            orgId: doc.get('orgId'),
+            electionName: doc.get('name'),
+            description: doc.get('description'),
+            startDate: doc.get('startDate'),
+            endDate: doc.get('endDate'),
+          ));
+        }
+      }
+
+      return electionList;
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong');
-
-      print('Error while fetching Election details');
-      return null;
     }
+    return electionList;
   }
 
   //
@@ -83,19 +98,20 @@ class ElectionDatabase {
       var docs = querySnapshot.docs;
 
       if (docs.isNotEmpty) {
-        for (int i = 0; i < docs.length; i++) {
+        for (var doc in docs) {
           electionList.add(ElectionModel(
-            electionId: docs[i].id,
-            orgId: docs[i].get('orgId'),
-            electionName: docs[i].get('name'),
-            description: docs[i].get('description'),
-            startDate: docs[i].get('startDate'),
-            endDate: docs[i].get('endDate'),
+            electionId: doc.id,
+            orgId: doc.get('orgId'),
+            electionName: doc.get('name'),
+            description: doc.get('description'),
+            startDate: doc.get('startDate'),
+            endDate: doc.get('endDate'),
           ));
         }
       }
+
       //
-      await LocalElectionData().setElections(electionList);
+      // await LocalElectionData().setAllElections(querySnapshot);
       //
       return electionList;
     } on FirebaseException catch (e) {
@@ -121,7 +137,7 @@ class ElectionDatabase {
       MyAlert.showToast(1, 'Updated Successfully');
       print('updated Election');
     } on FirebaseException catch (e) {
-      print('Error from firebase cannot update');
+      MyAlert.showToast(0, 'System Error');
     }
   }
 

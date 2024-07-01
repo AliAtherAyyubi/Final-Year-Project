@@ -1,27 +1,30 @@
-import 'package:e_voting/Screens/Widgets/myButton.dart';
-import 'package:e_voting/Screens/Widgets/textfield.dart';
-import 'package:e_voting/Services/textControl.dart';
-import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class ContactPage extends StatefulWidget {
-  @override
-  State<ContactPage> createState() => _ContactPageState();
-}
+class ContactPage extends StatelessWidget {
+  List<dynamic> links = [];
 
-class _ContactPageState extends State<ContactPage> {
-  var text = TextController().cnic;
   // const ContactPage({super.key});
   List<IconData> socialIcons = [
     FontAwesomeIcons.facebookF,
-    FontAwesomeIcons.instagram,
+    // FontAwesomeIcons.instagram,
     FontAwesomeIcons.twitter,
     FontAwesomeIcons.linkedinIn
   ];
+//
+  ContactPage({required this.links});
+  //
+
+  Future<void> openLink(String url) async {
+    //
+    Uri _url = Uri.parse(url);
+    bool isExist = await launchUrl(_url);
+    if (!isExist) {
+      throw Exception('Could not launch $_url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +52,20 @@ class _ContactPageState extends State<ContactPage> {
                   itemCount: socialIcons.length,
                   // padding: EdgeInsets.symmetric(horizontal: 20),
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: 15),
-                      child: CircleAvatar(
-                        backgroundColor: AppStyle.primaryColor,
-                        radius: 25,
-                        child: Icon(
-                          socialIcons[index],
-                          color: Colors.white,
-                          size: 25,
+                    return GestureDetector(
+                      onTap: () async {
+                        await openLink(links[index] ?? "");
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: 15),
+                        child: CircleAvatar(
+                          backgroundColor: AppStyle.primaryColor,
+                          radius: 25,
+                          child: Icon(
+                            socialIcons[index],
+                            color: Colors.white,
+                            size: 25,
+                          ),
                         ),
                       ),
                     );

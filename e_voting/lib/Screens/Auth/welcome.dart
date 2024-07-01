@@ -3,6 +3,7 @@ import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
+import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
@@ -10,39 +11,18 @@ import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class WelcomePage extends StatefulWidget {
-  @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
+class WelcomePage extends StatelessWidget {
   // const WelcomePage({super.key});
-  String name = "";
-  UserModel user = UserModel();
-  UserController userController = UserController();
-  Future<void> fetchUserInfo() async {
-    user = await UserLocalData().fetchLocalUser();
+  String userName;
 
-    setState(() {
-      user = user;
-      name = user.userName!.capitalize!;
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    fetchUserInfo();
-  }
-
+  WelcomePage({required this.userName});
+  //
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -55,7 +35,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 10.h,
               ),
               Text(
-                'Hi ${name}!\nWelcome to \nWeVote!',
+                'Hi ${userName.capitalize}!\nWelcome to \nEasyVote!',
                 style: GoogleFonts.inter(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.bold,
@@ -69,7 +49,7 @@ class _WelcomePageState extends State<WelcomePage> {
               SizedBox(
                 width: 80.w,
                 child: Text(
-                  'Your account has been created successfully!',
+                  'Your account has been created successfully!\n An email has been sent to your email address, verify it and the login.',
                   style: GoogleFonts.inter(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -98,10 +78,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 text: 'CONTINUE',
                 width: 100.w,
                 onPress: () {
-                  Get.off(
-                      () => user.role!.toLowerCase() == 'owner'
-                          ? OwnerMainScreen()
-                          : Dashboard(),
+                  Get.off(() => LoginPage(),
                       // duration: const Duration(seconds: 1),
                       transition: Transition.rightToLeft);
                 },

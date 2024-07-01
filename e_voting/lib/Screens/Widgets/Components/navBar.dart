@@ -16,7 +16,7 @@ class CustomNavBar extends StatefulWidget {
   CustomNavBar({
     required this.screens,
     required this.items,
-    this.initialIndex = 1,
+    this.initialIndex = 0,
     this.backgroundColor = Colors.white,
     this.handleAndroidBackButtonPress = true,
     this.resizeToAvoidBottomInset = true,

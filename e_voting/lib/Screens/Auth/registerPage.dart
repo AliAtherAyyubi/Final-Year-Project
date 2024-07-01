@@ -4,6 +4,7 @@ import 'package:e_voting/Controllers/userController.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
+import 'package:e_voting/Screens/Widgets/Components/authAppBar.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/logo.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -46,8 +47,6 @@ class _RegisterPageState extends State<RegisterPage> {
         loading = true;
       });
       await user.RegisterUser(username.text, role, Email.text, password.text);
-      // String? res = await user.RegisterUser(
-      //     username.text, cnic.text, role, Email.text, password.text);
 
       setState(() {
         loading = false;
@@ -62,10 +61,14 @@ class _RegisterPageState extends State<RegisterPage> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: PreferredSize(
-                preferredSize: Size.fromHeight(40),
-                child: ScreenTitle(
-                  title: 'Create Account',
+                preferredSize: Size.fromHeight(50),
+                child: AuthAppBar(
+                  title: 'Sign Up',
+                  actionTxt: 'Log In',
+                  actionBtn: () =>
+                      Get.to(LoginPage(), transition: Transition.leftToRight),
                 )),
             body: SingleChildScrollView(
               child: Padding(
@@ -73,9 +76,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
                     MyLogo(
                       logoClr: AppStyle.iconClr,
-                      height: 130,
+                      height: 120,
                       width: 200,
                     ),
                     const SizedBox(
@@ -90,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               keyboardType: TextInputType.name,
                               obscureText: false,
                               labelText: 'Name',
-                              hintText: 'Ali Hamza',
+                              hintText: 'Full Name',
                               maxlength: 13,
                               icon: Icons.alternate_email,
                               validator: (value) => validate.isValidName(value),
@@ -111,6 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               keyboardType: TextInputType.emailAddress,
                               obscureText: false,
                               labelText: 'Email',
+                              hintText: 'john123@gmail.com',
                               icon: Icons.email,
                               validator: (value) =>
                                   validate.isValidEmail(value),
@@ -120,12 +127,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               keyboardType: TextInputType.emailAddress,
                               obscureText: true,
                               labelText: 'Password',
+                              hintText: 'Password',
                               icon: Icons.password,
                               hidebtn: Icons.visibility_off,
                               validator: (value) =>
                                   validate.isValidPassword(value),
                             ),
                             DropDown(
+                              prefixIcon: Icons.person_2_rounded,
                               onRoleChanged: (value) {
                                 setState(() {
                                   role = value.toString();
@@ -159,13 +168,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             // ),
 
                             const SizedBox(
-                              height: 20,
+                              height: 30,
                             ),
                             ////// Register Button ///////
                             Align(
                                 alignment: Alignment.center,
                                 child: MyButton(
-                                  text: 'Register (Sign Up)',
+                                  text: 'Register',
                                   width: 100.w,
                                   loading: loading,
                                   onPress: Register,
@@ -173,8 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ],
                         )),
                     SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.center,
+                    Center(
                       child: Text(
                         'By signing up, you agree to our Terms of Service and Privacy Policy',
                         style: GoogleFonts.poppins(

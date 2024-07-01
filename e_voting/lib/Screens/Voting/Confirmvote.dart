@@ -108,7 +108,7 @@ class _ConfirmVoteState extends State<ConfirmVote> {
                 setState(() {
                   loading = true;
                 });
-                var userId = user.userID.toString();
+                var userId = await UserLocalData().getUserId();
                 var cand_id = candidate.candidateId.toString();
                 var elecId = election.electionId.toString();
                 var votedfor = election.electionTitle.toString();

@@ -13,67 +13,68 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         backgroundColor: AppStyle.primaryColor,
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                // Container(
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     '€VØŦ€',
-                //     style: AppStyle.headstyle
-                //         .copyWith(color: Colors.white, letterSpacing: 2),
-                //   ),
-                // ),
-                // const SizedBox(height: 40),
-                MyLogo(),
+                Expanded(flex: 10, child: MyLogo()),
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: 80.w,
-                  child: Text(
-                    'Participate in elections easily!',
-                    style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 25),
-                    textAlign: TextAlign.center,
+                Expanded(
+                  flex: 4,
+                  child: SizedBox(
+                    width: 80.w,
+                    child: Text(
+                      'Participate in elections easily!',
+                      style: AppStyle().txt2.copyWith(
+                            color: Colors.white,
+                            fontSize: 22,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                MyButton(
-                  elevation: 0,
-                  width: 90.w,
-                  text: 'SIGN UP',
-                  backClr: Colors.white,
-                  textClr: AppStyle.textClr,
-                  onPress: () {
-                    Get.to(() => const RegisterPage(),
-                        transition: Transition.rightToLeft,
-                        duration: const Duration(milliseconds: 600));
-                  },
-                ),
-                const SizedBox(height: 15),
-                MyButton(
-                  elevation: 0,
-                  width: 90.w,
-                  text: 'LOG IN',
-                  backClr: AppStyle.primaryColor,
-                  border: true,
-                  textClr: Colors.white,
-                  onPress: () {
-                    Get.to(() => LoginPage(),
-                        transition: Transition.rightToLeft,
-                        duration: const Duration(milliseconds: 600));
-                  },
-                ),
+                Expanded(
+                  flex: 8,
+                  child: Column(
+                    children: [
+                      MyButton(
+                        elevation: 0,
+                        width: 90.w,
+                        text: 'SIGN UP',
+                        backClr: Colors.white,
+                        textClr: AppStyle.textClr,
+                        onPress: () {
+                          Get.to(() => const RegisterPage(),
+                              transition: Transition.rightToLeft,
+                              duration: const Duration(milliseconds: 100));
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      MyButton(
+                        elevation: 0,
+                        width: 90.w,
+                        text: 'LOG IN',
+                        backClr: AppStyle.primaryColor,
+                        border: true,
+                        textClr: Colors.white,
+                        onPress: () {
+                          Get.to(() => LoginPage(),
+                              transition: Transition.rightToLeft,
+                              duration: const Duration(milliseconds: 100));
+                        },
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

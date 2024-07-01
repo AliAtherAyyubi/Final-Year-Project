@@ -4,6 +4,7 @@ import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Models/election.dart';
+import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myAvatar.dart';
@@ -23,7 +24,7 @@ class ElectionResultPage extends StatefulWidget {
 
 class _ElectionResultPageState extends State<ElectionResultPage> {
   //
-  int NoOfVote = 0;
+  // int NoOfVote = 0;
   int TotalVote = 1;
   //
   List<CandidateModel> candidatesList = [];
@@ -46,13 +47,14 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
   }
 
   Future<void> setElection(String selectedElection) async {
+    //
     var index = electionTitleList.indexOf(selectedElection);
     if (index != -1) {
       var orgID = electionList[index].orgId ?? "";
-      await UserLocalData().setUserOrgID(orgID);
       setState(() {
         filterCandidatesList =
             CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
+        NoOfVoteList.clear();
       });
     }
     await getNoOfVotes(index);
@@ -67,6 +69,7 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
     for (var candidate in filterCandidatesList) {
       int vote = await ReportsDatabase()
           .getCandidateVotes(candidate.candidateId ?? "");
+      // MyAlert.showToast(1, 'Candidate Count: ${vote}');
 
       NoOfVoteList.add(vote);
     }
@@ -220,19 +223,20 @@ class VoteData extends StatelessWidget {
   String? imageUrl;
   int NoOfVote;
   int TotalVotes;
+  // String? Votekey;
   VoteData(
-      {super.key,
-      this.name,
+      {this.name,
       this.imageUrl,
-      this.NoOfVote = 0,
-      this.TotalVotes = 1});
+      required this.NoOfVote,
+      required this.TotalVotes});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
-        height: 120,
+        margin: EdgeInsets.only(left: 10),
+        height: 150,
         width: 100.w,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,7 +244,7 @@ class VoteData extends StatelessWidget {
           children: [
             CandidateAvatar(
               imageUrl: imageUrl,
-              radius: 30,
+              radius: 40,
               name: name,
             ),
             Column(
@@ -249,6 +253,7 @@ class VoteData extends StatelessWidget {
                 Container(
                   width: 60.w,
                   child: LinearProgressIndicator(
+                    // key: Key(Votekey!),
                     value: NoOfVote / TotalVotes,
                     color: AppStyle.primaryColor,
                     borderRadius: BorderRadius.circular(50),

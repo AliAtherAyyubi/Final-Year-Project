@@ -49,11 +49,11 @@ class _DashboardState extends State<Dashboard> {
             // toolbarHeight: 50,
             automaticallyImplyLeading: false,
             title: Text(
-              '€VØŦ€',
+              'EasyVote',
               style: GoogleFonts.poppins(
-                  fontSize: 25,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: AppStyle.primaryColor),
               // textAlign: TextAlign.center,
             ),
             centerTitle: true,
@@ -62,25 +62,30 @@ class _DashboardState extends State<Dashboard> {
           ),
 
           ///////////////////////
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 1.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    'Elections',
-                    style: AppStyle().h2,
+          body: RefreshIndicator(
+            onRefresh: setUserId,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 1.h,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                OnGoingElectionPage()
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Elections',
+                      style: AppStyle()
+                          .h2
+                          .copyWith(color: Colors.black, fontSize: 28),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  OnGoingElectionPage()
+                ],
+              ),
             ),
           )),
     );

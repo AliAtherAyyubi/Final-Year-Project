@@ -181,13 +181,12 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                             horizontal: 5, vertical: 15),
                                         leading: const Icon(
                                           Icons.person,
-                                          size: 50,
+                                          size: 47,
                                         ),
                                         title: Text(
                                           voterID,
-                                          style: AppStyle()
-                                              .h3
-                                              .copyWith(color: Colors.black),
+                                          style: AppStyle().txt1.copyWith(
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         tileColor: Colors.green.shade200,
                                         trailing: IconButton(

@@ -80,7 +80,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
             hintText: widget.hintText,
             hoverColor: Colors.grey[200],
             filled: true,
-            fillColor: widget.fillColor ?? Colors.grey.shade200,
+            fillColor: widget.fillColor ?? AppStyle.textField,
             counterText: '',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             contentPadding: EdgeInsets.all(15),
@@ -151,11 +151,12 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
 class DropDown extends StatefulWidget {
   String? selectedValue;
-
+  IconData? prefixIcon;
   final ValueChanged<String?>? onRoleChanged;
   List<DropdownMenuItem>? DropDownItems = [];
   //
-  DropDown({super.key, this.onRoleChanged, this.DropDownItems});
+  DropDown(
+      {super.key, this.onRoleChanged, this.DropDownItems, this.prefixIcon});
   @override
   State<DropDown> createState() => _DropDownState();
 }
@@ -166,33 +167,33 @@ class _DropDownState extends State<DropDown> {
     return DropdownButtonFormField(
         style: AppStyle.textStyle4,
         borderRadius: BorderRadius.circular(10),
-        isExpanded: true,
         decoration: InputDecoration(
-          enabled: true,
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          prefixIcon: widget.prefixIcon != null
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(
+                    widget.prefixIcon,
+                    color: AppStyle.iconClr,
+                    size: 30,
+                  ),
+                )
+              : null,
+          border: UnderlineInputBorder(
+            borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(10),
           ),
-          // contentPadding: EdgeInsets.all(15),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide.none,
-          //   borderRadius: BorderRadius.circular(10),
-          // ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-          ),
-
           filled: true,
-          fillColor: Colors.grey.shade200,
-          hintText: 'Choose your role',
-
+          labelText: 'Choose your role',
+          fillColor: AppStyle.textField,
+          // hintText: 'Choose your role',
           errorStyle: GoogleFonts.inter(
             color: Colors.red,
             fontSize: 13,
           ),
         ),
-        validator: (value) => value == null ? "Please choose your role!" : null,
-        dropdownColor: Colors.grey.shade100,
+        validator: (value) => value == null ? "Choose your role!" : null,
+        dropdownColor: Colors.grey.shade200,
         value: widget.selectedValue,
         onChanged: (newValue) {
           setState(() {

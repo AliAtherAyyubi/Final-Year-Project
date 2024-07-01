@@ -6,6 +6,7 @@ import 'package:e_voting/Local%20Database/electionData.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/addElection.dart';
 import 'package:e_voting/Screens/Owner/Owner%20Elections/editElection.dart';
+import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/empty.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -23,13 +24,12 @@ class OwnerElectionList extends StatefulWidget {
 }
 
 class Owner_ElectionListState extends State<OwnerElectionList> {
-  QuerySnapshot? electionData;
-  // List<ElectionModel> elections = [];
+  // QuerySnapshot? electionData;
+  List<ElectionModel> electionList = [];
   bool data = false;
   //
   Future<void> fetchElections() async {
-    electionData = await ElectionDatabase().fetchElectionByOrg();
-    // print(elections[0].electionName);
+    electionList = await ElectionDatabase().fetchElectionByOrg();
     setState(() {
       // electionData = querySnapshot;
       data = true;
@@ -77,23 +77,62 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
             ),
             //
             data
-                ? electionData!.docs.isEmpty
+                ? electionList.isEmpty
                     ? EmptyImage()
                     : ListView.builder(
-                        itemCount: electionData!.docs.length,
+                        itemCount: electionList.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           // final election = electionData!.docs[index];
-                          final election = electionData!.docs[index];
-                          return ElectionTile(
-                            title: election.get('name'),
-                            date: TimeService().votingTime(
-                                election.get('startDate').toDate(),
-                                election.get('endDate').toDate()),
-                            onPress: () => Get.to(
-                                () => EditElections(electionId: election.id),
-                                transition: Transition.rightToLeft),
+                          final e = electionList[index];
+                          return Dismissible(
+                            key: Key(e.electionId!),
+                            confirmDismiss: (direction) async {
+                              final confirm = await showDialog<bool>(
+                                context: context,
+                                builder: (context) {
+                                  return MyAlertDialogWidget(
+                                    title:
+                                        'Are you sure you want to delete this election?',
+                                    cancelBtnText: 'No',
+                                    confirmBtnText: 'Yes',
+                                    onConfirm: () =>
+                                        Navigator.of(context).pop(true),
+                                    onCancel: () =>
+                                        Navigator.of(context).pop(false),
+                                  );
+                                },
+                              );
+                              return confirm ?? false;
+                            },
+                            onDismissed: (direction) async {
+                              await ElectionDatabase()
+                                  .deleteElectionByID(e.electionId!);
+                              await fetchElections();
+                            },
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                            ),
+                            child: ElectionTile(
+                              title: e.electionName,
+                              date: TimeService().votingTime(
+                                  e.startDate!.toDate(), e.endDate!.toDate()),
+                              onPress: () => Get.to(
+                                  () => EditElections(electionModel: e),
+                                  transition: Transition.rightToLeft),
+                            ),
                           );
                         })
                 : Loading(
