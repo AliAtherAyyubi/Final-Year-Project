@@ -52,7 +52,7 @@ class MyAlertDialogWidget extends StatelessWidget {
           elevation: 0,
           height: 45,
           fontWeight: FontWeight.w400,
-          width: 28.w,
+          width: 30.w,
           loading: loading,
         ),
       ],

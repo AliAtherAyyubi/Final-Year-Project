@@ -39,7 +39,6 @@ class _OwnerVotersState extends State<OwnerVoters> {
     if (formKey.currentState!.validate()) {
       await OwnerDatabase().addVoter(cnic.text);
       await fetchVoters();
-      cnic.clear();
       Navigator.pop(context);
     }
   }
@@ -82,6 +81,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
         //
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            cnic.clear();
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -104,6 +104,8 @@ class _OwnerVotersState extends State<OwnerVoters> {
           },
           child: Icon(Icons.add),
           backgroundColor: AppStyle.primaryColor,
+          clipBehavior: Clip.antiAlias,
+          autofocus: true,
         ),
 
         body: RefreshIndicator(
@@ -154,6 +156,25 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                     key: Key(voterID),
                                     direction: DismissDirection.endToStart,
                                     behavior: HitTestBehavior.deferToChild,
+                                    confirmDismiss: (direction) async {
+                                      final confirm = await showDialog<bool>(
+                                        context: context,
+                                        builder: (context) {
+                                          return MyAlertDialogWidget(
+                                            title:
+                                                'Are you sure you want to delete this voter ID?',
+                                            cancelBtnText: 'No',
+                                            confirmBtnText: 'Yes',
+                                            onConfirm: () =>
+                                                Navigator.of(context).pop(true),
+                                            onCancel: () =>
+                                                Navigator.of(context)
+                                                    .pop(false),
+                                          );
+                                        },
+                                      );
+                                      return confirm ?? false;
+                                    },
                                     onDismissed: (direction) async {
                                       removeVoter(voterID);
                                       await OwnerDatabase()
@@ -188,7 +209,7 @@ class _OwnerVotersState extends State<OwnerVoters> {
                                           style: AppStyle().txt1.copyWith(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        tileColor: Colors.green.shade200,
+                                        tileColor: AppStyle.tileClr,
                                         trailing: IconButton(
                                           onPressed: () {
                                             cnic.text = voterID;

@@ -113,8 +113,8 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
                             },
                             direction: DismissDirection.endToStart,
                             background: Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              alignment: Alignment.centerRight,
+                              margin: EdgeInsets.only(bottom: 5),
+                              // alignment: Alignment.centerRight,
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               decoration: BoxDecoration(
                                   color: Colors.red,
@@ -153,29 +153,26 @@ class ElectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        title: Text(
-          '${title}',
-          style: AppStyle().h3.copyWith(color: Colors.black),
-        ),
-        subtitle: Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Text(
-            '$date',
-            style: AppStyle().txt2.copyWith(color: Colors.grey.shade600),
-          ),
-        ),
-        trailing: IconButton(
-          onPressed: onPress,
-          icon: Icon(Icons.arrow_forward),
-          iconSize: 30,
-          color: AppStyle.iconClr,
-        ),
-        contentPadding: EdgeInsets.all(10),
-        tileColor: Colors.grey.shade200,
+    return ListTile(
+      title: Text(
+        '${title}',
+        style: AppStyle().h3.copyWith(color: Colors.black),
       ),
+      subtitle: Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: Text(
+          '$date',
+          style: AppStyle().txt2.copyWith(color: Colors.grey.shade600),
+        ),
+      ),
+      trailing: IconButton(
+        onPressed: onPress,
+        icon: Icon(Icons.arrow_forward),
+        iconSize: 30,
+        color: AppStyle.iconClr,
+      ),
+      contentPadding: EdgeInsets.all(10),
+      tileColor: Colors.grey.shade200,
     );
   }
 }

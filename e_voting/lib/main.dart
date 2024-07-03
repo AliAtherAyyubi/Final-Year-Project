@@ -1,4 +1,5 @@
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
+import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
 import 'package:e_voting/Screens/Owner/ownerPage.dart';
@@ -56,7 +57,9 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.white, // Set a fixed color
           ),
         ),
-        home: SplashScreen(),
+        home: WelcomePage(
+          userName: 'Najam-ul-Din',
+        ),
       );
     });
   }

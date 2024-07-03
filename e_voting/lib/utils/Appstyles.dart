@@ -9,6 +9,7 @@ class AppStyle {
   static const Color cardClr = Color(0xffA4FBBE);
   static const Color darkGreen = Color(0xff488f3c);
   static Color textField = Colors.grey.shade200;
+  static Color tileClr = Color(0xFF97FBC6);
   static const Color iconClr = textClr;
 
   TextStyle h1 = GoogleFonts.inter(

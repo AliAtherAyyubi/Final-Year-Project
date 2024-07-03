@@ -125,7 +125,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   : CircularProfileAvatar(
                       imageUrl,
                       radius: 90,
-                      cacheImage: true,
                       elevation: 10,
                     ),
               Positioned(

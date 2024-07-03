@@ -64,7 +64,7 @@ class _OwnerOrganizationState extends State<OwnerOrganization> {
                     height: 20,
                   ),
                   Text(
-                    'Add Organization',
+                    'Create Organization',
                     style: AppStyle().h2,
                   ),
                   SizedBox(

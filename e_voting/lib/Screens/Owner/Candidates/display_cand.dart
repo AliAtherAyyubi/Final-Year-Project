@@ -185,7 +185,7 @@ class CandidateTile extends StatelessWidget {
           color: AppStyle.iconClr,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        tileColor: Color(0xFF97FBC6),
+        tileColor: AppStyle.tileClr,
       ),
     );
   }

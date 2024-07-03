@@ -49,7 +49,7 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 width: 80.w,
                 child: Text(
-                  'Your account has been created successfully!\n An email has been sent to your email address, verify it and the login.',
+                  'Your account has been created successfully!\n An email has been sent to your email address, verify it and then login.',
                   style: GoogleFonts.inter(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,

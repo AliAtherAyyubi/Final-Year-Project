@@ -116,7 +116,7 @@ class MyTextButton extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.inter(
-            fontSize: Applayout.greater760() ? 15.sp : 18.sp,
+            fontSize: 18.sp,
             fontWeight: fontWeight,
             letterSpacing: 1,
             color: textClr),
