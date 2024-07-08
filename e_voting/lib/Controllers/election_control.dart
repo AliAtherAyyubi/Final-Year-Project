@@ -5,6 +5,7 @@ import 'package:e_voting/Controllers/org_controller.dart';
 import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Database/org_db.dart';
 import 'package:e_voting/Local%20Database/adminData.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Providers/electionData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
@@ -20,6 +21,7 @@ class ElectionController {
   // create election //
   Future<void> createElection(
     name,
+    position,
     sdate,
     edate,
     detail,
@@ -28,10 +30,12 @@ class ElectionController {
     if (exist) {
       String? orgId = await OrgDatabase().GetOrgId();
       e.electionName = name;
+      e.position = position;
       e.startDate = TimeService().convertToTimestamp(sdate);
       e.endDate = TimeService().convertToTimestamp(edate);
       e.description = detail;
       e.orgId = orgId;
+      e.adminId = await UserLocalData().getUserId();
       await ElectionDatabase().electionDB(e);
     } else {
       MyAlert.showToast(0, 'First create organization');

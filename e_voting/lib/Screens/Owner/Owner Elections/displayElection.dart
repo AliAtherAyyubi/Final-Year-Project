@@ -29,7 +29,7 @@ class Owner_ElectionListState extends State<OwnerElectionList> {
   bool data = false;
   //
   Future<void> fetchElections() async {
-    electionList = await ElectionDatabase().fetchElectionByOrg();
+    electionList = await ElectionDatabase().fetchElectionByAdmin();
     setState(() {
       // electionData = querySnapshot;
       data = true;

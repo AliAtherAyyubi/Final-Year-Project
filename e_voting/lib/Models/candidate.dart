@@ -2,7 +2,8 @@ class CandidateModel {
   String? candidateId;
   String? name;
   String? imageUrl;
-  String? orgId;
+  String? adminId;
+  String? elecId;
   String? publicDescription;
   String? biography;
   String? description;
@@ -11,7 +12,8 @@ class CandidateModel {
 
   CandidateModel({
     this.candidateId,
-    this.orgId,
+    this.adminId,
+    this.elecId,
     this.name,
     this.imageUrl,
     this.publicDescription,
@@ -20,34 +22,4 @@ class CandidateModel {
     this.voteCount,
     this.links,
   });
-
-  // Convert a CandidateModel to a Map.
-  Map<String, dynamic> toJson() {
-    return {
-      'candidateId': candidateId,
-      'name': name,
-      'imageUrl': imageUrl,
-      'orgId': orgId,
-      'publicDescription': publicDescription,
-      'biography': biography,
-      'description': description,
-      'voteCount': voteCount,
-      'links': links,
-    };
-  }
-
-  // Extract a CandidateModel from a Map.
-  factory CandidateModel.fromJson(Map<String, dynamic> json) {
-    return CandidateModel(
-      candidateId: json['candidateId'],
-      name: json['name'],
-      imageUrl: json['imageUrl'],
-      orgId: json['orgId'],
-      publicDescription: json['publicDescription'],
-      biography: json['biography'],
-      description: json['description'],
-      voteCount: json['voteCount'],
-      links: json['links'],
-    );
-  }
 }

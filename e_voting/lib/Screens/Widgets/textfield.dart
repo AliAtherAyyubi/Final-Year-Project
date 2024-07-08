@@ -151,12 +151,20 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
 class DropDown extends StatefulWidget {
   String? selectedValue;
+  String? labelText;
   IconData? prefixIcon;
+  final FormFieldValidator? validator;
   final ValueChanged<String?>? onRoleChanged;
   List<DropdownMenuItem>? DropDownItems = [];
   //
   DropDown(
-      {super.key, this.onRoleChanged, this.DropDownItems, this.prefixIcon});
+      {super.key,
+      this.onRoleChanged,
+      this.DropDownItems,
+      this.prefixIcon,
+      this.selectedValue,
+      this.labelText,
+      this.validator});
   @override
   State<DropDown> createState() => _DropDownState();
 }
@@ -184,7 +192,7 @@ class _DropDownState extends State<DropDown> {
             borderRadius: BorderRadius.circular(10),
           ),
           filled: true,
-          labelText: 'Choose your role',
+          labelText: widget.labelText,
           fillColor: AppStyle.textField,
           // hintText: 'Choose your role',
           errorStyle: GoogleFonts.inter(
@@ -192,7 +200,7 @@ class _DropDownState extends State<DropDown> {
             fontSize: 13,
           ),
         ),
-        validator: (value) => value == null ? "Choose your role!" : null,
+        validator: widget.validator,
         dropdownColor: Colors.grey.shade200,
         value: widget.selectedValue,
         onChanged: (newValue) {

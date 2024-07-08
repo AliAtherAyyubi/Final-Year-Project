@@ -1,5 +1,6 @@
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
+import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -66,13 +67,20 @@ class DialogMsg {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(msg),
+          title: Text(
+            msg,
+            style: AppStyle().h3.copyWith(color: Colors.black),
+          ),
           actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Ok'))
+            MyButton(
+              onPress: () {
+                Navigator.pop(context);
+              },
+              text: 'OK',
+              width: 20.w,
+              height: 45,
+              elevation: 0,
+            )
           ],
         );
       },

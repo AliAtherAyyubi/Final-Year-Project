@@ -1,68 +1,44 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_voting/Database/org_db.dart';
-import 'package:e_voting/Local%20Database/electionData.dart';
+import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/election.dart';
-import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
-import 'package:get/get.dart';
 
 class ElectionDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> electionDB(ElectionModel e) async {
     try {
-      DocumentReference docRef = await firestore.collection('election').add({
+      await firestore.collection('election').add({
         // 'electionId': e.electionId,
         'name': e.electionName,
+        'position': e.position,
         'startDate': e.startDate,
         'endDate': e.endDate,
         'description': e.description,
         // 'status': e.status,
         'orgId': e.orgId,
+        'adminId': e.adminId,
       });
 
-      await docRef.update({'electionId': docRef.id});
-      e.electionId = docRef.id;
-      // await ElectionLocalData().addLocalElection(e);
       MyAlert.showToast(1, 'Added Successfully!');
-      print('added election');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Network Error');
-
-      print('error :$e');
     }
   }
-  // Fetch Eelction by ID //
 
-  Future<ElectionModel?> fetchElectionById(String id) async {
-    try {
-      DocumentSnapshot doc =
-          await firestore.collection('election').doc(id).get();
-
-      return ElectionModel(
-          electionName: doc['name'],
-          description: doc['description'],
-          electionId: doc['electionId'],
-          orgId: doc['orgId'],
-          startDate: doc['startDate'],
-          endDate: doc['endDate'],
-          status: doc['status']);
-    } on FirebaseException catch (e) {
-      MyAlert.showToast(0, 'System error ');
-    }
-  }
 // Fetch Eelction by Org ID //
 
-  Future<List<ElectionModel>> fetchElectionByOrg() async {
+  Future<List<ElectionModel>> fetchElectionByAdmin() async {
     List<ElectionModel> electionList = [];
 
     try {
-      var orgID = await OrgDatabase().GetOrgId();
+      var adminId = await UserLocalData().getUserId();
+
+      ///
       QuerySnapshot querySnapshot = await firestore
           .collection('election')
-          .where('orgId', isEqualTo: orgID)
+          .where('adminId', isEqualTo: adminId)
           .get();
 
       var docs = querySnapshot.docs;
@@ -72,7 +48,9 @@ class ElectionDatabase {
           electionList.add(ElectionModel(
             electionId: doc.id,
             orgId: doc.get('orgId'),
+            adminId: doc.get('adminId'),
             electionName: doc.get('name'),
+            position: doc.get('position'),
             description: doc.get('description'),
             startDate: doc.get('startDate'),
             endDate: doc.get('endDate'),
@@ -102,15 +80,15 @@ class ElectionDatabase {
           electionList.add(ElectionModel(
             electionId: doc.id,
             orgId: doc.get('orgId'),
+            adminId: doc.get('adminId'),
             electionName: doc.get('name'),
+            position: doc.get('position'),
             description: doc.get('description'),
             startDate: doc.get('startDate'),
             endDate: doc.get('endDate'),
           ));
         }
       }
-
-      //
       // await LocalElectionData().setAllElections(querySnapshot);
       //
       return electionList;
@@ -127,15 +105,14 @@ class ElectionDatabase {
 
       await firestore.collection('election').doc(elecId).update({
         'name': election.electionName,
+        'position': election.position,
         'description': election.description,
         'startDate': election.startDate,
         'endDate': election.endDate,
-        'status': election.status
-        // 'adminId': org.adminId
+        // 'status': election.status
       });
       //
       MyAlert.showToast(1, 'Updated Successfully');
-      print('updated Election');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'System Error');
     }
@@ -148,7 +125,27 @@ class ElectionDatabase {
       await firestore.collection('election').doc(id).delete();
       MyAlert.showToast(1, 'Deleted Successfully');
     } on FirebaseException catch (e) {
-      MyAlert.showToast(0, 'System or Network Erro');
+      MyAlert.showToast(0, 'System or Network Error');
+    }
+  }
+
+  //
+  Future<ElectionModel?> fetchElectionById(String id) async {
+    try {
+      DocumentSnapshot doc =
+          await firestore.collection('election').doc(id).get();
+
+      return ElectionModel(
+          electionName: doc['name'],
+          position: doc['position'],
+          description: doc['description'],
+          electionId: doc['electionId'],
+          orgId: doc['orgId'],
+          startDate: doc['startDate'],
+          endDate: doc['endDate'],
+          status: doc['status']);
+    } on FirebaseException catch (e) {
+      MyAlert.showToast(0, 'System error ');
     }
   }
 }

@@ -30,7 +30,7 @@ class OwnerMainScreen extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       MyNavBarItem(iconData: Icons.home_filled, title: 'Home'),
-      MyNavBarItem(iconData: Icons.how_to_vote_sharp, title: 'Voting'),
+      MyNavBarItem(iconData: Icons.how_to_vote_sharp, title: 'Vote'),
       MyNavBarItem(iconData: Icons.bar_chart, title: 'Reports'),
       MyNavBarItem(iconData: Icons.person, title: 'Profile'),
     ];

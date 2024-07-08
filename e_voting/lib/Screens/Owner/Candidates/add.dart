@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:e_voting/Controllers/image_control.dart';
 import 'package:e_voting/Database/candidate_db.dart';
+import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Screens/Owner/ownerScreen.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -10,17 +12,23 @@ import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AddCandidateScreen extends StatefulWidget {
-  const AddCandidateScreen({super.key});
+  //
+  List<ElectionModel>? electionList = [];
+  //
+  AddCandidateScreen({super.key, this.electionList});
 
   @override
   State<AddCandidateScreen> createState() => _AddCandidateScreenState();
 }
 
 class _AddCandidateScreenState extends State<AddCandidateScreen> {
+  //
+  List<String> electionTitleList = [];
   //
   CandidateModel c = CandidateModel();
   //
@@ -38,39 +46,11 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
 
   XFile? image;
 
-  Future<void> addCandidate() async {
-    if (formKey.currentState!.validate()) {
-      FocusScope.of(context).unfocus();
-      setState(() {
-        loading = true;
-      });
-      //
-      String? imageUrl = image != null
-          ? await ImageController().uploadCandidateImage(image!)
-          : null;
-
-      ///
-      c.name = name.text;
-      c.biography = bio.text;
-      c.publicDescription = publicDesc.text;
-      c.description = description.text;
-      c.links = [facebook.text, twitter.text, linkedIn.text];
-      c.imageUrl = imageUrl;
-
-      ///
-      await CandidateDB().createCandidate(c);
-      setState(() {
-        image = null;
-        loading = false;
-      });
-      clearText();
-    }
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setTitles();
   }
 
   @override
@@ -117,6 +97,9 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
                           });
                         },
                       ),
+                      TextLabel(
+                        field: 'Name',
+                      ),
                       AuthTextField(
                         controller: name,
                         keyboardType: TextInputType.name,
@@ -124,6 +107,27 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
                         maxlength: 40,
                         validator: (value) {
                           if (value.isEmpty) return 'Can\'t be empty';
+                          return null;
+                        },
+                      ),
+                      TextLabel(
+                        field: 'Select Election',
+                      ),
+                      DropDown(
+                        DropDownItems: electionTitleList.map((election) {
+                          return DropdownMenuItem<String>(
+                            value: election,
+                            child: Text(election),
+                          );
+                        }).toList(),
+                        onRoleChanged: (selectedElection) async {
+                          // Handl
+                          setElection(selectedElection!);
+                          //
+                        },
+                        labelText: 'Set election for candidate',
+                        validator: (value) {
+                          if (value == null) return 'Select election';
                           return null;
                         },
                       ),
@@ -199,8 +203,55 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
         ),
       ),
     );
+  } //
+
+  Future<void> addCandidate() async {
+    if (formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+      setState(() {
+        loading = true;
+      });
+      //
+      String? imageUrl = image != null
+          ? await ImageController().uploadImage(image!, null)
+          : null;
+
+      ///
+      c.name = name.text;
+      c.biography = bio.text;
+      c.publicDescription = publicDesc.text;
+      c.description = description.text;
+      c.links = [facebook.text, twitter.text, linkedIn.text];
+      c.imageUrl = imageUrl;
+
+      ///
+      await CandidateDB().createCandidate(c);
+      setState(() {
+        image = null;
+        loading = false;
+      });
+      clearText();
+      Get.back();
+    }
   }
 
+  void setTitles() {
+    for (var titles in widget.electionList!) {
+      electionTitleList.add(titles.electionName!.capitalize ?? "Election");
+    }
+  }
+
+  void setElection(String selectedElection) async {
+    //
+    var index = electionTitleList.indexOf(selectedElection);
+    //
+    setState(() {
+      c.elecId = widget.electionList![index].electionId;
+    });
+//
+  }
+
+//
   void clearText() {
     name.clear();
     publicDesc.text = "";
@@ -209,4 +260,6 @@ class _AddCandidateScreenState extends State<AddCandidateScreen> {
     facebook.clear();
     twitter.clear();
   }
+
+  //
 }

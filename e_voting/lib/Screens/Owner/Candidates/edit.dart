@@ -2,25 +2,29 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Controllers/image_control.dart';
 import 'package:e_voting/Database/candidate_db.dart';
 import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/textfield.dart';
 import 'package:e_voting/utils/Appstyles.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class EditCandidateScreen extends StatefulWidget {
   CandidateModel? candidate;
-  EditCandidateScreen({super.key, this.candidate});
+  List<ElectionModel>? electionList = [];
+
+  EditCandidateScreen({super.key, this.candidate, this.electionList});
 
   @override
   State<EditCandidateScreen> createState() => _EditCandidateScreenState();
 }
 
 class _EditCandidateScreenState extends State<EditCandidateScreen> {
+  List<String> electionTitleList = [];
   //
   CandidateModel c = CandidateModel();
   //
@@ -36,6 +40,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
   TextEditingController imageName = TextEditingController();
 
   bool loading = false;
+  String? selectedElec;
   XFile? image;
 
   fetchCandidate() {
@@ -53,11 +58,23 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
     setState(() {});
   }
 
+//////
+  candidateElection() {
+    String elecId = c.elecId!;
+    int index = widget.electionList!
+        .indexWhere((election) => election.electionId == elecId);
+    setState(() {
+      selectedElec = widget.electionList![index].electionName;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchCandidate();
+    // setTitles();
+    // candidateElection();jjjjjjj
   }
 
   @override
@@ -92,7 +109,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 10,
               ),
               Form(
                   key: formKey,
@@ -100,7 +117,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextLabel(
-                        field: 'Select Image',
+                        field: 'Change Image',
                       ),
                       AuthTextField(
                         controller: imageName,
@@ -128,6 +145,25 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                           return null;
                         },
                       ),
+                      // DropDown(
+                      //   DropDownItems: electionTitleList.map((election) {
+                      //     return DropdownMenuItem<String>(
+                      //       value: election,
+                      //       child: Text(election),
+                      //     );
+                      //   }).toList(),
+                      //   onRoleChanged: (selectedElection) async {
+                      //     // Handl
+                      //     setElection(selectedElection!);
+                      //     //
+                      //   },
+                      //   labelText: 'Set election for candidate',
+                      //   validator: (value) {
+                      //     if (value == null) return 'Select election';
+                      //     return null;
+                      //   },
+                      //   selectedValue: selectedElec,
+                      // ),
                       TextLabel(
                         field: 'Short Biography',
                       ),
@@ -192,7 +228,7 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
                             });
                             String? imageUrl = image != null
                                 ? await ImageController()
-                                    .uploadCandidateImage(image!)
+                                    .uploadImage(image!, c.imageUrl)
                                 : c.imageUrl;
                             c.name = name.text;
                             c.biography = bio.text;
@@ -225,5 +261,21 @@ class _EditCandidateScreenState extends State<EditCandidateScreen> {
         ),
       ),
     );
+  }
+
+  void setTitles() {
+    for (var titles in widget.electionList!) {
+      electionTitleList.add(titles.electionName!.capitalize ?? "Election");
+    }
+  }
+
+  void setElection(String selectedElection) async {
+    //
+    var index = electionTitleList.indexOf(selectedElection);
+    //
+    setState(() {
+      c.elecId = widget.electionList![index].electionId;
+    });
+//
   }
 }

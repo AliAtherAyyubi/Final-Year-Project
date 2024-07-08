@@ -24,6 +24,7 @@ class OwnerElection extends StatefulWidget {
 class _OwnerElectionState extends State<OwnerElection> {
   final formKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
+  TextEditingController position = TextEditingController();
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
   TextEditingController description = TextEditingController();
@@ -88,6 +89,18 @@ class _OwnerElectionState extends State<OwnerElection> {
                       },
                     ),
                     TextLabel(
+                      field: 'Position',
+                    ),
+                    AuthTextField(
+                      controller: position,
+                      keyboardType: TextInputType.name,
+                      labelText: 'Position of Election',
+                      maxlength: 20,
+                      validator: (value) {
+                        if (value.isEmpty) return 'field can\'t be empty';
+                      },
+                    ),
+                    TextLabel(
                       field: 'Start Date',
                     ),
                     AuthTextField(
@@ -127,7 +140,10 @@ class _OwnerElectionState extends State<OwnerElection> {
                         if (value!.isEmpty) {
                           return 'Please select end date';
                         }
-                        if (TimeService().getDifference(_start, _end) > 5) {
+                        if (TimeService().getDifference(_start, _end) > 3) {
+                          return 'End date must be after the start date';
+                        }
+                        if (_end.isBefore(_start)) {
                           return 'Choose a correct ending date!';
                         }
                         return null;
@@ -158,14 +174,13 @@ class _OwnerElectionState extends State<OwnerElection> {
                           setState(() {
                             loading = true;
                           });
-                          await ElectionController().createElection(
-                              name.text, _start, _end, description.text);
+                          await ElectionController().createElection(name.text,
+                              position.text, _start, _end, description.text);
                           setState(() {
                             loading = false;
                           });
                           clearText();
-                          Get.off(OwnerMainScreen(),
-                              transition: Transition.fade);
+                          Get.back();
                         }
                       },
                       text: 'Create an Election',

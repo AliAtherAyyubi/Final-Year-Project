@@ -32,6 +32,7 @@ class OnGoingElectionPage extends StatefulWidget {
 class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   late final PageController pageController;
   late int activeIndex;
+  late DateTime endDate;
 
   // final candidateData candi_data = Get.put(candidateData());
   final electionData elec_data = Get.put(electionData());
@@ -44,32 +45,32 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
   bool data = false;
 
   Future<void> fetchData() async {
-    // bool isElectionExist = await LocalElectionData().isExist();
-    // if (!isElectionExist) {
-    //   MyAlert.showToast(1, 'election exist');
-
-    // }
-    setState(() {
-      data = false;
-    });
+    // setState(() {
+    //   data = false;
+    // });
     electionList = await ElectionDatabase().fetchAllElections();
     candidatesList = await CandidateDB().fetchAllCandidates();
 
     ///
-    setState(() {
-      data = true;
-    });
+
     setElection(1);
   }
 
   void setElection(int index) async {
     elec_data.setElectionTitle(electionList[index].electionName ?? "");
     elec_data.setElectionId(electionList[index].electionId ?? "");
-    var orgID = electionList[index].orgId ?? "";
-    await UserLocalData().setUserOrgID(orgID);
+    //
+    // var orgID = electionList[index].orgId ?? "";
+    var elecID = electionList[index].electionId ?? "";
+    // await UserLocalData().setUserOrgID(orgID);
+    //
     setState(() {
+      endDate = electionList[index].endDate!.toDate();
       filterCandidatesList =
-          CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
+          CandidateDB().filterCandidates(candidatesList, elecID);
+
+      //
+      data = true;
     });
   }
 
@@ -130,7 +131,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                 margin: EdgeInsets.only(top: Applayout.getheight(10)),
                 width: double.infinity,
                 height: Applayout.getheight(180),
-                child: filterCandidatesList.isEmpty
+                child: candidatesList.isEmpty
                     ? Center(
                         child: Text('No Candidates found'),
                       )
@@ -155,39 +156,16 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                         MyAlert.showToast(0, 'No Election found');
                       }
                     : () {
-                        var title = elec_data.electionTitle;
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return MyAlertDialogWidget(
-                                title:
-                                    'Are you sure you want to vote for following election?',
-                                content: Text(
-                                  '$title',
-                                  style: AppStyle().h3.copyWith(
-                                        color: AppStyle.textClr,
-                                      ),
-                                ),
-                                cancelBtnText: 'No',
-                                confirmBtnText: 'Yes',
-                                onConfirm: () {
-                                  Navigator.pop(context);
-
-                                  Get.to(
-                                      () => VotingPage(
-                                            candidatesList:
-                                                filterCandidatesList,
-                                          ),
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      transition: Transition.fadeIn);
-                                },
-                              );
-                            });
+                        if (DateTime.now().isAfter(endDate)) {
+                          DialogMsg().showMsg(
+                              context, 'Election deadline has passed.');
+                        } else {
+                          VoteNow();
+                        }
                       },
               ),
               SizedBox(
-                height: Applayout.getheight(15),
+                height: Applayout.getheight(20),
               ),
             ],
           )
@@ -207,6 +185,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
         onPageChanged: (index) async {
           setState(() => activeIndex = index);
           setElection(activeIndex);
+          endDate = electionList[index].endDate!.toDate();
         },
         itemBuilder: (context, index) {
           final election = electionList[index];
@@ -217,6 +196,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
             curve: Curves.easeInOut,
             child: VoteCard(
               title: election.electionName ?? "Election Title",
+              position: election.position ?? "",
               time: TimeService().votingTime(
                   election.startDate!.toDate(), election.endDate!.toDate()),
               description: election.description ??
@@ -227,262 +207,33 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
       ),
     );
   }
+
+////
+  void VoteNow() {
+    var title = elec_data.electionTitle;
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return MyAlertDialogWidget(
+            title: 'Are you sure you want to vote for following election?',
+            content: Text(
+              '$title',
+              style:
+                  AppStyle().h3.copyWith(color: AppStyle.textClr, fontSize: 25),
+            ),
+            cancelBtnText: 'No',
+            confirmBtnText: 'Yes',
+            onConfirm: () {
+              Navigator.pop(context);
+
+              Get.to(
+                  () => VotingPage(
+                        candidatesList: filterCandidatesList,
+                      ),
+                  duration: const Duration(milliseconds: 500),
+                  transition: Transition.fadeIn);
+            },
+          );
+        });
+  }
 }
-
-
-
-
-
-
-
-
-// import 'package:card_swiper/card_swiper.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:e_voting/Controllers/candidate_control.dart';
-// import 'package:e_voting/Controllers/election_control.dart';
-// import 'package:e_voting/Providers/candidateData.dart';
-// import 'package:e_voting/Models/user.dart';
-// import 'package:e_voting/Providers/electionData.dart';
-// import 'package:e_voting/Screens/Profile/candi_Profile.dart';
-// import 'package:e_voting/Screens/Voting/vote.dart';
-// import 'package:e_voting/Screens/Widgets/loading.dart';
-// import 'package:e_voting/Screens/Widgets/myButton.dart';
-// import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
-// import 'package:e_voting/Screens/Widgets/Voting/voteCard.dart';
-// import 'package:e_voting/Services/dateTime.dart';
-// import 'package:e_voting/utils/Applayout.dart';
-// import 'package:e_voting/utils/Appstyles.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:page_transition/page_transition.dart';
-// import 'package:responsive_sizer/responsive_sizer.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-// class OnGoingElectionPage extends StatefulWidget {
-//   @override
-//   State<OnGoingElectionPage> createState() => _OnGoingElectionPageState();
-// }
-
-// class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
-//   late final Animation<Offset> slideAnimation;
-//   late final PageController pageController;
-//   late int activeIndex;
-
-//   candidateData candi_data = Get.put(candidateData());
-//   electionData elec_data = Get.put(electionData());
-//   // //
-//   List<Map<String, dynamic>> candidatesList = [];
-//   List<Map<String, dynamic>> electionList = [];
-// //
-//   bool data = false;
-
-//   Future<void> fetchInfo() async {
-//     if (elec_data.electionList.isEmpty) {
-//       await ElectionController().fetchElections();
-//       await CandidateController().fetchCandidates();
-//     }
-
-//     setState(() {
-//       electionList = elec_data.electionList
-//           .map((element) => element as Map<String, dynamic>)
-//           .toList();
-//       candidatesList = candi_data.candidatesList
-//           .map((item) => item as Map<String, dynamic>)
-//           .toList();
-//       data = true;
-//     });
-//     elec_data.setElectionTitle(electionList[0]['name'] ?? "");
-//     elec_data.setElectionId(electionList[0]['elecId'] ?? "");
-//   }
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     fetchInfo();
-//     pageController = PageController(
-//       initialPage: 1,
-//       viewportFraction: 0.85,
-//     );
-//     activeIndex = 1;
-//     slideAnimation = Tween<Offset>(
-//       begin: const Offset(0, 1.5),
-//       end: Offset.zero,
-//     ).animate(
-//       CurvedAnimation(
-//         parent: widget.pageTransitionAnimation,
-//         curve: Curves.easeOut,
-//       ),
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SingleChildScrollView(
-//       child: data
-//           ? Column(
-//               children: [
-//                 SizedBox(
-//                   height: Applayout.getheight(5),
-//                 ),
-
-//                 // Card Section //
-//                 //By najam
-//                 Container(
-//                   padding: const EdgeInsets.only(bottom: 20),
-//                   decoration: const BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(25),
-//                       bottomRight: Radius.circular(25),
-//                     ),
-//                   ),
-//                   clipBehavior: Clip.hardEdge,
-//                   child: Column(
-//                     children: [
-//                       _buildCardsPageView(context),
-//                       SlideTransition(
-//                         position: slideAnimation,
-//                         child: Padding(
-//                             padding: const EdgeInsets.symmetric(horizontal: 30),
-//                             child: AnimatedSmoothIndicator(
-//                               activeIndex: activeIndex,
-//                               count: electionList.length,
-//                               effect: ExpandingDotsEffect(),
-//                             )),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-
-//                 // Card Section //
-//                 //By Ali
-//                 // Container(
-//                 //     color: Colors.transparent,
-//                 //     // width: 400,
-//                 //     height: 30.h,
-//                 //     child: Swiper(
-//                 //         itemCount: electionList.length,
-//                 //         loop: false,
-//                 //         pagination: const SwiperPagination(
-//                 //             alignment: Alignment.bottomCenter,
-//                 //             margin: EdgeInsets.only(top: 20)),
-//                 //         onIndexChanged: (index) {
-//                 //           var elecId = electionList[index]['elecId'] ?? "";
-//                 //           var title = electionList[index]['name'] ?? "";
-//                 //           elec_data.setElectionTitle(title);
-//                 //           elec_data.setElectionId(elecId);
-//                 //         },
-//                 //         itemBuilder: (BuildContext context, int index) {
-//                 //           final election = electionList[index];
-//                 //           var title = electionList[index]['name'] ?? "";
-//                 //           return VoteCard(
-//                 //             title: title,
-//                 //             time: election['date'] ?? "",
-//                 //             description:
-//                 //                 election['description'] ?? "Network error",
-//                 //           );
-//                 //         })),
-
-//                 SizedBox(
-//                   height: Applayout.getheight(10),
-//                 ),
-
-//                 /// Candidates Section //
-
-//                 Text(
-//                   '${candidatesList.length} Candidate',
-//                   style: GoogleFonts.inter(
-//                       fontSize: 16, fontWeight: FontWeight.bold),
-//                 ),
-//                 // Candidates List>>>>>>
-//                 Container(
-//                     margin: EdgeInsets.only(top: Applayout.getheight(25)),
-//                     // padding: EdgeInsets.symmetric(horizontal: 10),
-//                     //color: Colors.amber,
-//                     width: double.infinity,
-//                     height: Applayout.getheight(200),
-//                     child: ListView.builder(
-//                         itemCount: candidatesList.length,
-//                         shrinkWrap: true,
-//                         scrollDirection: Axis.horizontal,
-//                         itemBuilder: (context, index) {
-//                           return GestureDetector(
-//                             onTap: () {
-//                               Get.to(
-//                                   () => CandidateProfile(
-//                                         name: candidatesList[index]['name'],
-//                                         description: candidatesList[index]
-//                                             ['description'],
-//                                       ),
-//                                   transition: Transition.fadeIn);
-//                             },
-//                             child: CandidateAvatar(
-//                               name: candidatesList[index]['name'],
-//                               image: 'assets/images/profile.jpg',
-//                             ),
-//                           );
-//                         })),
-//                 MyButton(
-//                   text: 'VOTE NOW',
-//                   width: 95.w,
-//                   onPress: () {
-//                     Get.to(() => VotingPage(), transition: Transition.fade);
-//                   },
-//                 ),
-//                 SizedBox(
-//                   height: Applayout.getheight(15),
-//                 ),
-//               ],
-//             )
-//           : const Padding(
-//               padding: EdgeInsets.only(top: 50),
-//               child: Center(
-//                   child: CircularProgressIndicator(
-//                 color: AppStyle.textClr,
-//               )),
-//             ),
-//     );
-//   }
-
-//   Widget _buildCardsPageView(BuildContext context) {
-//     final screenSize = MediaQuery.of(context).size;
-//     final cardWidth = screenSize.width - 16 * 2;
-//     return SizedBox(
-//       height: 40.h,
-//       child: PageView.builder(
-//         controller: pageController,
-//         itemCount: electionList.length,
-//         onPageChanged: (index) {
-//           setState(() => activeIndex = index);
-//           var elecId = electionList[index]['elecId'] ?? "";
-//           var title = electionList[index]['name'] ?? "";
-//           elec_data.setElectionTitle(title);
-//           elec_data.setElectionId(elecId);
-//         },
-//         itemBuilder: (context, index) {
-//           final election = electionList[index];
-//           var title = electionList[index]['name'] ?? "";
-
-//           return AnimatedScale(
-//             scale: index == activeIndex ? 1 : 0.85,
-//             duration: const Duration(milliseconds: 300),
-//             curve: Curves.easeInOut,
-//             child: HeroMode(
-//               enabled: index == activeIndex,
-//               child: Hero(
-//                 tag: 'card_${electionList[index]['elecid']}',
-//                 child: VoteCard(
-//                   title: title,
-//                   time: election['date'] ?? "",
-//                   description: election['description'] ?? "Network error",
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

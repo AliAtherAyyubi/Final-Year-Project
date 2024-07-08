@@ -26,6 +26,7 @@ class _EditElectionsState extends State<EditElections> {
 //
   final formKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
+  TextEditingController position = TextEditingController();
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
   TextEditingController description = TextEditingController();
@@ -39,6 +40,7 @@ class _EditElectionsState extends State<EditElections> {
     e = widget.electionModel;
     setState(() {
       name.text = e!.electionName ?? "";
+      position.text = e!.position ?? "";
       startDate.text = TimeService().getOnlyDate(e!.startDate!);
       endDate.text = TimeService().getOnlyDate(e!.endDate!);
       description.text = e!.description ?? "";
@@ -58,15 +60,19 @@ class _EditElectionsState extends State<EditElections> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: ScreenTitle(title: ''),
-        ),
+        // appBar: PreferredSize(
+        //   preferredSize: Size.fromHeight(50),
+        //   child: ScreenTitle(title: ''),
+        // ),
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10),
           children: [
             SizedBox(
               height: 20,
+            ),
+            MyBackButton(),
+            SizedBox(
+              height: 10,
             ),
             Text(
               'Edit Election',
@@ -89,6 +95,18 @@ class _EditElectionsState extends State<EditElections> {
                           keyboardType: TextInputType.name,
                           labelText: 'Election Title',
                           maxlength: 50,
+                          validator: (value) {
+                            if (value.isEmpty) return 'field can\'t be empty';
+                          },
+                        ),
+                        TextLabel(
+                          field: 'Position',
+                        ),
+                        AuthTextField(
+                          controller: position,
+                          keyboardType: TextInputType.name,
+                          labelText: 'Position of Election',
+                          maxlength: 20,
                           validator: (value) {
                             if (value.isEmpty) return 'field can\'t be empty';
                           },
@@ -183,6 +201,9 @@ class _EditElectionsState extends State<EditElections> {
                 : Loading(
                     color: AppStyle.iconClr,
                   ),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

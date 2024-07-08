@@ -28,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
-      MyNavBarItem(iconData: Icons.how_to_vote_sharp, title: 'Dashboard'),
+      MyNavBarItem(iconData: Icons.how_to_vote_sharp, title: 'Vote'),
       MyNavBarItem(iconData: Icons.bar_chart, title: 'Reports'),
       MyNavBarItem(iconData: Icons.person, title: 'Profile'),
     ];

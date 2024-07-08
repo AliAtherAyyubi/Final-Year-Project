@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Controllers/image_control.dart';
 import 'package:e_voting/Controllers/userController.dart';
+import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
@@ -30,42 +31,29 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  UserData data = Get.put(UserData());
+  // UserData data = Get.put(UserData());
   UserModel user = UserModel();
-// to get from gallery and upload //
-  String imageUrl = "";
+//
+  String? imageUrl;
   String name = "";
   bool loading = false;
-  Future<void> getImage() async {
-    try {
-      XFile? pickedFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        final File path = File(pickedFile.path);
-        // final name = pickedFile.name;
-        final id = data.userID;
-        setState(() {
-          imageUrl = "";
-          loading = true;
-        });
-        var res = await ImageController().uploadUserImage(id, path);
-        if (res == null) {
-          await fetchUserInfo();
-          MyAlert.Alert("", 'Uploaded Successfully!');
-        } else
-          MyAlert.Alert("", res.toString());
-      }
-    } catch (e) {
-      MyAlert.Alert("", 'System Error');
 
-      // print('System Error');
-    }
+  ///
+  Future<void> uploadImage() async {
+    XFile? image = await ImageController().pickGalleryImage();
+    setState(() {
+      imageUrl = null;
+      loading = true;
+    });
+    var Url = await ImageController().uploadImage(image!, user.imageUrl);
+    await userDatabase().updateUser('imageUrl', Url!);
+
+    await fetchUserInfo();
   }
 
   Future<void> fetchUserInfo() async {
-    UserModel getuser = await UserLocalData().fetchLocalUser();
+    user = await UserLocalData().fetchLocalUser();
     setState(() {
-      user = getuser;
       imageUrl = user.imageUrl ?? "";
       name = user.userName!.toUpperCase();
       loading = false;
@@ -103,7 +91,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           Stack(
             alignment: Alignment.center,
             children: [
-              imageUrl == ""
+              imageUrl != null
                   ? GFBorder(
                       color: Colors.green,
                       strokeWidth: 3,
@@ -123,7 +111,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   color: AppStyle.primaryColor,
                                 )))
                   : CircularProfileAvatar(
-                      imageUrl,
+                      imageUrl!,
                       radius: 90,
                       elevation: 10,
                     ),
@@ -134,7 +122,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   radius: 20,
                   backgroundColor: AppStyle.primaryColor,
                   child: IconButton(
-                    onPressed: loading ? null : getImage,
+                    onPressed: loading ? null : uploadImage,
                     icon: const Icon(
                       Icons.add,
                     ),

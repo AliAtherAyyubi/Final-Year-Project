@@ -150,6 +150,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   value: 'Voter',
                                 ),
                               ],
+                              labelText: 'Choose your role',
+                              validator: (value) {
+                                if (value == null) return 'choose your role!';
+                                return null;
+                              },
                             ),
 
                             // AuthTextField(

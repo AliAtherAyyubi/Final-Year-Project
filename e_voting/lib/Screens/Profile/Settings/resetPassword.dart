@@ -76,6 +76,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                       icon: Icons.password,
                       obscureText: true,
                       hidebtn: Icons.visibility_off,
+                      suffixicon: Icons.visibility_off,
                       validator: (value) {
                         // if (value.isEmpty) return 'Enter password';
                         return Validation().isValidPassword(value);
@@ -88,6 +89,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                       icon: Icons.rotate_left_sharp,
                       obscureText: true,
                       hidebtn: Icons.visibility_off,
+                      suffixicon: Icons.visibility_off,
                       validator: (value) {
                         if (password.text != confirmPassword.text)
                           return 'Password are not same';

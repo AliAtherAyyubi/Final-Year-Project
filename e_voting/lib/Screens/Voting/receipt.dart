@@ -139,15 +139,15 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                           label: 'Date',
                                           data: Receipt!['votedOn']),
                                       receiptDetails(
-                                          label: 'Student',
+                                          label: 'Voter',
                                           data: Receipt!['userName']),
                                       receiptDetails(label: 'ID', data: ID),
                                       receiptDetails(
                                           label: 'Voted For',
                                           data: Receipt!['votedFor']),
-                                      receiptDetails(
-                                          label: 'Reference Number',
-                                          data: reference),
+                                      // receiptDetails(
+                                      //     label: 'Reference Number',
+                                      //     data: reference),
                                     ],
                                   ),
                                 ),

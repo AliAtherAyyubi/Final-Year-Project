@@ -1,6 +1,8 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:e_voting/Database/candidate_db.dart';
+import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Screens/Owner/Candidates/add.dart';
 import 'package:e_voting/Screens/Owner/Candidates/edit.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
@@ -21,10 +23,18 @@ class CandidateScreen extends StatefulWidget {
 
 class _CandidateScreenState extends State<CandidateScreen> {
   List<CandidateModel> candidateList = [];
+  List<ElectionModel> electionList = [];
+
   bool data = false;
   //
+  Future<void> fetchElections() async {
+    electionList = await ElectionDatabase().fetchElectionByAdmin();
+  }
+
+  //
   Future<void> fetchCandidates() async {
-    candidateList = await CandidateDB().fetchCandidatesByOrg();
+    candidateList = await CandidateDB().fetchCandidatesByAdmin();
+
     //
     setState(() {
       data = true;
@@ -36,6 +46,7 @@ class _CandidateScreenState extends State<CandidateScreen> {
     // TODO: implement initState
     super.initState();
     fetchCandidates();
+    fetchElections();
   }
 
   @override
@@ -49,7 +60,10 @@ class _CandidateScreenState extends State<CandidateScreen> {
       //
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Get.to(() => AddCandidateScreen(),
+          Get.to(
+              () => AddCandidateScreen(
+                    electionList: electionList,
+                  ),
               transition: Transition.rightToLeft);
         },
         child: Icon(Icons.add),

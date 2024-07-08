@@ -12,57 +12,63 @@ class ImageController {
   FirebaseStorage storage = FirebaseStorage.instance;
   UserData user = Get.put(UserData());
   // CRUD //
-  Future<void> updateUserImage(String value) async {
-    await userDatabase().updateUser('imageUrl', value);
-  }
 
-  //    Uploading User/Admin/Candidate image to Firebase Storage>//
-  Future<String?> uploadUserImage(filename, image) async {
+  ////
+  Future<String?> uploadImage(XFile image, String? imageUrl) async {
     try {
-      final ref = storage.ref('profile_images/$filename');
-      await ref.putFile(image);
-      // Get download URL
-      final String downloadURL = await ref.getDownloadURL();
-      // Store download URL in Firestore
-      await updateUserImage(downloadURL);
-      // Show success message or navigate to next screen
-      print('Uploaded Image');
-      return null;
+      final imagePath = File(image.path);
+      String? downloadURL;
+      //
+      if (imageUrl == null) {
+        final ref = storage.ref('profile_images/${image.name}');
+        await ref.putFile(imagePath);
+        // Get download URL
+        downloadURL = await ref.getDownloadURL();
+      } else {
+        downloadURL = await updateImage(image, imageUrl);
+      }
+
+      //
+      MyAlert.showToast(1, 'Uploaded image successfully!');
+      return downloadURL;
     } on FirebaseException catch (error) {
       // Handle error
-      print('Error uploading image: $error');
+      MyAlert.showToast(0, 'System or Network error');
+
       return 'System Error';
     }
   }
 
-//    Uploading User/Admin/Candidate image to Firebase Storage>//
-  Future<String?> uploadCandidateImage(XFile image) async {
+//
+  Future<String?> updateImage(XFile image, imageUrl) async {
     try {
+      // Pick an image
       final imagePath = File(image.path);
-      //
-      final ref = storage.ref('profile_images/${image.name}');
-      await ref.putFile(imagePath);
-      // Get download URL
-      final String downloadURL = await ref.getDownloadURL();
-      // Show success message or navigate to next screen
-      return downloadURL;
-    } on FirebaseException catch (error) {
-      // Handle error
-      MyAlert.showToast(0, 'System error');
-      print('Error uploading image: $error');
-      return null;
+
+      // Get a reference to the existing image
+      Reference storageReference = storage.refFromURL(imageUrl);
+
+      // Upload the new image to the same reference (this will overwrite the existing image)
+      await storageReference.putFile(imagePath);
+
+      // Get the new download URL (optional)
+      String newImageUrl = await storageReference.getDownloadURL();
+
+      return newImageUrl;
     } catch (e) {
-      MyAlert.showToast(0, 'System error');
-      return null;
+      MyAlert.showToast(0, 'System Error');
     }
   }
 
   //    Fetching User/Admin/Candidate image//
-  Future<String> fetchImage() async {
-    String uid = Get.put(UserData()).userID.toString();
-    // Get download URL
-    UserModel user = await userDatabase().getUserById(uid);
-    return user.imageUrl!;
+  Future<void> deleteImageByURL(String imageUrl) async {
+    try {
+      Reference ref = storage.refFromURL(imageUrl);
+
+      await ref.delete();
+    } catch (e) {
+      MyAlert.showToast(0, 'System Error');
+    }
   }
 
   Future<XFile?> pickCameraImage() async {

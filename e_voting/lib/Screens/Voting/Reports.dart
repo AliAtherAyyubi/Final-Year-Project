@@ -1,13 +1,12 @@
 import 'package:e_voting/Database/Reports.dart';
 import 'package:e_voting/Database/candidate_db.dart';
 import 'package:e_voting/Database/election_db.dart';
-import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/candidate.dart';
 import 'package:e_voting/Models/election.dart';
-import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/candidateAvatar.dart';
+import 'package:e_voting/Screens/Widgets/empty.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
-import 'package:e_voting/Screens/Widgets/myAvatar.dart';
+import 'package:e_voting/Services/dateTime.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,11 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
   //
   // int NoOfVote = 0;
   int TotalVote = 1;
+  int winnerIndex = 0;
+  String winnerCandidate = "Not Decided Yet";
+  String elecDuration = "";
+  bool isElecEnd = false;
+
   //
   List<CandidateModel> candidatesList = [];
   List<CandidateModel> filterCandidatesList = [];
@@ -47,34 +51,55 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
   }
 
   Future<void> setElection(String selectedElection) async {
+    setState(() {
+      data = false;
+    });
     //
     var index = electionTitleList.indexOf(selectedElection);
+    DateTime start = electionList[index].startDate!.toDate();
+    DateTime end = electionList[index].endDate!.toDate();
+
+    // to filter candidates
     if (index != -1) {
-      var orgID = electionList[index].orgId ?? "";
+      var elecID = electionList[index].electionId ?? "";
       setState(() {
         filterCandidatesList =
-            CandidateDB().filterCandidatesByOrg(candidatesList, orgID);
+            CandidateDB().filterCandidates(candidatesList, elecID);
         NoOfVoteList.clear();
       });
     }
     await getNoOfVotes(index);
+    setState(() {
+      elecDuration = TimeService().votingTime(start, end);
+
+      isElecEnd = DateTime.now().isAfter(end);
+      data = true;
+    });
   }
 
   Future<void> getNoOfVotes(int index) async {
-    setState(() {
-      data = false;
-    });
-    var id = electionList[index].electionId!;
-    TotalVote = await ReportsDatabase().getElectionTotalVotes(id);
+    // var id = electionList[index].electionId!;
+    // TotalVote = await ReportsDatabase().getElectionTotalVotes(id);
+    //
+    int TotalCount = 0;
     for (var candidate in filterCandidatesList) {
-      int vote = await ReportsDatabase()
+      int voteCount = await ReportsDatabase()
           .getCandidateVotes(candidate.candidateId ?? "");
       // MyAlert.showToast(1, 'Candidate Count: ${vote}');
 
-      NoOfVoteList.add(vote);
+      NoOfVoteList.add(voteCount);
+      TotalCount += voteCount;
+    }
+
+    if (NoOfVoteList.isNotEmpty) {
+      winnerIndex = ReportsDatabase().getWinner(NoOfVoteList);
+      winnerCandidate = TotalCount < 10
+          ? 'Deciding...'
+          : filterCandidatesList[winnerIndex].name ?? "Deciding...";
     }
     setState(() {
-      data = true;
+      TotalVote = TotalCount;
+      // NoOfVoteList = voteList;
     });
   }
 
@@ -136,37 +161,163 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
           SizedBox(
             height: 20,
           ),
+
           //
+
           data
               ? Container(
-                  margin: EdgeInsets.only(top: Applayout.getheight(10)),
-                  width: 90.w,
-                  child: filterCandidatesList.isEmpty
-                      ? const Center(
-                          child: Text('No Result Found'),
-                        )
-                      : ListView.builder(
-                          itemCount: filterCandidatesList.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            final candidate = filterCandidatesList[index];
-                            return VoteData(
-                              name: candidate.name,
-                              imageUrl: candidate.imageUrl,
-                              NoOfVote: NoOfVoteList[index],
-                              TotalVotes: TotalVote,
-                            );
-                          },
-                        ),
+                  margin: EdgeInsets.only(top: Applayout.getheight(5)),
+                  // width: 90.w,
+                  child: Column(
+                    children: [
+                      Text(
+                        '$elecDuration',
+                        style: AppStyle().txt1,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      filterCandidatesList.isNotEmpty
+                          ? Center(
+                              child: Text(
+                                'Total Votes Cast: $TotalVote',
+                                style:
+                                    AppStyle().h3.copyWith(color: Colors.black),
+                              ),
+                            )
+                          : Container(),
+                      isElecEnd
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Winner: ',
+                                  style: AppStyle()
+                                      .h2
+                                      .copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  winnerCandidate,
+                                  style: AppStyle().h2,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      filterCandidatesList.isEmpty
+                          ? EmptyImage()
+                          : ListView.builder(
+                              itemCount: filterCandidatesList.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                final candidate = filterCandidatesList[index];
+                                bool isBorder =
+                                    winnerIndex == index ? true : false;
+                                return VoteDataCard(
+                                  name: candidate.name,
+                                  imageUrl: candidate.imageUrl,
+                                  NoOfVote: NoOfVoteList[index],
+                                  TotalVotes: TotalVote,
+                                  border: isBorder,
+                                );
+                              },
+                            ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 )
               : Loading(),
+          SizedBox(
+            height: 100,
+          )
+          //
         ],
       ),
     );
   }
 }
 
+//
+class VoteDataCard extends StatelessWidget {
+  //
+  String? name;
+  String? imageUrl;
+  int NoOfVote;
+  int TotalVotes;
+  bool border;
+  // String? Votekey;
+  VoteDataCard(
+      {this.name,
+      this.imageUrl,
+      this.border = false,
+      required this.NoOfVote,
+      required this.TotalVotes});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 5,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      height: 150,
+      width: 100.w,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: border ? Border.all(color: Colors.green, width: 3) : null),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CandidateAvatar(
+                imageUrl: imageUrl,
+                radius: 40,
+                name: name,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 60.w,
+                    child: LinearProgressIndicator(
+                      // key: Key(Votekey!),
+                      value: NoOfVote / (TotalVotes == 0 ? 1 : TotalVotes),
+                      color: AppStyle.primaryColor,
+                      borderRadius: BorderRadius.circular(50),
+                      backgroundColor: Colors.grey[300],
+                      minHeight: 15,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Vote: $NoOfVote ${border ? '(Leading)' : ""}',
+                    style: AppStyle.textStyle1.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///
+///
+///
 class ElectionDropdown extends StatefulWidget {
   final List<String> electionList;
   final ValueChanged<String> onElectionSelected;
@@ -210,67 +361,6 @@ class _ElectionDropdownState extends State<ElectionDropdown> {
               child: Text(election),
             );
           }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
-//
-class VoteData extends StatelessWidget {
-  //
-  String? name;
-  String? imageUrl;
-  int NoOfVote;
-  int TotalVotes;
-  // String? Votekey;
-  VoteData(
-      {this.name,
-      this.imageUrl,
-      required this.NoOfVote,
-      required this.TotalVotes});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        margin: EdgeInsets.only(left: 10),
-        height: 150,
-        width: 100.w,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CandidateAvatar(
-              imageUrl: imageUrl,
-              radius: 40,
-              name: name,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 60.w,
-                  child: LinearProgressIndicator(
-                    // key: Key(Votekey!),
-                    value: NoOfVote / TotalVotes,
-                    color: AppStyle.primaryColor,
-                    borderRadius: BorderRadius.circular(50),
-                    backgroundColor: Colors.grey[300],
-                    minHeight: 20,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Vote: $NoOfVote',
-                  style: AppStyle.textStyle1.copyWith(color: Colors.black),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

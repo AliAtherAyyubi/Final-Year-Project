@@ -14,12 +14,12 @@ class VoteController {
   //
   Future<void> createVote(uid, elecId, cand_id, votedfor) async {
     bool isVoteExist = await VoteDatabase().isVoteExist(uid);
-    electionModel = await ElectionDatabase().fetchElectionById(elecId);
+    // electionModel = await ElectionDatabase().fetchElectionById(elecId);
     if (isVoteExist) {
       vote.userId = uid;
       vote.electionId = elecId;
       vote.candidateId = cand_id;
-      vote.orgId = electionModel!.orgId;
+      // vote.orgId = electionModel!.orgId;
       vote.votedFor = votedfor;
       vote.time = Timestamp.now();
       //

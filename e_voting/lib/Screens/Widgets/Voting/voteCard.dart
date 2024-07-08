@@ -1,16 +1,21 @@
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VoteCard extends StatelessWidget {
   final String title;
+  final String position;
   final String time;
   final String description;
 
   VoteCard(
-      {required this.title, required this.time, required this.description});
+      {required this.title,
+      required this.time,
+      required this.description,
+      required this.position});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +32,9 @@ class VoteCard extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                  blurRadius: 8,
+                  blurRadius: 7,
                   color: Colors.grey.shade400,
-                  offset: Offset(1, 8))
+                  offset: Offset(1, 7))
             ],
             // gradient: AppStyle.Gradientcolor,
             gradient: const LinearGradient(
@@ -42,13 +47,21 @@ class VoteCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Vote for \n $title',
+              '$title',
               style: GoogleFonts.inter(
-                  fontSize: 17.sp,
+                  fontSize: 18.sp,
                   height: 1.4,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Text(
+              'Position: ${position.capitalize}',
+              style:
+                  AppStyle().h3.copyWith(color: Colors.black, fontSize: 17.sp),
             ),
             const SizedBox(
               height: 5,

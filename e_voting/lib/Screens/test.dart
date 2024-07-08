@@ -53,12 +53,12 @@ class _SampleState extends State<Sample> {
   }
 
   String? imageUrl;
-  Future<void> fetchImage() async {
-    String url = await ImageController().fetchImage();
-    setState(() {
-      imageUrl = url;
-    });
-  }
+  // Future<void> fetchImage() async {
+  //   String url = await ImageController().fetchImage();
+  //   setState(() {
+  //     imageUrl = url;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class _SampleState extends State<Sample> {
               width: 90.w,
               onPress: () async {
                 await UserController().Signin('mayoayyubi@gmail.com', '123456');
-                fetchImage();
+                // fetchImage();
               }),
           // MyButton(text: 'Upload Image', width: 90.w, onPress: getImage),
           MyButton(
@@ -128,7 +128,7 @@ class _SampleState extends State<Sample> {
               onPress: () async {
                 CandidateModel c5 = CandidateModel();
                 c5.name = 'Mushtaq Ahmed';
-                c5.orgId = 'ZzYyXx789';
+                // c5.orgId = 'ZzYyXx789';
                 c5.publicDescription =
                     'I\'m a part of Islamic party and will help you to grow economics challenges to be solved.';
 

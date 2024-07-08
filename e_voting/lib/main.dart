@@ -57,9 +57,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.white, // Set a fixed color
           ),
         ),
-        home: WelcomePage(
-          userName: 'Najam-ul-Din',
-        ),
+        home: SplashScreen(),
       );
     });
   }

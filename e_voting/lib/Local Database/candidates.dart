@@ -13,24 +13,24 @@ class LocalCandidate {
   Future<void> setCandidates(List<CandidateModel> candList) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
 
-    List<String> candidateDataList =
-        candList.map((candidate) => jsonEncode(candidate.toJson())).toList();
+    // // List<String> candidateDataList =
+    // //     candList.map((candidate) => jsonEncode(candidate.toJson())).toList();
 
-    await sp.setStringList('CandidateDataList', candidateDataList);
+    // await sp.setStringList('CandidateDataList', candidateDataList);
   }
 
 //
-  Future<List<CandidateModel>> fetchAllCandidates() async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
+  // Future<List<CandidateModel>> fetchAllCandidates() async {
+  //   SharedPreferences sp = await SharedPreferences.getInstance();
 
-    List<String> candidateDataList =
-        sp.getStringList('CandidateDataList') ?? [];
+  //   List<String> candidateDataList =
+  //       sp.getStringList('CandidateDataList') ?? [];
 
-    return candidateDataList.map((candidate) {
-      Map<String, dynamic> json = jsonDecode(candidate);
-      return CandidateModel.fromJson(json);
-    }).toList();
-  }
+  //   return candidateDataList.map((candidate) {
+  //     Map<String, dynamic> json = jsonDecode(candidate);
+  //     return CandidateModel.fromJson(json);
+  //   }).toList();
+  // }
   //
 
   Future<void> RemoveAllElections() async {
