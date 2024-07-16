@@ -32,7 +32,7 @@ class VoteLabel extends StatelessWidget {
               Get.back();
             },
             child: const Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               size: 25,
               color: AppStyle.iconClr,
             ),

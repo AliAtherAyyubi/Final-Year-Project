@@ -78,8 +78,6 @@ class _ElectionResultPageState extends State<ElectionResultPage> {
   }
 
   Future<void> getNoOfVotes(int index) async {
-    // var id = electionList[index].electionId!;
-    // TotalVote = await ReportsDatabase().getElectionTotalVotes(id);
     //
     int TotalCount = 0;
     for (var candidate in filterCandidatesList) {
