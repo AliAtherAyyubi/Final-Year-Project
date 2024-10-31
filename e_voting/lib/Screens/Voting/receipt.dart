@@ -6,7 +6,7 @@ import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Models/vote.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
-import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Admin/AdminNavbar.dart';
 import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';

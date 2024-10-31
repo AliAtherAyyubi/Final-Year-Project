@@ -59,12 +59,11 @@ class Validation {
   String? isValidPassword(String? value) {
     if (value!.isEmpty) {
       return 'Can\'t be empty';
-    } else if (value.length < 6) {
-      return 'Password should be at least of 6 characters';
+    } else if (value.length < 8) {
+      return 'Password should be at least of 8 characters';
+    } else if (!extString(value).isValidPassword) {
+      return 'Must contains special character,alphabets and numbers!';
     }
-    // else if (!extString(value).isValidEmail) {
-    //   return 'Enter a valid password!';
-    // }
     return null;
   }
 

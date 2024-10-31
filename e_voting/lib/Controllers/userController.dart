@@ -8,11 +8,12 @@ import 'package:e_voting/Models/owner.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Database/user_db.dart';
+import 'package:e_voting/Screens/Auth/email_auth.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
-import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Admin/AdminNavbar.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -43,25 +44,23 @@ class UserController {
       user.role = role;
       //
 
-      bool isEmailSent = await sendVerificationEmail(_auth);
-      if (isEmailSent) {
-        //
-        await userDatabase().createUserById(user);
+      await sendVerificationEmail(_auth);
 
-        // creating Owner if user is Owner///
-        if (role.toLowerCase() == 'owner') {
-          OwnerModel ownerModel = OwnerModel();
-          ownerModel.userID = user.userId;
-          await OwnerDatabase().createOwner(ownerModel);
-        }
-        //
+      await UserDatabase().createUserById(user);
 
-        Get.to(
-            () => WelcomePage(
-                  userName: name,
-                ),
-            transition: Transition.rightToLeft);
+      // creating Owner if user is Owner///
+      if (role.toLowerCase() == 'owner') {
+        OwnerModel ownerModel = OwnerModel();
+        ownerModel.userID = user.userId;
+        await OwnerDatabase().createOwner(ownerModel);
       }
+
+      Get.to(
+          () => EmailVerificationScreen(
+                username: name,
+                auth: _auth,
+              ),
+          transition: Transition.rightToLeft);
 
       /////
     } on FirebaseAuthException catch (e) {
@@ -79,8 +78,7 @@ class UserController {
       await auth.currentUser!.sendEmailVerification();
       return true;
     } on FirebaseAuthException catch (e) {
-      MyAlert.showToast(
-          0, 'There might be a system error. Try again to signUp!');
+      MyAlert.showToast(0, 'Network error');
     }
     return false;
   }
@@ -94,7 +92,7 @@ class UserController {
           email: email, password: password);
       // Checking Crdentials //
       if (credential.user != null && credential.user!.emailVerified) {
-        user = await userDatabase().getUserById(credential.user!.uid);
+        user = await UserDatabase().getUserById(credential.user!.uid);
 
         await UserLocalData().setLocalUser(user);
         // // Set User ID //
@@ -119,6 +117,7 @@ class UserController {
     } on FirebaseAuthException catch (e) {
       MyAlert.showToast(0, 'Invalid Username and Password!');
     } catch (e) {
+      print('Error while Login: $e');
       MyAlert.showToast(0, 'System Error');
     }
   }
@@ -156,7 +155,7 @@ class UserController {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       // Check if the email address is associated with an existing account
-      final isUserExist = await userDatabase().checkUserbyEmail(email);
+      final isUserExist = await UserDatabase().checkUserbyEmail(email);
 
       if (isUserExist) {
         // Send the password reset email

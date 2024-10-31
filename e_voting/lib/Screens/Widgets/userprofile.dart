@@ -39,32 +39,40 @@ class SettingLabel extends StatelessWidget {
   SettingLabel({required this.label});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Text(
-        //   label,
-        //   style: AppStyle.textStyle4
-        //       .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
-        // ),
-        // const gap(
-        //   Height: 10,
-        // ),
-        Container(
-          height: 40,
-          child: Center(
-            child: ListTile(
-              // leading: Icon(Icons.person),
-              title: Text(
-                '$label',
-                style: AppStyle.textStyle4
-                    .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
+    return Container(
+      height: 40,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      margin: EdgeInsets.symmetric(vertical: 5),
+      // decoration: BoxDecoration(
+      //     color: Colors.white,
+      //     borderRadius: BorderRadius.circular(10),
+      //     boxShadow: [
+      //       BoxShadow(
+      //         blurRadius: 5,
+      //         color: Colors.grey.shade300,
+      //       )
+      //     ]),
+      child: Row(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Text(
+          //   label,
+          //   style: AppStyle.textStyle4
+          //       .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
+          // ),
+          // const gap(
+          //   Height: 10,
+          // ),
+          Expanded(
+            child: Text(
+              '$label',
+              style: AppStyle.textStyle4
+                  .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w100),
             ),
           ),
-        ),
-      ],
+          Icon(Icons.arrow_forward_ios)
+        ],
+      ),
     );
   }
 }

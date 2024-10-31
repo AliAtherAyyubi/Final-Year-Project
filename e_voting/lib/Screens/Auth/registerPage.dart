@@ -124,17 +124,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             AuthTextField(
                               controller: password,
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.visiblePassword,
                               obscureText: true,
                               labelText: 'Password',
                               hintText: 'Password',
                               icon: Icons.password,
-                              hidebtn: Icons.visibility_off,
+                              // hidebtn: Icons.visibility_off,
+                              suffixicon: Icons.visibility_off,
                               validator: (value) =>
                                   validate.isValidPassword(value),
                             ),
                             DropDown(
-                              prefixIcon: Icons.person_2_rounded,
+                              prefixIcon: Icons.person,
                               onRoleChanged: (value) {
                                 setState(() {
                                   role = value.toString();

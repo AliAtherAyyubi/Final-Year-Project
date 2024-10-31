@@ -8,7 +8,6 @@ import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class OrgDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -109,9 +108,8 @@ class OrgDatabase {
       MyAlert.showToast(1, 'Updated Successfully');
     } on FirebaseException catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
-    }catch(e){
+    } catch (e) {
       MyAlert.showToast(0, 'Something went wrong!');
-
     }
   }
 

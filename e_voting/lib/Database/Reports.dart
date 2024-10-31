@@ -29,16 +29,16 @@ class ReportsDatabase {
   ////////
   Future<int> getCandidateVotes(String candID) async {
     try {
-      // AggregateQuery TotalVotes = firestore
-      //     .collection('vote')
-      //     .where('candidateId', isEqualTo: candID)
-      //     .count();
+      AggregateQuery TotalVotes = firestore
+          .collection('vote')
+          .where('candidateId', isEqualTo: candID)
+          .count();
 
-      // AggregateQuerySnapshot snapshot = await TotalVotes.get();
-      // int? count = snapshot.count ?? 0;
+      AggregateQuerySnapshot snapshot = await TotalVotes.get();
+      int? count = snapshot.count ?? 0;
 
-      int random = 10 + Random().nextInt(100);
-      return random;
+      // int random = 10 + Random().nextInt(100);
+      return count;
       //
     } catch (e) {
       MyAlert.showToast(0, 'System Error');

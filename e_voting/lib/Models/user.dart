@@ -7,6 +7,7 @@ class UserModel {
   String? phone;
   String? imageUrl;
   String? role;
+  bool? isVerified;
 
   // Constructor //
 
@@ -17,6 +18,7 @@ class UserModel {
       this.email,
       this.password,
       this.phone,
+      this.isVerified = false,
       this.imageUrl,
       this.role});
 }

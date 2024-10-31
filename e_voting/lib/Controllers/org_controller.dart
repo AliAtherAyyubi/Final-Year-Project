@@ -3,7 +3,6 @@ import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Models/organization.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class OrgController {
   OrgModel org = OrgModel();

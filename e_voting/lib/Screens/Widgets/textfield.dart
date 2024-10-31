@@ -2,6 +2,7 @@ import 'package:e_voting/utils/Appstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_custom.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -125,16 +126,16 @@ class _AuthTextFieldState extends State<AuthTextField> {
                     highlightColor: Colors.transparent,
                     onPressed: () {
                       setState(() {
-                        if (widget.hidebtn == Icons.visibility_off) {
-                          widget.hidebtn = Icons.visibility;
+                        if (widget.suffixicon == Icons.visibility_off) {
+                          widget.suffixicon = Icons.visibility;
                           widget.obscureText = false;
                         } else {
-                          widget.hidebtn = Icons.visibility_off;
+                          widget.suffixicon = Icons.visibility_off;
                           widget.obscureText = true;
                         }
                       });
                     },
-                    icon: Icon(widget.hidebtn),
+                    icon: Icon(widget.suffixicon),
                     iconSize: 20,
                     splashRadius: 20,
                     padding: EdgeInsets.only(right: 10),
@@ -173,6 +174,9 @@ class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+        isExpanded: true,
+        iconSize: 24,
+        alignment: Alignment.topCenter,
         style: AppStyle.textStyle4,
         borderRadius: BorderRadius.circular(10),
         decoration: InputDecoration(

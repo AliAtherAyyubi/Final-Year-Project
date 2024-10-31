@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:image/image.dart' as img;
 import 'package:e_voting/Database/user_db.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
@@ -19,14 +21,15 @@ class ImageController {
       final imagePath = File(image.path);
       String? downloadURL;
       //
-      if (imageUrl == null) {
-        final ref = storage.ref('profile_images/${image.name}');
-        await ref.putFile(imagePath);
-        // Get download URL
-        downloadURL = await ref.getDownloadURL();
-      } else {
-        downloadURL = await updateImage(image, imageUrl);
-      }
+      final ref = storage.ref('profile_images/${image.name}');
+      await ref.putFile(imagePath);
+      // Get download URL
+      downloadURL = await ref.getDownloadURL();
+      // if (imageUrl == null) {
+
+      // } else {
+      //   downloadURL = await updateImage(image, imageUrl);
+      // }
 
       //
       MyAlert.showToast(1, 'Uploaded image successfully!');
@@ -74,8 +77,10 @@ class ImageController {
   Future<XFile?> pickCameraImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
+    final file = File(image!.path);
     if (image != null) {
-      return image;
+      File? compressedImage = await compressImage(file);
+      return XFile(compressedImage!.path);
     }
     MyAlert.showToast(0, 'No Image selected');
     return null;
@@ -84,28 +89,51 @@ class ImageController {
   Future<XFile?> pickGalleryImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
+    final file = File(image!.path);
     if (image != null) {
-      return image;
+      File? compressedImage = await compressImage(file);
+      return XFile(compressedImage!.path);
     }
     MyAlert.showToast(0, 'No Image selected');
 
     return null;
   }
-  // // Storing Image Locally //
-  // Future<void> downloadAndSaveImage(String imageUrl) async {
-  //   // final response = await storage.refFromURL(imageUrl).getDownloadURL();
-  //   final imageResponse = await HttpClient().getUrl(Uri.parse(imageUrl));
-  //   final imageFile = File(
-  //       '${(await getTemporaryDirectory()).path}/${path.basename(imageUrl)}');
-  //   final downloadedImage = await imageResponse.close();
-  //   await imageFile.writeAsBytes(downloadedImage as List<int>);
-  // }
 
-  // Future<File> getLocalImageFile(String imageUrl) async {
-  //   final imageName = path.basename(imageUrl);
-  //   final localImagePath = '${(await getTemporaryDirectory()).path}/$imageName';
-  //   final localImageFile = File(localImagePath);
-  //   print(localImageFile.path);
-  //   return localImageFile;
-  // }
+  ///
+  Future<File?> compressImage(File imageFile,
+      {int quality = 80, int maxWidth = 600}) async {
+    try {
+      // Read the image as bytes
+      Uint8List imageBytes = await imageFile.readAsBytes();
+
+      // Decode the image
+      img.Image? image = img.decodeImage(imageBytes);
+
+      if (image == null) return null;
+
+      // Resize the image to the maxWidth while maintaining the aspect ratio
+      img.Image resizedImage = img.copyResize(image, width: maxWidth);
+
+      // Compress the image to the given quality
+      List<int> compressedImageBytes =
+          img.encodeJpg(resizedImage, quality: quality);
+
+      // Save the compressed image as a new file
+      File compressedFile =
+          await File(imageFile.path).writeAsBytes(compressedImageBytes);
+
+      return compressedFile;
+    } catch (e) {
+      print("Error compressing image: $e");
+      return null;
+    }
+  }
+
+  ///
+  String convertToBase64(File imageFile) {
+    List<int> imageBytes = imageFile.readAsBytesSync();
+    String base64Image = base64Encode(imageBytes);
+
+    return base64Image;
+  }
 }

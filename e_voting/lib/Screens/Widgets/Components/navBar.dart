@@ -35,7 +35,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
       screens: widget.screens,
       items: widget.items,
       confineInSafeArea: true,
-      navBarHeight: 70,
+      navBarHeight: 60,
       backgroundColor: Colors.black,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true,
@@ -75,9 +75,9 @@ PersistentBottomNavBarItem MyNavBarItem({
     icon: Icon(
       iconData,
     ),
-    iconSize: 35,
+    iconSize: 30,
     title: title,
-    textStyle: GoogleFonts.inter(fontSize: 13),
+    textStyle: GoogleFonts.inter(fontSize: 10),
     activeColorPrimary: Colors.white,
     inactiveColorPrimary: Colors.grey,
   );

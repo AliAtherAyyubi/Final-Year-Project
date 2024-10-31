@@ -1,6 +1,6 @@
 import 'package:e_voting/Database/owner_db.dart';
 import 'package:e_voting/Providers/userData.dart';
-import 'package:e_voting/Screens/Voting/Facerecognition1.dart';
+import 'package:e_voting/Screens/Voting/Face%20Recognition/Verification.dart';
 import 'package:e_voting/Screens/Widgets/Voting/Stepper.dart';
 import 'package:e_voting/Screens/Widgets/alertDialog.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';

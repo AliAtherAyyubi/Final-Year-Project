@@ -1,7 +1,7 @@
 import 'package:e_voting/Local%20Database/userLocalData.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
 import 'package:e_voting/Screens/Homepage/mainDasboard.dart';
-import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Admin/AdminNavbar.dart';
 import 'package:e_voting/Screens/Voting/receipt.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';

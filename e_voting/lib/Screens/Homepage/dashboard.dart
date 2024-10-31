@@ -1,9 +1,14 @@
+import 'package:e_voting/Database/candidate_db.dart';
+import 'package:e_voting/Database/election_db.dart';
 import 'package:e_voting/Local%20Database/userLocalData.dart';
+import 'package:e_voting/Models/candidate.dart';
+import 'package:e_voting/Models/election.dart';
 import 'package:e_voting/Models/user.dart';
 import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Profile/userProfile.dart';
 import 'package:e_voting/Screens/Homepage/onGoing.dart';
 import 'package:e_voting/Screens/Homepage/upcoming.dart';
+import 'package:e_voting/Screens/Widgets/loading.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/Screens/Widgets/tabBar.dart';
 import 'package:e_voting/utils/Applayout.dart';
@@ -24,17 +29,36 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   UserData data = Get.put(UserData());
-
-  // Completion screen//
+//
+  List<CandidateModel> candidatesList = [];
+  List<ElectionModel> electionList = [];
+  //
+  bool loading = false;
   // late TabController? tabController;
   Future<void> setUserId() async {
-    UserModel user = await UserLocalData().fetchLocalUser();
-    data.setUserId(user.userId);
+    String uid = await UserLocalData().getUserId();
+    data.setUserId(uid);
+  }
+
+//
+  Future<void> fetchData() async {
+    setState(() {
+      loading = true;
+    });
+    electionList = await ElectionDatabase().fetchAllElections();
+    candidatesList = await CandidateDB().fetchAllCandidates();
+
+    ///
+    setState(() {
+      loading = false;
+    });
+    await setUserId();
   }
 
   @override
   void initState() {
     super.initState();
+    fetchData();
     // tabController = TabController(vsync: this, length: 2);
     // setUserId();
   }
@@ -63,29 +87,38 @@ class _DashboardState extends State<Dashboard> {
 
           ///////////////////////
           body: RefreshIndicator(
-            onRefresh: setUserId,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 1.h,
+            onRefresh: () async {
+              await fetchData();
+            },
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 1.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Elections',
+                    style: AppStyle()
+                        .h2
+                        .copyWith(color: Colors.black, fontSize: 28),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Elections',
-                      style: AppStyle()
-                          .h2
-                          .copyWith(color: Colors.black, fontSize: 28),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  OnGoingElectionPage()
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                loading
+                    ? Loading()
+                    : OnGoingElectionPage(
+                        electionList: electionList,
+                        candidatesList: candidatesList,
+                      ),
+                SizedBox(
+                  height: 50,
+                )
+              ],
             ),
           )),
     );

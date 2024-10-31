@@ -21,7 +21,8 @@ class UserLocalData {
       'email': user.email,
       'imageUrl': user.imageUrl,
       'phone': user.phone,
-      'role': user.role
+      'role': user.role,
+      'isVerified': user.isVerified
     };
 
     //
@@ -47,7 +48,8 @@ class UserLocalData {
         userName: doc['username'],
         imageUrl: doc['imageUrl'],
         phone: doc['phone'],
-        role: doc['role']
+        role: doc['role'],
+        isVerified: doc['isVerified']
         // accountCreated: doc['accountCreated'],
         );
   }
@@ -56,7 +58,7 @@ class UserLocalData {
     SharedPreferences prefs = await helper.initializer();
     // Check if user data exists in SharedPreferences
     await prefs.remove('userData');
-    print('User Removed from local  DB');
+    // print('User Removed from local  DB');
   }
 
   Future<bool> checkUserLoggedIn() async {
@@ -74,8 +76,7 @@ class UserLocalData {
   }
 
   Future<void> setUserId() async {
-    UserModel user = await fetchLocalUser();
-    String id = user.userId.toString();
+    String id = await getUserId();
     //
     Get.put(UserData()).setUserId(id);
   }

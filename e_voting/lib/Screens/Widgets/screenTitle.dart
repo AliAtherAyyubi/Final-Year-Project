@@ -43,17 +43,18 @@ class VoteLabel extends StatelessWidget {
           // gap(
           //   Width: Applayout.getWidth(3),
           // ),
-          Expanded(
-            child: Obx(
-              () => Text(
-                elec_data.electionTitle.toString(),
-                style: GoogleFonts.inter(
-                    color: AppStyle.textClr,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-              ),
+          SizedBox(
+            width: 10,
+          ),
+          Obx(
+            () => Text(
+              elec_data.electionTitle.toString(),
+              style: GoogleFonts.inter(
+                  color: AppStyle.textClr,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
             ),
           )
         ],
@@ -64,23 +65,26 @@ class VoteLabel extends StatelessWidget {
 
 class ScreenTitle extends StatelessWidget {
   String? title;
+  bool? isback;
   Widget? widget;
-  ScreenTitle({super.key, this.title, this.widget});
+  ScreenTitle({super.key, this.title, this.widget, this.isback = true});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: GestureDetector(
-        onTap: () {
-          Get.back();
-        },
-        child: Icon(
-          Icons.arrow_back_ios,
-          // color: AppStyle.textClr,
-          color: AppStyle.iconClr,
-          size: 3.h,
-        ),
-      ),
+      leading: isback ?? true
+          ? GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.arrow_back,
+                // color: AppStyle.textClr,
+                color: AppStyle.iconClr,
+                size: 3.h,
+              ),
+            )
+          : Container(),
       title: Text(
         title!,
         style: GoogleFonts.inter(

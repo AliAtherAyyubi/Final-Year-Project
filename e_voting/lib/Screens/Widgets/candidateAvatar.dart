@@ -23,7 +23,7 @@ class CandidateAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 15),
+      margin: EdgeInsets.only(right: 7),
       padding: EdgeInsets.all(10),
       // color: Colors.amber,
       child: Column(

@@ -116,6 +116,7 @@ class OwnerDatabase {
       ///////////
       if (ownerDoc.docs.isNotEmpty) {
         List<dynamic> voters = ownerDoc.docs.first.get('voters');
+        // print(voters);
         bool found = voters.contains(voterID);
         return found;
       }

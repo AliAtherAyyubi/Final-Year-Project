@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
-class userDatabase {
+class UserDatabase {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   UserData data = Get.put(UserData());
   UserModel user = UserModel();
@@ -22,7 +22,8 @@ class userDatabase {
       // 'password': user.password,
       'imageUrl': user.imageUrl,
       'phone': user.phone,
-      'role': user.role!.toLowerCase()
+      'role': user.role!.toLowerCase(),
+      'isVerified': user.isVerified,
       // 'accountCreated': user.accountCreated,
     });
   }
@@ -30,17 +31,46 @@ class userDatabase {
   // To update user info //
 
   Future<void> updateUser(String field, String value) async {
-    String uid = data.userID.toString();
-    DocumentReference docRef = firestore.collection('users').doc(uid);
-    await docRef.update({field: value}).then(
-      (_) {
-        print('Updated Successfully');
-      },
-    ).catchError((_) {
-      print('Cannot updated');
-    });
-    user = await getUserById(uid);
-    await UserLocalData().setLocalUser(user);
+    try {
+      String uid = await UserLocalData().getUserId();
+      //
+      DocumentReference docRef = firestore.collection('users').doc(uid);
+      //
+      await docRef.update({field: value}).then(
+        (_) {
+          print('Updated Successfully');
+        },
+      ).catchError((_) {
+        print('Cannot updated');
+      });
+      user = await getUserById(uid);
+      await UserLocalData().setLocalUser(user);
+    } catch (e) {
+      print("Error while updating user: $e");
+    }
+  }
+
+  Future<void> updateUserVerification(String field, bool value) async {
+    try {
+      String uid = await UserLocalData().getUserId();
+      //
+      DocumentReference docRef = firestore.collection('users').doc(uid);
+      //
+      await docRef.update({'isVerified': value}).then(
+        (_) {
+          print('Updated Successfully');
+        },
+      ).catchError((_) {
+        print('Cannot updated');
+      });
+      //
+      user = await UserLocalData().fetchLocalUser();
+      user.isVerified = value;
+      await UserLocalData().setLocalUser(user);
+    } catch (e) {
+      print("Error while updating user: $e");
+      MyAlert.showToast(0, 'System error while updating user');
+    }
   }
 
   Future<UserModel> getUserById(String uid) async {
@@ -53,7 +83,8 @@ class userDatabase {
         userName: doc['username'],
         imageUrl: doc['imageUrl'],
         phone: doc['phone'],
-        role: doc['role']
+        role: doc['role'],
+        isVerified: doc['isVerified']
         // accountCreated: doc['accountCreated'],
         );
   }

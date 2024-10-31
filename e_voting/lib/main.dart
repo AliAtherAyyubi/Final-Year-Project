@@ -1,11 +1,4 @@
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
-import 'package:e_voting/Screens/Auth/welcome.dart';
-import 'package:e_voting/Screens/Homepage/dashboard.dart';
-import 'package:e_voting/Screens/Owner/Voters/voterMain.dart';
-import 'package:e_voting/Screens/Owner/ownerPage.dart';
-import 'package:e_voting/Screens/Voting/Reports.dart';
-import 'package:e_voting/Screens/test.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,7 +6,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

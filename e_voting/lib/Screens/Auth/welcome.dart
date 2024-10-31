@@ -5,7 +5,7 @@ import 'package:e_voting/Providers/userData.dart';
 import 'package:e_voting/Screens/Auth/authScreen.dart';
 import 'package:e_voting/Screens/Auth/login.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
-import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Admin/AdminNavbar.dart';
 import 'package:e_voting/Screens/Widgets/myButton.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class WelcomePage extends StatelessWidget {
                 style: GoogleFonts.inter(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.bold,
-                    height: 1.5,
+                    height: 1.2,
                     color: Color(0xff2AAA8A)),
                 textAlign: TextAlign.center,
               ),
@@ -49,7 +49,7 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 width: 80.w,
                 child: Text(
-                  'Your account has been created successfully!\n An email has been sent to your email address, verify it and then login.',
+                  'Your account has been created successfully!',
                   style: GoogleFonts.inter(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,

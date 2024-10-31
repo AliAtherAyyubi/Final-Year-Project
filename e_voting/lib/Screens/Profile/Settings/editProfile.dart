@@ -170,7 +170,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   setState(() {
                     loading = true;
                   });
-                  await userDatabase().updateUser(field, controller.text);
+                  await UserDatabase().updateUser(field, controller.text);
 
                   await fetchUser();
                   MyAlert.Alert(field, 'Updated Successfully');

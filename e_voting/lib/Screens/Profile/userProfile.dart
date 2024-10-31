@@ -22,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -45,19 +44,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
       imageUrl = null;
       loading = true;
     });
+
     var Url = await ImageController().uploadImage(image!, user.imageUrl);
-    await userDatabase().updateUser('imageUrl', Url!);
+    await UserDatabase().updateUser('imageUrl', Url!);
 
     await fetchUserInfo();
   }
 
   Future<void> fetchUserInfo() async {
-    user = await UserLocalData().fetchLocalUser();
-    setState(() {
-      imageUrl = user.imageUrl ?? "";
-      name = user.userName!.toUpperCase();
-      loading = false;
-    });
+    try {
+      user = await UserLocalData().fetchLocalUser();
+      // print(user.isVerified);
+      setState(() {
+        imageUrl = user.imageUrl;
+        // name = user.userName?.toUpperCase() ?? '';
+        loading = false;
+      });
+    } catch (e) {
+      print('Error while fetching User: $e');
+    }
   }
 
   @override
@@ -77,120 +82,139 @@ class _UserProfilePageState extends State<UserProfilePage> {
             automaticallyImplyLeading: false,
             title: Text(
               'Account',
-              style: AppStyle().h3,
+              style: AppStyle().h3.copyWith(fontSize: 25),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
           )),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-        ),
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              imageUrl != null
-                  ? GFBorder(
-                      color: Colors.green,
-                      strokeWidth: 3,
-                      type: GFBorderType.circle,
-                      dashedLine: [4, 7],
-                      padding: EdgeInsets.all(0),
-                      child: GFAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 90,
-                          child: loading
-                              ? Loading(
-                                  color: AppStyle.primaryColor,
-                                )
-                              : const Icon(
-                                  Icons.face,
-                                  size: 35,
-                                  color: AppStyle.primaryColor,
-                                )))
-                  : CircularProfileAvatar(
-                      imageUrl!,
-                      radius: 90,
-                      elevation: 10,
+      body: RefreshIndicator(
+        onRefresh: () async => await fetchUserInfo(),
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                imageUrl == null
+                    ? GFBorder(
+                        color: Colors.green,
+                        strokeWidth: 3,
+                        type: GFBorderType.circle,
+                        dashedLine: [4, 7],
+                        padding: EdgeInsets.all(0),
+                        child: GFAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: 90,
+                            child: loading
+                                ? Loading(
+                                    color: AppStyle.primaryColor,
+                                  )
+                                : const Icon(
+                                    Icons.face,
+                                    size: 35,
+                                    color: AppStyle.primaryColor,
+                                  )))
+                    : CircularProfileAvatar(
+                        imageUrl!,
+                        radius: 23.w,
+                        elevation: 10,
+                      ),
+                Positioned(
+                  right: Applayout.getWidth(90),
+                  bottom: Applayout.getWidth(20),
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: AppStyle.primaryColor,
+                    child: IconButton(
+                      onPressed: loading ? null : uploadImage,
+                      icon: const Icon(
+                        Icons.add,
+                      ),
+                      // splashRadius: 20,
+                      color: Colors.white,
                     ),
-              Positioned(
-                right: Applayout.getWidth(80),
-                bottom: Applayout.getWidth(20),
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: AppStyle.primaryColor,
-                  child: IconButton(
-                    onPressed: loading ? null : uploadImage,
-                    icon: const Icon(
-                      Icons.add,
-                    ),
-                    // splashRadius: 20,
-                    color: Colors.white,
                   ),
-                ),
-              )
-            ],
-          ),
-          gap(
-            Height: Applayout.getheight(20),
-          ),
-          Text(
-            name,
-            style: AppStyle.textStyle1.copyWith(
-              fontSize: 25,
-              color: AppStyle.textClr,
+                )
+              ],
             ),
-            textAlign: TextAlign.center,
-          ),
-          const gap(
-            Height: 20,
-          ),
-          // Setting Section //
-          ProfileSetting(title: 'Account Settings'),
-          GestureDetector(
-              onTap: () {
-                Get.to(() => EditUserProfile(),
-                    transition: Transition.rightToLeft);
+            gap(
+              Height: Applayout.getheight(20),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  user.userName?.toUpperCase() ?? "User Name",
+                  style: AppStyle.textStyle1.copyWith(
+                    fontSize: 25,
+                    color: AppStyle.textClr,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                user.isVerified ?? false
+                    ? Icon(
+                        Icons.verified,
+                        size: 35,
+                        color: Colors.green,
+                      )
+                    : Container()
+              ],
+            ),
+            const gap(
+              Height: 20,
+            ),
+            // Setting Section //
+
+            ProfileSetting(title: 'Account Settings'),
+            GestureDetector(
+                onTap: () {
+                  Get.to(() => EditUserProfile(),
+                      transition: Transition.rightToLeft);
+                },
+                child: SettingLabel(label: 'Edit your personal information')),
+            GestureDetector(
+                onTap: () => Get.to(() => PasswordResetPage(),
+                    transition: Transition.rightToLeft),
+                child: SettingLabel(label: 'Password reset')),
+            const gap(
+              Height: 10,
+            ),
+            // ProfileSetting(title: 'App Settings'),
+            // SettingLabel(label: 'Notifications'),
+            // const gap(
+            //   Height: 10,
+            // ),
+            ProfileSetting(title: 'Support'),
+            SettingLabel(label: 'FAQ'),
+            SettingLabel(label: 'Contact us'),
+
+            const gap(
+              Height: 30,
+            ),
+            // Button //
+
+            MyButton(
+              text: 'LOG OUT',
+              width: 100.w,
+              // loading: true,
+              onPress: () async {
+                await UserController().signOut();
+                Get.offAll(() => LoginPage(),
+                    // duration: const Duration(seconds: 1),
+                    transition: Transition.native);
               },
-              child: SettingLabel(label: 'Edit your personal information')),
-          GestureDetector(
-              onTap: () => Get.to(() => PasswordResetPage(),
-                  transition: Transition.rightToLeft),
-              child: SettingLabel(label: 'Password reset')),
-          const gap(
-            Height: 10,
-          ),
-          // ProfileSetting(title: 'App Settings'),
-          // SettingLabel(label: 'Notifications'),
-          // const gap(
-          //   Height: 10,
-          // ),
-          ProfileSetting(title: 'Support'),
-          SettingLabel(label: 'FAQ'),
-          SettingLabel(label: 'Contact us'),
-
-          const gap(
-            Height: 30,
-          ),
-          // Button //
-
-          MyButton(
-            text: 'LOG OUT',
-            width: 100.w,
-            // loading: true,
-            onPress: () async {
-              await UserController().signOut();
-              Get.offAll(() => LoginPage(),
-                  // duration: const Duration(seconds: 1),
-                  transition: Transition.native);
-            },
-          ),
-          SizedBox(
-            height: 20,
-          )
-        ],
+            ),
+            SizedBox(
+              height: 50,
+            )
+          ],
+        ),
       ),
     );
   }

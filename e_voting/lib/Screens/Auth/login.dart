@@ -4,8 +4,8 @@ import 'package:e_voting/Screens/Auth/forgotPass.dart';
 import 'package:e_voting/Screens/Auth/registerPage.dart';
 import 'package:e_voting/Screens/Auth/welcome.dart';
 import 'package:e_voting/Screens/Homepage/dashboard.dart';
-import 'package:e_voting/Screens/Owner/ownerPage.dart';
-import 'package:e_voting/Screens/Owner/ownerScreen.dart';
+import 'package:e_voting/Screens/Admin/adminPage.dart';
+import 'package:e_voting/Screens/Admin/AdminNavbar.dart';
 import 'package:e_voting/Screens/Widgets/Components/authAppBar.dart';
 import 'package:e_voting/Screens/Widgets/alert.dart';
 import 'package:e_voting/Screens/Widgets/screenTitle.dart';
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   Validation valid = Validation();
   bool loading = false;
   // Sign in function from userController //
-  void Signin() async {
+  Future<void> Signin() async {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       setState(() {
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: 'Password',
                             icon: Icons.password,
                             maxline: 1,
-                            hidebtn: Icons.visibility_off,
+                            // hidebtn: Icons.visibility_off,
                             suffixicon: Icons.visibility_off,
                             validator: (value) {
                               if (value == null) return 'Enter your password!';
