@@ -29,10 +29,10 @@ Here are some screenshots of the app in action:
 ### Auth Screens
 
 <p>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%064657.png" alt="Screenshot 1" height="420" width="210"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20120946.png" alt="Screenshot 1" height="420" width="210"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122038.png" alt="Screenshot 1" height="420" width="210"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122103.png" alt="Screenshot 1" height="420" width="210"/>
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20064657.png" alt="Screenshot 1" height="420" width="210"/> &nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20120946.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122038.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122103.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
 </p>
 <p >
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20070904.png" alt="Screenshot 9" width="200"/>
