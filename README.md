@@ -4,7 +4,7 @@ This mobile app offers a secure, efficient, and user-friendly platform for priva
 
 ## Project Goals
 
-- **Secure Voting System**: Ensures a safe voting experience by leveraging mobile technology.
+- **Secure Voting System**: Ensures a safe voting experience by leveraging mobile technology
 - **Ongoing Elections Display**: Lists all active elections for easy access.
 - **Vote for Favorite Candidates**: Allows users to cast votes for their chosen candidates.
 - **Facial Recognition**: Speeds up user authentication and ensures only eligible users can vote.
