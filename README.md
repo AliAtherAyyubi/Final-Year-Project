@@ -22,6 +22,17 @@ This mobile app offers a secure, efficient, and user-friendly platform for priva
 - Real-time result updates
 - Multi-location accessibility
 
+## Tech Stack
+
+This project was built using the following technologies:
+
+- **Flutter**
+- **Firebase**
+- **OpenCV**
+- **Google ML Kit**
+- **Dart**
+- **Git & GitHub**
+
 # Screenshots
 
 Here are some screenshots of the app in action:
