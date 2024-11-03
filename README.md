@@ -22,38 +22,43 @@ This mobile app offers a secure, efficient, and user-friendly platform for priva
 - Real-time result updates
 - Multi-location accessibility
 
+## Tech Stack
+
+This project was built using the following technologies:
+
+- **Flutter**
+- **Firebase**
+- **OpenCV**
+- **Google ML Kit**
+- **Dart**
+- **Git & GitHub**
+
 # Screenshots
 
 Here are some screenshots of the app in action:
 
-### Auth Screens
-
 <p>
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20064657.png" alt="Screenshot 1" height="420" width="210"/> &nbsp
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20120946.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122038.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122103.png" alt="Screenshot 1" height="420" width="230"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122038.png" alt="Screenshot 1" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122103.png" alt="Screenshot 1" height="420" width="210"/>&nbsp
+  
 </p>
 <p >
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20070904.png" alt="Screenshot 9" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 10" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20121030.png" alt="Screenshot 11" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 12" width="200"/>
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20130714.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20131051.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-02%20123007.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  
 </p>
-### Voting Screens
 
 <p >
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 5" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 6" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 7" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 8" width="200"/>
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20060249.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20054152.png" alt="Screenshot 5" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20054417.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+</p>
+<p>
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444153.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444324.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444324.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
 </p>
 
-### Result Screens
 
-<p >
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20120946.png" alt="Screenshot 9" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 10" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20121030.png" alt="Screenshot 11" width="200"/>
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20.png" alt="Screenshot 12" width="200"/>
-</p>
