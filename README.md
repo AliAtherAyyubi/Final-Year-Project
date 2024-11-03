@@ -30,18 +30,21 @@ Here are some screenshots of the app in action:
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20064657.png" alt="Screenshot 1" height="420" width="210"/> &nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122038.png" alt="Screenshot 1" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20122103.png" alt="Screenshot 1" height="420" width="210"/>&nbsp
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20070904.png" alt="Screenshot 1" height="420" width="210"/>&nbsp
+  
 </p>
 <p >
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20130714.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-06-30%20131051.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-02%20123007.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
-  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20060249.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+  
 </p>
 
 <p >
+  <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20060249.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20054152.png" alt="Screenshot 5" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/ScreenShots/Screenshot%202024-07-03%20054417.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
+</p>
+<p>
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444153.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444324.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
   <img src="https://github.com/AliAtherAyyubi/Final-Year-Project/blob/main/Screenshots/Screenshot_1730444324.png" alt="Screenshot 9" height="420" width="210"/>&nbsp
