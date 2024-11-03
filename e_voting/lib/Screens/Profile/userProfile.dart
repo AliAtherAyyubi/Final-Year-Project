@@ -74,146 +74,149 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              'Account',
-              style: AppStyle().h3.copyWith(fontSize: 25),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50),
+            child: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(
+                'Account',
+                style: AppStyle().h3.copyWith(fontSize: 25),
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+            )),
+        body: RefreshIndicator(
+          onRefresh: () async => await fetchUserInfo(),
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.symmetric(
+              horizontal: 10,
             ),
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-          )),
-      body: RefreshIndicator(
-        onRefresh: () async => await fetchUserInfo(),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          padding: EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                imageUrl == null
-                    ? GFBorder(
-                        color: Colors.green,
-                        strokeWidth: 3,
-                        type: GFBorderType.circle,
-                        dashedLine: [4, 7],
-                        padding: EdgeInsets.all(0),
-                        child: GFAvatar(
-                            backgroundColor: Colors.transparent,
-                            radius: 90,
-                            child: loading
-                                ? Loading(
-                                    color: AppStyle.primaryColor,
-                                  )
-                                : const Icon(
-                                    Icons.face,
-                                    size: 35,
-                                    color: AppStyle.primaryColor,
-                                  )))
-                    : CircularProfileAvatar(
-                        imageUrl!,
-                        radius: 23.w,
-                        elevation: 10,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  imageUrl == null
+                      ? GFBorder(
+                          color: Colors.green,
+                          strokeWidth: 3,
+                          type: GFBorderType.circle,
+                          dashedLine: [4, 7],
+                          padding: EdgeInsets.all(0),
+                          child: GFAvatar(
+                              backgroundColor: Colors.transparent,
+                              radius: 90,
+                              child: loading
+                                  ? Loading(
+                                      color: AppStyle.primaryColor,
+                                    )
+                                  : const Icon(
+                                      Icons.face,
+                                      size: 35,
+                                      color: AppStyle.primaryColor,
+                                    )))
+                      : CircularProfileAvatar(
+                          imageUrl!,
+                          radius: 23.w,
+                          elevation: 10,
+                        ),
+                  Positioned(
+                    right: Applayout.getWidth(90),
+                    bottom: Applayout.getWidth(20),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: AppStyle.primaryColor,
+                      child: IconButton(
+                        onPressed: loading ? null : uploadImage,
+                        icon: const Icon(
+                          Icons.add,
+                        ),
+                        // splashRadius: 20,
+                        color: Colors.white,
                       ),
-                Positioned(
-                  right: Applayout.getWidth(90),
-                  bottom: Applayout.getWidth(20),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: AppStyle.primaryColor,
-                    child: IconButton(
-                      onPressed: loading ? null : uploadImage,
-                      icon: const Icon(
-                        Icons.add,
-                      ),
-                      // splashRadius: 20,
-                      color: Colors.white,
                     ),
+                  )
+                ],
+              ),
+              gap(
+                Height: Applayout.getheight(20),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    user.userName?.toUpperCase() ?? "User Name",
+                    style: AppStyle.textStyle1.copyWith(
+                      fontSize: 25,
+                      color: AppStyle.textClr,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                )
-              ],
-            ),
-            gap(
-              Height: Applayout.getheight(20),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  user.userName?.toUpperCase() ?? "User Name",
-                  style: AppStyle.textStyle1.copyWith(
-                    fontSize: 25,
-                    color: AppStyle.textClr,
+                  SizedBox(
+                    width: 10,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                user.isVerified ?? false
-                    ? Icon(
-                        Icons.verified,
-                        size: 35,
-                        color: Colors.green,
-                      )
-                    : Container()
-              ],
-            ),
-            const gap(
-              Height: 20,
-            ),
-            // Setting Section //
+                  user.isVerified ?? false
+                      ? Icon(
+                          Icons.verified,
+                          size: 35,
+                          color: Colors.green,
+                        )
+                      : Container()
+                ],
+              ),
+              const gap(
+                Height: 20,
+              ),
+              // Setting Section //
 
-            ProfileSetting(title: 'Account Settings'),
-            GestureDetector(
-                onTap: () {
-                  Get.to(() => EditUserProfile(),
-                      transition: Transition.rightToLeft);
+              ProfileSetting(title: 'Account Settings'),
+              GestureDetector(
+                  onTap: () {
+                    Get.to(() => EditUserProfile(),
+                        transition: Transition.rightToLeft);
+                  },
+                  child: SettingLabel(label: 'Edit your personal information')),
+              GestureDetector(
+                  onTap: () => Get.to(() => PasswordResetPage(),
+                      transition: Transition.rightToLeft),
+                  child: SettingLabel(label: 'Password reset')),
+              const gap(
+                Height: 10,
+              ),
+              // ProfileSetting(title: 'App Settings'),
+              // SettingLabel(label: 'Notifications'),
+              // const gap(
+              //   Height: 10,
+              // ),
+              ProfileSetting(title: 'Support'),
+              SettingLabel(label: 'FAQ'),
+              SettingLabel(label: 'Contact us'),
+
+              const gap(
+                Height: 30,
+              ),
+              // Button //
+
+              MyButton(
+                text: 'LOG OUT',
+                width: 100.w,
+                // loading: true,
+                onPress: () async {
+                  await UserController().signOut();
+                  Get.offAll(() => LoginPage(),
+                      // duration: const Duration(seconds: 1),
+                      transition: Transition.native);
                 },
-                child: SettingLabel(label: 'Edit your personal information')),
-            GestureDetector(
-                onTap: () => Get.to(() => PasswordResetPage(),
-                    transition: Transition.rightToLeft),
-                child: SettingLabel(label: 'Password reset')),
-            const gap(
-              Height: 10,
-            ),
-            // ProfileSetting(title: 'App Settings'),
-            // SettingLabel(label: 'Notifications'),
-            // const gap(
-            //   Height: 10,
-            // ),
-            ProfileSetting(title: 'Support'),
-            SettingLabel(label: 'FAQ'),
-            SettingLabel(label: 'Contact us'),
-
-            const gap(
-              Height: 30,
-            ),
-            // Button //
-
-            MyButton(
-              text: 'LOG OUT',
-              width: 100.w,
-              // loading: true,
-              onPress: () async {
-                await UserController().signOut();
-                Get.offAll(() => LoginPage(),
-                    // duration: const Duration(seconds: 1),
-                    transition: Transition.native);
-              },
-            ),
-            SizedBox(
-              height: 50,
-            )
-          ],
+              ),
+              SizedBox(
+                height: 50,
+              )
+            ],
+          ),
         ),
       ),
     );

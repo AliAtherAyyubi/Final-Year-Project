@@ -280,7 +280,7 @@ class VoteDataCard extends StatelessWidget {
               CandidateAvatar(
                 imageUrl: imageUrl,
                 radius: 40,
-                name: name,
+                name: name!,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

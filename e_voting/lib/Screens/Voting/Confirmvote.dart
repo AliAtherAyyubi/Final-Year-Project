@@ -94,7 +94,7 @@ class _ConfirmVoteState extends State<ConfirmVote> {
                           radius: 24.w,
                           fontsize: 20,
                           imageUrl: candidate.candidateImage.toString(),
-                          name: candidate.candidateName.toString().capitalize,
+                          name: candidate.candidateName.toString().capitalize!,
                         )),
                   )
                 ],

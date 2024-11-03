@@ -36,20 +36,20 @@ class _CustomNavBarState extends State<CustomNavBar> {
       items: widget.items,
       confineInSafeArea: true,
       navBarHeight: 60,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true,
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
       decoration: const NavBarDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        // border: Border(
-        //   top: BorderSide(
-        //     color: Colors.grey,
-        //     width: 1,
-        //   ),
-        // ),
+        // borderRadius: BorderRadius.only(
+        //     topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey,
+            width: 1,
+          ),
+        ),
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -62,7 +62,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style6,
+      navBarStyle: NavBarStyle.style13,
     );
   }
 }
@@ -75,10 +75,10 @@ PersistentBottomNavBarItem MyNavBarItem({
     icon: Icon(
       iconData,
     ),
-    iconSize: 30,
+    iconSize: 33,
     title: title,
     textStyle: GoogleFonts.inter(fontSize: 10),
-    activeColorPrimary: Colors.white,
+    activeColorPrimary: AppStyle.primaryColor,
     inactiveColorPrimary: Colors.grey,
   );
 }

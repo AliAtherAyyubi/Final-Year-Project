@@ -3,6 +3,7 @@ import 'package:e_voting/Screens/Widgets/myAvatar.dart';
 import 'package:e_voting/utils/Applayout.dart';
 import 'package:e_voting/utils/Gap.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CandidateAvatar extends StatelessWidget {
@@ -10,11 +11,11 @@ class CandidateAvatar extends StatelessWidget {
 
   final String? imageUrl;
   final double fontsize;
-  final String? name;
+  final String name;
   double radius;
 
   CandidateAvatar(
-      {this.name,
+      {required this.name,
       this.imageUrl,
       this.radius = 50,
       super.key,
@@ -38,7 +39,7 @@ class CandidateAvatar extends StatelessWidget {
           Container(
             // width: Applayout.getWidth(100),
             child: Text(
-              name!,
+              name.capitalize!,
               style: GoogleFonts.inter(
                   fontSize: fontsize,
                   fontWeight: FontWeight.bold,

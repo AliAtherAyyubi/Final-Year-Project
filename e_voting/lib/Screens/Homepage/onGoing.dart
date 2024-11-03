@@ -137,7 +137,7 @@ class _OnGoingElectionPageState extends State<OnGoingElectionPage> {
                   itemBuilder: (context, index) {
                     final candidate = filtercandidatesList[index];
                     return CandidateAvatar(
-                      name: candidate.name,
+                      name: candidate.name!,
                       imageUrl: candidate.imageUrl,
                     );
                   },

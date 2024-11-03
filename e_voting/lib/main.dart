@@ -1,4 +1,6 @@
 import 'package:e_voting/Screens/Auth/splashscreen.dart';
+import 'package:e_voting/Screens/Voting/Face%20Recognition/Verification.dart';
+import 'package:e_voting/Screens/Voting/Face%20Recognition/registerFace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
